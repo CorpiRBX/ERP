@@ -1,13 +1,9 @@
 import React from 'react';
     import { useNavigate } from 'react-router-dom';
 
-    const Fichajes = ({ toggleSidebar, isSidebarOpen }) => {
+    const Screen2 = ({ toggleSidebar, isSidebarOpen }) => {
       const navigate = useNavigate();
       const buttonLeftPosition = isSidebarOpen ? 250 + 5 : 5;
-
-      const handleGoToScreen2 = () => {
-        navigate('/screen2');
-      };
 
       const handleGoBack = () => {
         navigate('/');
@@ -32,12 +28,11 @@ import React from 'react';
             }}
           />
           <div style={{ textAlign: 'center' }}>
-            <h1>Fichajes Screen</h1>
-            <button onClick={handleGoToScreen2}>Go to Screen 2</button>
+            <h1>Timesheet</h1>
             <button onClick={handleGoBack}>Go back to Main Screen</button>
           </div>
         </div>
       );
     };
 
-    export default Fichajes;
+    export default Screen2;

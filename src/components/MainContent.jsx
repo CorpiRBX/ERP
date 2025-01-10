@@ -22,7 +22,7 @@ import React from 'react';
             }}
           />
           <div style={{ textAlign: 'center' }}>
-            
+            <h1>Main</h1>
           </div>
         </div>
       );
