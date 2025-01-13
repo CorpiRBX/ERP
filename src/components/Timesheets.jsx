@@ -10,7 +10,7 @@ import React from 'react';
       };
 
       return (
-        <div style={{ flex: 1, padding: '1.25rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem', position: 'relative', backgroundColor: '#F2F2F2' }}>
+        <div style={{ flex: 1, padding: '1.25rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', position: 'relative', backgroundColor: '#F2F2F2' }}>
           <button
             onClick={toggleSidebar}
             style={{
@@ -29,7 +29,7 @@ import React from 'react';
             }}
           />
            <div style={{
-            
+            marginLeft: '1rem',
             height: 'calc(100% - 2.5rem)',
             backgroundColor: 'white',
             border: '0.125rem solid black',
@@ -53,8 +53,7 @@ import React from 'react';
           </div>
           <div style={{
             
-            minWidth: '26.3125rem',
-            height: 'calc(100% - 2.5rem)',
+            height: 'calc(100% - 1.3rem)',
             backgroundColor: 'white',
             border: '0.125rem solid black',
             display: 'flex',
