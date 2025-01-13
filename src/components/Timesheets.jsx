@@ -45,7 +45,7 @@ import React from 'react';
                 marginBottom: '0.625rem',
                 position: 'relative'
               }}>
-                <h2 style={{ margin: 0, fontFamily: 'DM Sans', fontSize: '1.25rem' }}>TAREAS</h2>
+                <h2 style={{ margin: 0, fontFamily: 'DM Sans', fontSize: '1.25rem' }}>FICHAJE</h2>
               </div>
             <div style={{ flex: 1, overflowY: 'auto', padding: '0.625rem' }}>
               {/* Content will go here */}
