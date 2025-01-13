@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
     import { Routes, Route, useNavigate } from 'react-router-dom';
     import Sidebar from './components/Sidebar';
     import MainContent from './components/MainContent';
@@ -15,6 +15,17 @@ import React, { useState } from 'react';
       const handleFichajesClick = () => {
         navigate('/timesheets');
       };
+
+      useEffect(() => {
+        const handleResize = () => {
+          setIsSidebarOpen(window.innerWidth >= 1200);
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
 
       return (
         <div style={{ display: 'flex', height: '100vh' }}>

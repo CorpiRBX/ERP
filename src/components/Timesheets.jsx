@@ -1,35 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
     import { useNavigate } from 'react-router-dom';
 
-    const Timesheets = ({ toggleSidebar, isSidebarOpen }) => {
+    const Timesheets = () => {
       const navigate = useNavigate();
-      const buttonLeftPosition = '0.3125rem';
+      const [isMobile, setIsMobile] = useState(false);
+
+      useEffect(() => {
+        const handleResize = () => {
+          setIsMobile(window.innerWidth < 750);
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
 
       const handleGoBack = () => {
         navigate('/');
       };
 
       return (
-        <div style={{ flex: 1, padding: '1.25rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', position: 'relative', backgroundColor: '#F2F2F2' }}>
-          <button
-            onClick={toggleSidebar}
-            style={{
-              position: 'absolute',
-              left: buttonLeftPosition,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '1.25rem',
-              height: '1.25rem',
-              backgroundColor: '#252323',
-              border: 'none',
-              borderRadius: '50%',
-              cursor: 'pointer',
-              transition: 'left 0.3s ease-in-out',
-              zIndex: 1000,
-            }}
-          />
+        <div style={{ flex: 1, padding: '1.25rem', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1rem', position: 'relative', backgroundColor: '#F2F2F2' }}>
            <div style={{
-            marginLeft: '1rem',
             height: 'calc(100% - 2.5rem)',
             backgroundColor: 'white',
             border: '0.125rem solid black',
@@ -230,6 +223,7 @@ import React from 'react';
                       textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)'
                     }}>DEPARTAMENTO</label>
                   </div>
+							 		<div>
                   <div style={{
                     border: '0.125rem solid black',
                     borderRadius: '0.3125rem',
@@ -259,6 +253,7 @@ import React from 'react';
 											color: 'white'
 										}}>REPETIR FICHAJE</span>
 									</button>
+										</div>
                 </div>
           </div>
           <div style={{
