@@ -6,7 +6,7 @@ import React from 'react';
       const buttonLeftPosition = isSidebarOpen ? 250 + 5 : 5;
 
       const handleGoToScreen2 = () => {
-        navigate('/screen2');
+        navigate('/timesheets');
       };
 
       const handleGoBack = () => {
@@ -33,7 +33,7 @@ import React from 'react';
           />
           <div style={{ textAlign: 'center' }}>
             <h1>Fichajes Screen</h1>
-            <button onClick={handleGoToScreen2}>Go to Screen 2</button>
+            <button onClick={handleGoToScreen2}>Go to Timesheets</button>
             <button onClick={handleGoBack}>Go back to Main Screen</button>
           </div>
         </div>
