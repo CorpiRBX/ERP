@@ -171,10 +171,95 @@ import React from 'react';
                   height: '100%',
                   position: 'relative',
                   bottom: 0,
-                  left: 0
-                }}></div>
-            <div style={{ flex: 1, overflowY: 'auto', padding: '0.625rem' }}>
-            </div>
+                  left: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                  borderRadius: '0.3125rem'
+                }}>
+                  <label style={{
+                    fontFamily: 'DM Sans',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    color: 'black',
+                    position: 'absolute',
+                    top: '0.625rem',
+                    left: '0.625rem'
+                  }}>ULTIMO FICHAJE</label>
+                  <label style={{
+                    fontFamily: 'DM Sans',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold',
+                    color: '#9e0000',
+                    position: 'absolute',
+                    bottom: '0.625rem',
+                    right: '0.625rem'
+                  }}>OFICINAS</label>
+                  <div style={{
+                    display: 'flex',
+                    position: 'absolute',
+                    top: '3rem',
+                    left: '1rem',
+                    width: 'calc(100% - 4rem)',
+                    justifyContent: 'space-between',
+										padding:'0 1rem'
+                  }}>
+                    <label style={{
+                      fontFamily: 'DM Sans',
+                      fontSize: '0.65rem',
+                      color: '#9F9292',
+                      textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)'
+                    }}>ENTRADA</label>
+                    <label style={{
+                      fontFamily: 'DM Sans',
+                      fontSize: '0.65rem',
+                      color: '#9F9292',
+                      textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)'
+                    }}>SALIDA</label>
+                    <label style={{
+                      fontFamily: 'DM Sans',
+                      fontSize: '0.65rem',
+                      color: '#9F9292',
+                      textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)'
+                    }}>PROYECTO</label>
+                    <label style={{
+                      fontFamily: 'DM Sans',
+                      fontSize: '0.65rem',
+                      color: '#9F9292',
+                      textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)'
+                    }}>DEPARTAMENTO</label>
+                  </div>
+                  <div style={{
+                    border: '0.125rem solid black',
+                    borderRadius: '0.3125rem',
+                    backgroundColor: 'white',
+                    width: 'calc(100% - 1.25rem)',
+                    height: '2.5rem',
+                    position: 'absolute',
+                    top: '4.2rem',
+                    left: '0.625rem'
+                  }}></div>
+									<button style={{
+										height: '2rem',
+										width: '50%',
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center',
+										border: '0.125rem solid black',
+										borderRadius: '0.3125rem',
+										backgroundColor: '#333131',
+										position: 'absolute',
+										top: '7.5rem',
+										left: '50%',
+										transform: 'translateX(-50%)'
+									}}>
+										<span style={{
+											fontFamily: 'DM Sans',
+											color: 'white'
+										}}>REPETIR FICHAJE</span>
+									</button>
+                </div>
           </div>
           <div style={{
             
@@ -217,12 +302,12 @@ import React from 'react';
                 justifyContent: 'space-between',
                 left: '1.25rem'
               }}>
-                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', marginRight: '0.0625rem' }}>Nombre</span>
-                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', marginRight: '0.0625rem' }}>Entrada</span>
-                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', marginRight: '0.0625rem' }}>Salida</span>
-                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', marginRight: '0.0625rem' }}>Break</span>
-                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', marginRight: '0.0625rem' }}>Proyecto</span>
-                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292' }}>Departamento</span>
+                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)', marginRight: '0.0625rem' }}>Nombre</span>
+                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)', marginRight: '0.0625rem' }}>Entrada</span>
+                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)', marginRight: '0.0625rem' }}>Salida</span>
+                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)', marginRight: '0.0625rem' }}>Break</span>
+                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)', marginRight: '0.0625rem' }}>Proyecto</span>
+                <span style={{ textAlign: 'center', fontSize: '0.75rem', fontFamily: 'DM Sans', color: '#9F9292', textShadow: '0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2)' }}>Departamento</span>
               </div>
             </div>
             <div style={{ flex: 1, overflowY: 'auto', padding: '0.625rem' }}>
