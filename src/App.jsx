@@ -2,7 +2,7 @@ import React, { useState } from 'react';
     import { Routes, Route, useNavigate } from 'react-router-dom';
     import Sidebar from './components/Sidebar';
     import MainContent from './components/MainContent';
-    import Screen2 from './components/Screen2';
+    import Timesheets from './components/Timesheets';
 
     function App() {
       const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -13,7 +13,7 @@ import React, { useState } from 'react';
       };
 
       const handleFichajesClick = () => {
-        navigate('/screen2');
+        navigate('/timesheets');
       };
 
       return (
@@ -21,7 +21,7 @@ import React, { useState } from 'react';
           <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} onFichajesClick={handleFichajesClick} />
           <Routes>
             <Route path="/" element={<MainContent toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />} />
-            <Route path="/screen2" element={<Screen2 toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />} />
+            <Route path="/timesheets" element={<Timesheets toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />} />
           </Routes>
         </div>
       );
