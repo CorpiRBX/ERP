@@ -47,8 +47,133 @@ import React from 'react';
               }}>
                 <h2 style={{ margin: 0, fontFamily: 'DM Sans', fontSize: '1.25rem' }}>FICHAJE</h2>
               </div>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '0.625rem' }}>
+                <button style={{
+                  height: '3rem',
+                  border: '2px solid black',
+                  borderRadius: '0.3125rem',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                  <span style={{
+                    fontFamily: 'DM Sans',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    color: 'black'
+                  }}>Oficina</span>
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', position: 'relative', top: '-0.4375rem' }}>
+                <span style={{
+                  fontFamily: 'DM Sans',
+                  fontSize: '0.8125rem',
+                  fontWeight: 'bold',
+                  color: 'black'
+                }}>OFICINAS</span>
+                 <button style={{
+                  height: '3rem',
+                  border: '2px solid black',
+                  borderRadius: '0.3125rem',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: '0.3125rem',
+                  position: 'relative',
+                  top: '0.375rem'
+                }}>
+                  <span style={{
+                    fontFamily: 'DM Sans',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    color: 'black'
+                  }}>OnSite</span>
+                </button>
+                <span style={{
+                  fontFamily: 'DM Sans',
+                  fontSize: '0.8125rem',
+                  fontWeight: 'bold',
+                  color: 'black',
+                  marginTop: '0.5rem',
+                  position: 'relative',
+                  top: '0.125rem'
+                }}>ONSITE</span>
+                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                    <button style={{
+                      height: '3rem',
+                      border: '2px solid black',
+                      borderRadius: '0.3125rem',
+                      width: '49%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginTop: '1rem',
+                      position: 'relative',
+                      top: '-0.125rem',
+                      alignSelf: 'flex-start'
+                    }}>
+                      <span style={{
+                        fontFamily: 'DM Sans',
+                        fontSize: '1rem',
+                        fontWeight: 'bold',
+                        color: 'black'
+                      }}>Vacaciones</span>
+                    </button>
+                    <button style={{
+                      height: '3rem',
+                      border: '2px solid black',
+                      borderRadius: '0.3125rem',
+                      width: '49%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginTop: '1rem',
+                      position: 'relative',
+                      top: '-0.125rem',
+                      alignSelf: 'flex-end'
+                    }}>
+                      <span style={{
+                        fontFamily: 'DM Sans',
+                        fontSize: '1rem',
+                        fontWeight: 'bold',
+                        color: 'black'
+                      }}>Baja</span>
+                    </button>
+                 </div>
+                 <span style={{
+                  fontFamily: 'DM Sans',
+                  fontSize: '0.8125rem',
+                  fontWeight: 'bold',
+                  color: 'black',
+                  marginTop: '0rem',
+                  position: 'relative',
+                  top: '0.125rem',
+                  marginRight: '51%'
+                }}>VACACIONES</span>
+                 <span style={{
+                  fontFamily: 'DM Sans',
+                  fontSize: '0.8125rem',
+                  fontWeight: 'bold',
+                  color: 'black',
+                  marginTop: '-0.8rem',
+                  position: 'relative',
+                  top: '0.125rem',
+                  marginLeft: 'auto'
+                }}>BAJA</span>
+                
+              </div>
+						 <div style={{
+                  marginTop: '1.75rem',
+                  border: '2px solid black',
+                  width: '100%',
+                  height: '100%',
+                  position: 'relative',
+                  bottom: 0,
+                  left: 0
+                }}></div>
             <div style={{ flex: 1, overflowY: 'auto', padding: '0.625rem' }}>
-              {/* Content will go here */}
             </div>
           </div>
           <div style={{
