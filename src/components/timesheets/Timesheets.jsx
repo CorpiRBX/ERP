@@ -28,30 +28,24 @@ const Timesheets = () => {
           <h2 className="timesheets-title">FICHAJE</h2>
         </div>
         <div className="timesheets-button-container">
-          <button className="timesheets-button">
-            <span className="timesheets-button-text">Oficina</span>
+          <button className="timesheets-button-oficina">
           </button>
-
           <span className="timesheets-label">OFICINAS</span>
         </div>
         <div className="timesheets-button-container">
-          <button className="timesheets-button">
-            <span className="timesheets-button-text">OnSite</span>
+          <button className={isMobile ? 'timesheets-button-onsite-mobile' : 'timesheets-button-onsite-pc'}>
           </button>
-
           <span className="timesheets-label">ONSITE</span>
         </div>
         <div className="timesheets-button-group">
           <div className="timesheets-button-wrapper">
-            <button className="timesheets-button">
-              <span className="timesheets-button-text">Vacaciones</span>
+          <button className={isMobile ? 'timesheets-button-vacaciones-mobile' : 'timesheets-button-vacaciones-pc'}>
             </button>
             <span className="timesheets-label-right">VACACIONES</span>
           </div>
 
           <div className="timesheets-button-wrapper">
-            <button className="timesheets-button">
-              <span className="timesheets-button-text">Baja</span>
+          <button className={isMobile ? 'timesheets-button-baja-mobile' : 'timesheets-button-baja-pc'}>
             </button>
             <span className="timesheets-label-right">BAJA</span>
           </div>

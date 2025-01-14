@@ -1,3 +1,4 @@
+
 .timesheets-container {
       flex: 1;
       padding: 1.25rem;
@@ -21,15 +22,14 @@
       display: flex;
       flex-direction: column;
       border-radius: 0.3125rem;
-      padding: 0.625rem;
-      overflow-y: auto;      
+      padding: 0.625rem;    
     }
 
     .timesheets-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 2rem;
       position: relative;
     }
 
@@ -37,6 +37,7 @@
       margin: 0;
       font-family: DM Sans;
       font-size: 1.25rem;
+      text-shadow: 0.2rem 0.2rem 0.15rem rgba(0, 0, 0, 0.2);
     }
 
     .timesheets-button-container {
@@ -44,12 +45,100 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-bottom: 1.8rem;
+      margin-bottom: 2.2rem;
       position: relative;
     }
 
-    .timesheets-button {
-      height: 3.5rem;
+    .timesheets-button-oficina {
+      background-image: url('../../assets/images/Oficinas.jpg');
+      background-repeat: no-repeat;  /* No repite la imagen */
+      background-position: center ;  /* Centra la imagen */
+      background-size: cover;       /* La imagen cubre todo el área del contenedor */
+      height: 5rem;
+      border: 2px solid black;
+      border-radius: 0.3125rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .timesheets-button-onsite-pc {
+      background-image: url('../../assets/images/OnSite.jpg');
+      background-repeat: no-repeat;  /* No repite la imagen */
+      background-position: center -6rem;  /* Centra la imagen */
+      background-size: cover;       /* La imagen cubre todo el área del contenedor */
+      height: 5rem;
+      border: 2px solid black;
+      border-radius: 0.3125rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .timesheets-button-onsite-mobile {
+      background-image: url('../../assets/images/OnSite.jpg');
+      background-repeat: no-repeat;  /* No repite la imagen */
+      background-position: center ;  /* Centra la imagen */
+      background-size: cover;       /* La imagen cubre todo el área del contenedor */
+      height: 5rem;
+      border: 2px solid black;
+      border-radius: 0.3125rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .timesheets-button-vacaciones-pc {
+      background-image: url('../../assets/images/Vacaciones.jpg');
+      background-repeat: no-repeat;  /* No repite la imagen */
+      background-position: center -3.2rem;  /* Centra la imagen */
+      background-size: cover;       /* La imagen cubre todo el área del contenedor */
+      height: 5rem;
+      border: 2px solid black;
+      border-radius: 0.3125rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .timesheets-button-vacaciones-mobile {
+      background-image: url('../../assets/images/Vacaciones.jpg');
+      background-repeat: no-repeat;  /* No repite la imagen */
+      background-position: center ;  /* Centra la imagen */
+      background-size: cover;       /* La imagen cubre todo el área del contenedor */
+      height: 5rem;
+      border: 2px solid black;
+      border-radius: 0.3125rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .timesheets-button-baja-pc {
+      background-image: url('../../assets/images/Baja.jpg');
+      background-repeat: no-repeat;  /* No repite la imagen */
+      background-position: center -2.5rem;   /* Centra la imagen */
+      background-size: cover;       /* La imagen cubre todo el área del contenedor */
+      height: 5rem;
+      border: 2px solid black;
+      border-radius: 0.3125rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .timesheets-button-baja-mobile {
+      background-image: url('../../assets/images/Baja.jpg');
+      background-repeat: no-repeat;  /* No repite la imagen */
+      background-position: center ;   /* Centra la imagen */
+      background-size: cover;       /* La imagen cubre todo el área del contenedor */
+      height: 5rem;
       border: 2px solid black;
       border-radius: 0.3125rem;
       width: 100%;
@@ -79,7 +168,6 @@
       display: flex;
       justify-content: space-between;
       width: 100%;
-      margin-top: 1rem;
     }
 
     .timesheets-button-wrapper {
@@ -103,8 +191,8 @@
     }
 
     .timesheets-last-entry-container {
-      margin-top: 8rem;
-      min-height: 12.5rem;
+      margin-top: 4rem;
+      min-height: 13.5rem;
       border: 2px solid black;
       width: 100%;
       height: auto;
@@ -191,7 +279,6 @@
       display: flex;
       flex-direction: column;
       border-radius: 0.3125rem;
-      overflow-y: auto;  
     }
 
     .timesheets-history-header {
@@ -215,6 +302,7 @@
       margin: 0;
       font-family: DM Sans;
       font-size: 1.25rem;
+      text-shadow: 0.2rem 0.2rem 0.15rem rgba(0, 0, 0, 0.2);
     }
 
     .timesheets-history-filters {
