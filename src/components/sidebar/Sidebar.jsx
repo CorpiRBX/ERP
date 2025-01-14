@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Sidebar = ({ isOpen, toggleSidebar, onFichajesClick }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [transition, setTransition] = useState("width 0.3s ease-in-out");
+
+  // Usamos useRef para almacenar los valores anteriores de isMobile e isTablet
+  const prevIsMobile = useRef(false);
+  const prevIsTablet = useRef(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -12,8 +17,19 @@ const Sidebar = ({ isOpen, toggleSidebar, onFichajesClick }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isMobile = windowWidth < 720;
+  const isMobile = windowWidth < 800;
   const isTablet = windowWidth < 1200;
+
+  useEffect(() => {
+    if (prevIsMobile.current !== isMobile || prevIsTablet.current !== isTablet) {
+      setTransition("width 0s");
+      setTimeout(() => {
+        setTransition("width 0.3s ease-in-out");
+      }, 0);
+    }
+    prevIsMobile.current = isMobile;
+    prevIsTablet.current = isTablet;
+  }, [isMobile, isTablet]);
 
   const sidebarWidth = isTablet
     ? isMobile
