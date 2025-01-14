@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
     import { Routes, Route, useNavigate } from 'react-router-dom';
-    import Sidebar from './components/Sidebar';
-    import MainContent from './components/MainContent';
-    import Timesheets from './components/Timesheets';
+    import Sidebar from './components/sidebar/Sidebar';
+    import MainContent from './components/maincontent/MainContent';
+    import Timesheets from './components/timesheets/Timesheets';
 
     function App() {
       const [isSidebarOpen, setIsSidebarOpen] = useState(false);
