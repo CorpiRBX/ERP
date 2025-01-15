@@ -1,0 +1,287 @@
+.sidebar {
+  background-color: #222;
+  color: white;
+  overflow-x: hidden;
+  padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: static;
+  left: 0;
+  z-index: auto;
+  transition: width 0.3s ease-in-out;
+}
+
+.sidebar-button {
+  margin: 5px;
+  text-align: center;
+  background-color: transparent;
+  border: 1.5px solid white;
+  border-radius: 15px;
+  padding: 10px 10px;
+  width: calc(100% - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+  height: 88px;
+  box-sizing: border-box; /* Asegura que los márgenes se excluyan del cálculo del ancho */
+}
+
+.sidebar-button-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start; /* Alineación a la izquierda */
+  gap: 10px;
+  position: relative;
+}
+
+
+.sidebar-button-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: white;  
+}
+
+.sidebar-button-text {
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  position: sticky;
+  top: -15px;
+}
+
+.sidebar-fichajes-button {
+  background-color: #252323;
+  color: white;
+  padding: 10px 10px;
+  border: 1.5px solid white;
+  border-radius: 15px;
+  cursor: pointer;
+  width: calc(100% - 20px);
+  margin: 5px;
+  text-align: center;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alinea los elementos desde el inicio */
+  position: relative;
+}
+
+.sidebar-fichajes-user-image {
+  width: 4rem; /* Tamaño de la imagen */
+  height: 4rem; /* Tamaño de la imagen */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  border: 2px solid white;
+}
+
+.sidebar-fichajes-button-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  left: 10px;
+}
+
+.sidebar-fichajes-icon {
+  height: 1.8rem;
+  width: 1.8rem;
+  margin-top: 0.3rem;
+  margin-left: 0.5rem;
+}
+
+.sidebar-fichajes-button-text {
+  font-weight: bold;
+  text-align: center;
+  flex-grow: 1;  /* Esto hace que el texto ocupe el espacio restante y se centre */
+  margin-left: -1.8rem;
+}
+
+/* PC Expanded configuration */
+
+.sidebar-button.expanded {
+  height: 16.5rem; /* Aumentar la altura cuando se expande */
+}
+
+.sidebar-button-expanded-content {
+  display: none; /* Oculto por defecto */
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 2rem;
+}
+
+.dashboard-button {
+  background-color: transparent; /* Fondo transparente */
+  color: white; /* Color de las letras blanco */
+  padding: 6px;
+  border-radius: 10px;
+  border: none; /* Sin borde */
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: flex-start; /* Alinea todo al principio */
+  font-weight: bold; /* Fuente en negrita */
+  font-size: 12px; /* Ajusta el tamaño de fuente */
+  margin-bottom: 1rem;
+}
+
+.dashboard-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.sidebar-fichajes-icon-dashboard {
+  width: 1.5rem; /* Reduce el tamaño del ícono */
+  height: 1.5rem; /* Reduce el tamaño del ícono */
+  margin-right: -0.7rem; /* Espacio entre el ícono y el texto */
+  margin-left: 0.5rem; /* Espacio entre el ícono y el texto */
+}
+
+.dashboard-text {
+  flex-grow: 1; /* Hace que el texto ocupe solo el espacio necesario */
+}
+
+.sidebar-button.expanded .sidebar-button-expanded-content {
+  display: block; /* Mostrar contenido cuando se expande */
+}
+
+/* Tablet configuration*/
+
+.sidebar-button-compress {
+  margin: 5px;
+  text-align: center;
+  background-color: transparent;
+  border: 1.5px solid white;
+  border-radius: 15px;
+  padding: 13px 8px;
+  width: calc(100% - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+  height: 88px;
+  box-sizing: border-box; /* Asegura que los márgenes se excluyan del cálculo del ancho */
+}
+
+.sidebar-button-compress.expanded {
+  height: 16.5rem; /* Aumentar la altura cuando se expande */
+}
+
+.sidebar-button-compress.expanded .sidebar-button-expanded-content {
+  display: block; /* Mostrar contenido cuando se expande */
+}
+
+.sidebar-fichajes-button-compress {
+  background-color: #252323;
+  color: white;
+  padding: 10px 10px;
+  border: 1.5px solid white;
+  border-radius: 15px;
+  cursor: pointer;
+  width: calc(100% - 20px);
+  margin: 5px;
+  text-align: center;
+  height: 50px;
+  display: flex;
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  position: relative;
+}
+
+
+.sidebar-fichajes-icon-compress {
+  height: 1.8rem;
+  width: 1.8rem;
+  margin-top: 0.3rem;
+}
+
+.sidebar-button-icon-compress {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 80%;
+  background-color: white;
+}
+
+.sidebar-fichajes-user-image-compress {
+  width: 3.5rem; /* Tamaño de la imagen */
+  height: 3.5rem; /* Tamaño de la imagen */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  border: 2px solid white;
+}
+
+/* Tablet Expanded configuration*/
+
+.dashboard-button-tablet {
+  background-color: transparent; /* Fondo transparente */
+  color: white; /* Color de las letras blanco */
+  padding: 6px;
+  border-radius: 10px;
+  border: none; /* Sin borde */
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: flex-start; /* Alinea todo al principio */
+  margin-bottom: 1rem;
+}
+
+.dashboard-button-tablet:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-fichajes-icon-dashboard-tablet {
+  width: 1.5rem; /* Reduce el tamaño del ícono */
+  height: 1.5rem; /* Reduce el tamaño del ícono */
+  margin-right: -0.7rem; /* Espacio entre el ícono y el texto */
+  margin-left: 0.5rem; /* Espacio entre el ícono y el texto */
+}
+
+/* Mobile configuration*/
+
+.sidebar-mobile-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.sidebar-mobile-button {
+  margin-bottom: 5px;
+  margin-left: 5px;
+  text-align: center;
+  background-color: transparent;
+  border: 1.5px solid white;
+  border-radius: 15px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sidebar-mobile-button-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.sidebar-fichajes-user-image-mobile-compress {
+  width: 2.rem; /* Tamaño de la imagen */
+  height: 2.3rem; /* Tamaño de la imagen */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  border: 1.5px solid white;
+}

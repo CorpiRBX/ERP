@@ -8,7 +8,7 @@ const Timesheets = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 750);
+      setIsMobile(window.innerWidth < 800);
     };
 
     handleResize();
@@ -29,24 +29,44 @@ const Timesheets = () => {
         </div>
         <div className="timesheets-button-container">
           <button className="timesheets-button-oficina">
+          <img
+              src="../../../src/assets/images/Oficinas.jpg"
+              className="timesheets-button-img"
+              alt="Onsite"
+            ></img>
           </button>
           <span className="timesheets-label">OFICINAS</span>
         </div>
         <div className="timesheets-button-container">
-          <button className={isMobile ? 'timesheets-button-onsite-mobile' : 'timesheets-button-onsite-pc'}>
+          <button className="timesheets-button-onsite">
+            <img
+              src="../../../src/assets/images/OnSite.jpg"
+              className="timesheets-button-img-onsite"
+              alt="Onsite"
+            ></img>
           </button>
           <span className="timesheets-label">ONSITE</span>
         </div>
         <div className="timesheets-button-group">
           <div className="timesheets-button-wrapper">
-          <button className={isMobile ? 'timesheets-button-vacaciones-mobile' : 'timesheets-button-vacaciones-pc'}>
+            <button className="timesheets-button-vacaciones">
+              <img
+                src="../../../src/assets/images/Vacaciones.jpg"
+                className="timesheets-button-img-vacaciones"
+                alt="Onsite">                
+              </img>
             </button>
             <span className="timesheets-label-right">VACACIONES</span>
           </div>
 
           <div className="timesheets-button-wrapper">
-          <button className={isMobile ? 'timesheets-button-baja-mobile' : 'timesheets-button-baja-pc'}>
-            </button>
+            <button className= "timesheets-button-baja">
+            <img
+              src="../../../src/assets/images/Baja.jpg"
+              className="timesheets-button-img-baja"
+              alt="Onsite"
+            ></img>
+              </button>
             <span className="timesheets-label-right">BAJA</span>
           </div>
         </div>

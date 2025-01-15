@@ -1,259 +1,196 @@
+import React, { useState, useEffect, useRef } from "react";
+import "./Sidebar.css";
 
-      import React, { useState, useEffect, useRef } from "react";
+const Sidebar = ({ isOpen, toggleSidebar, onFichajesClick, onDashboardClick }) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [transition, setTransition] = useState("width 0.3s ease-in-out");
 
-      const Sidebar = ({ isOpen, toggleSidebar, onFichajesClick }) => {
-        const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-        const [transition, setTransition] = useState("width 0.3s ease-in-out");
-        const prevIsMobile = useRef(false);
-        const prevIsTablet = useRef(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
 
-        useEffect(() => {
-          const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-          };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-          window.addEventListener("resize", handleResize);
-          return () => window.removeEventListener("resize", handleResize);
-        }, []);
+  const isMobile = windowWidth < 800;
+  const isTablet = windowWidth < 1200;
 
-        const isMobile = windowWidth < 800;
-        const isTablet = windowWidth < 1200;
+  const sidebarWidth = isTablet
+    ? isMobile
+      ? "100%"
+      : "6rem"
+    : isOpen
+    ? "250px"
+    : "0";
+  const sidebarHeight = isMobile ? "60px" : "100vh";
+  const sidebarPosition = isMobile ? "fixed" : "static";
+  const flexDirection = isMobile ? "row" : "column";
+  const justifyContent = isMobile ? "space-around" : "flex-start";
+  const alignItems = isMobile ? "center" : "center";
+  const zIndex = isMobile ? 1000 : "auto";
+  const bottom = isMobile ? 0 : "auto";
 
-        const sidebarWidth = isTablet
-          ? isMobile
-            ? "100%"
-            : "7rem"
-          : isOpen
-          ? "250px"
-          : "0";
-        const sidebarHeight = isMobile ? "60px" : "100vh";
-        const sidebarPosition = isMobile ? "fixed" : "static";
-        const flexDirection = isMobile ? "row" : "column";
-        const justifyContent = isMobile ? "space-around" : "flex-start";
-        const alignItems = isMobile ? "center" : "center";
-        const zIndex = isMobile ? 1000 : "auto";
-        const bottom = isMobile ? 0 : 'auto';
+  const handleExpandClick = () => {
+    setIsExpanded(!isExpanded);
+  };
 
-        return (
+  return (
+    <div
+      className="sidebar"
+      style={{
+        width: sidebarWidth,
+        height: sidebarHeight,
+        flexDirection: flexDirection,
+        alignItems: alignItems,
+        position: sidebarPosition,
+        bottom: bottom,
+        zIndex: zIndex, // Asegurar que no cubra contenido
+      }}
+    >
+      {isOpen && !isMobile && (
+        <>
           <div
-            style={{
-              width: sidebarWidth,
-              height: sidebarHeight,
-              backgroundColor: "#222",
-              color: "white",
-              transition: "width 0.3s ease-in-out",
-              overflowX: "hidden",
-              paddingTop: "5px",
-              display: "flex",
-              flexDirection: flexDirection,
-              alignItems: alignItems,
-              position: sidebarPosition,
-              bottom: bottom,
-              left: 0,
-              justifyContent: justifyContent,
-              zIndex: zIndex,
-            }}
+            className={`sidebar-button ${isExpanded ? "expanded" : ""}`}
+            onClick={handleExpandClick}
           >
-            {isOpen && !isMobile && (
-              <>
-                <button
-                  style={{
-                    marginBottom: "5px",
-                    textAlign: "center",
-                    backgroundColor: "transparent",
-                    border: "1.5px solid white",
-                    borderRadius: "15px",
-                    padding: "10px",
-                    width: "calc(100% - 20px)",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    height: "90px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      borderRadius: "50%",
-                      backgroundColor: "white",
-                      marginRight: "10px",
-                    }}
-                  ></div>
-                  <p
-                    style={{
-                      color: "white",
-                      fontWeight: "bold",
-                      position: "relative",
-                      top: "-15px",
-                    }}
-                  >
-                    Nombre de usuario
-                  </p>
-                </button>
-                <button
-                  style={{
-                    backgroundColor: "#252323",
-                    color: "white",
-                    padding: "10px 10px",
-                    border: "1.5px solid white",
-                    borderRadius: "15px",
-                    cursor: "pointer",
-                    width: "calc(100% - 20px)",
-                    margin: "5px",
-                    textAlign: "center",
-                    height: "50px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                  }}
-                  onClick={onFichajesClick}
-                >
-                  <div
-                    style={{
-                      width: "2rem",
-                      height: "2rem",
-                      borderRadius: "50%",
-                      backgroundColor: "white",
-                      position: "absolute",
-                      left: "10px",
-                    }}
-                  ></div>
-                  <strong style={{ fontWeight: "bold" }}>Fichajes</strong>
-                </button>
-              </>
-            )}
+            <div className="sidebar-button-content">
+              <img
+                src="../../../src/assets/images/User.jpg"
+                className="sidebar-fichajes-user-image"
+                alt="Image"
+              />
+              <p className="sidebar-button-text">Nombre de usuario</p>
+            </div>
+            <div
+              className={`sidebar-button-expanded-content ${
+                isExpanded ? "show" : ""
+              }`}
+            >
+              <button className="dashboard-button" onClick={onDashboardClick}>
+              <img
+                src="../../../src/assets/icons/IconDashboard.png"
+                className="sidebar-fichajes-icon-dashboard"
+                alt="Image"
+              />
+               <span className="dashboard-text">DASHBOARD</span>
+              </button>
 
-            {!isOpen && !isMobile && (
-              <>
-                <button
-                  style={{
-                    marginBottom: "5px",
-                    textAlign: "center",
-                    backgroundColor: "transparent",
-                    border: "1.5px solid white",
-                    borderRadius: "15px",
-                    padding: "10px",
-                    width: "calc(100% - 20px)",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    height: "90px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      borderRadius: "50%",
-                      backgroundColor: "white",
-                    }}
-                  ></div>
-                </button>
-                <button
-                  style={{
-                    backgroundColor: "#252323",
-                    color: "white",
-                    padding: "10px 10px",
-                    border: "1.5px solid white",
-                    borderRadius: "15px",
-                    cursor: "pointer",
-                    width: "calc(100% - 20px)",
-                    margin: "5px",
-                    textAlign: "center",
-                    height: "50px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                  }}
-                  onClick={onFichajesClick}
-                >
-                  <div
-                    style={{
-                      width: "2rem",
-                      height: "2rem",
-                      borderRadius: "50%",
-                      backgroundColor: "white",
-                      position: "absolute",
-                    }}
-                  ></div>
-                </button>
-              </>
-            )}
-            {isMobile && (
-              <>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <button
-                    style={{
-                      marginBottom: "5px",
-                      marginLeft: "5px",
-                      textAlign: "center",
-                      backgroundColor: "transparent",
-                      border: "1.5px solid white",
-                      borderRadius: "15px",
-                      width: "50px",
-                      height: "50px",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "50%",
-                        backgroundColor: "white",
-                      }}
-                    ></div>
-                  </button>
+              <button className="dashboard-button" onClick={onDashboardClick}>
+              <img
+                src="../../../src/assets/icons/IconMAterial.png"
+                className="sidebar-fichajes-icon-dashboard"
+                alt="Image"
+              />
+               <span className="dashboard-text">MATERIAL DE OFICINA</span>
+              </button>
 
-                  <button
-                    style={{
-                      marginBottom: "5px",
-                      marginLeft: "5px",
-                      textAlign: "center",
-                      backgroundColor: "transparent",
-                      border: "1.5px solid white",
-                      borderRadius: "15px",
-                      width: "50px",
-                      height: "50px",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                    onClick={onFichajesClick}
-                  >
-                    <div
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "50%",
-                        backgroundColor: "white",
-                      }}
-                    ></div>
-                  </button>
-                </div>
-              </>
-            )}
+              <button className="dashboard-button" onClick={onDashboardClick}>
+              <img
+                src="../../../src/assets/icons/IconRopa.png"
+                className="sidebar-fichajes-icon-dashboard"
+                alt="Image"
+              />
+               <span className="dashboard-text">ROPA RBX</span>
+              </button>
+            </div>
           </div>
-        );
-      };
 
-      export default Sidebar;
+          <button className="sidebar-fichajes-button" onClick={onFichajesClick}>
+            <div>
+              <img
+                src="../../../src/assets/icons/IconFichar.png"
+                className="sidebar-fichajes-icon"
+                alt="Image"
+              />
+            </div>
+            <strong className="sidebar-fichajes-button-text">FICHAJES</strong>
+          </button>
+        </>
+      )}
+
+      {!isOpen && !isMobile && (
+        <>
+          <div
+            className={`sidebar-button-compress ${isExpanded ? "expanded" : ""}`}
+            onClick={handleExpandClick}
+          >
+            <div>
+              <img
+                src="../../../src/assets/images/User.jpg"
+                className="sidebar-fichajes-user-image-compress"
+                alt="Image"
+              />
+            </div>
+            <div
+              className={`sidebar-button-expanded-content ${
+                isExpanded ? "show" : ""
+              }`}
+            >
+              <button className="dashboard-button-tablet" onClick={onDashboardClick}>
+              <img
+                src="../../../src/assets/icons/IconDashboard.png"
+                className="sidebar-fichajes-icon-dashboard-tablet"
+                alt="Image"
+              />
+              </button>
+
+              <button className="dashboard-button-tablet" onClick={onDashboardClick}>
+              <img
+                src="../../../src/assets/icons/IconMAterial.png"
+                className="sidebar-fichajes-icon-dashboard-tablet"
+                alt="Image"
+              />
+              </button>
+
+              <button className="dashboard-button-tablet" onClick={onDashboardClick}>
+              <img
+                src="../../../src/assets/icons/IconRopa.png"
+                className="sidebar-fichajes-icon-dashboard-tablet"
+                alt="Image"
+              />
+              </button>
+            </div>
+          </div>
+
+          <button
+            className="sidebar-fichajes-button-compress"
+            onClick={onFichajesClick}
+          >
+            <div>
+              <img
+                src="../../../src/assets/icons/IconFichar.png"
+                className="sidebar-fichajes-icon-compress"
+                alt="Image"
+              />
+            </div>
+          </button>
+        </>
+      )}
+      {isMobile && (
+        <div className="sidebar-mobile-container">
+          <button className="sidebar-mobile-button">
+            <img
+              src="../../../src/assets/images/User.jpg"
+              className="sidebar-fichajes-user-image-mobile-compress"
+              alt="Image"
+            />
+          </button>
+          <button className="sidebar-mobile-button" onClick={onFichajesClick}>
+            <div>
+              <img
+                src="../../../src/assets/icons/IconFichar.png"
+                className="sidebar-fichajes-icon-compress"
+                alt="Image"
+              />
+            </div>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Sidebar;

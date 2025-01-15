@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import RBXLogo from '../../assets/logos/RBXWhite.jpg';
+import './MainContent.css'; // Importa el archivo CSS
 
 const MainContent = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
@@ -19,25 +20,11 @@ const MainContent = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        flex: 1,
-        padding: '20px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '90vh', // Ocupa toda la pantalla
-      }}
-    >
+    <div className="main-content-container">
       <img
         src={RBXLogo}
         alt="RBX White Logo"
-        style={{
-          maxWidth: isMobile ? '100%' : '60%',
-          maxHeight: isMobile ? '100%' : '60%',
-          objectFit: 'contain',
-          transform: 'translateY(-3rem)', // Desplaza 3rem hacia arriba
-        }}
+        className={`main-content-logo ${isMobile ? 'mobile' : ''}`} // Se agrega la clase 'mobile' cuando es móvil
       />
     </div>
   );

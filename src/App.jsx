@@ -1,52 +1,59 @@
+import React, { useState, useEffect } from 'react';
+    import { Routes, Route, useNavigate } from 'react-router-dom';
+    import Sidebar from './components/sidebar/Sidebar';
+    import MainContent from './components/maincontent/MainContent';
+    import Timesheets from './components/timesheets/Timesheets';
+    import Topbar from './components/topbar/Topbar';
 
-      import React, { useState, useEffect } from 'react';
-      import { Routes, Route, useNavigate } from 'react-router-dom';
-      import Sidebar from './components/sidebar/Sidebar';
-      import MainContent from './components/maincontent/MainContent';
-      import Timesheets from './components/timesheets/Timesheets';
+    function App() {
+      const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+      const [isMobile, setIsMobile] = useState(false);
+      const navigate = useNavigate();
 
-      function App() {
-        const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-        const [isMobile, setIsMobile] = useState(false);
-        const navigate = useNavigate();
+      const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+      };
 
-        const toggleSidebar = () => {
-          setIsSidebarOpen(!isSidebarOpen);
+      const handleFichajesClick = () => {
+        navigate('/timesheets');
+      };
+
+      const handleDashboardClick = () => {
+        navigate('/');
+      };
+
+      useEffect(() => {
+        const handleResize = () => {
+          setIsSidebarOpen(window.innerWidth >= 1200);
+          setIsMobile(window.innerWidth < 800);
         };
 
-        const handleFichajesClick = () => {
-          navigate('/timesheets');
-        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
 
-        useEffect(() => {
-          const handleResize = () => {
-            setIsSidebarOpen(window.innerWidth >= 1200);
-            setIsMobile(window.innerWidth < 800);
-          };
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
 
-          handleResize();
-          window.addEventListener('resize', handleResize);
+      const appStyle = {
+        display: 'flex',
+        height: isMobile ? `calc(100vh - 60px)` : 'calc(100vh - 1rem)', // Ajustar altura para sidebar móvil
+        flexDirection: isMobile ? 'column' : 'row',
+        marginTop: isMobile ? '0' : '2.5rem',
+        paddingBottom: isMobile ? '60px' : '0', // Reservar espacio para el sidebar móvil
+      };
 
-          return () => window.removeEventListener('resize', handleResize);
-        }, []);
+      const contentStyle = {
+        flex: 1,
+        paddingBottom: isMobile ? '3.75rem' : '0rem',
+        paddingTop: isMobile ? '2.5rem' : '0rem',
+      };
 
-        const appStyle = {
-          display: 'flex',
-          height: '100vh',
-          flexDirection: isMobile ? 'column' : 'row',
-        };
-
-        const contentStyle = {
-          flex: 1,
-          overflowY: 'auto',
-      
-          marginBottom: isMobile ? '60px' : '0',
-        };
-
-        return (
+      return (
+        <div>
+          <Topbar />
           <div style={appStyle}>
             <div style={{position: 'relative'}}>
-              <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} onFichajesClick={handleFichajesClick} />
+              <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} onFichajesClick={handleFichajesClick} onDashboardClick={handleDashboardClick}/>
             </div>
             <div style={contentStyle}>
               <Routes>
@@ -55,8 +62,8 @@
               </Routes>
             </div>
           </div>
-        );
-      }
+        </div>
+      );
+    }
 
-      export default App;
-
+    export default App;
