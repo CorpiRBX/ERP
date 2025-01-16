@@ -1,148 +1,273 @@
 .form-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
 
-    .form-container {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      width: 50%;
-      max-width: 600px;
-      position: relative;
-      height: auto;
-    }
+.form-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 50%;
+  max-width: 600px;
+  position: relative;
+  height: auto;
+}
 
-    .form-title {
-      text-align: center;
-      margin-top: -0.3rem;
-      margin-bottom: 20px;
-      font-size: 1.2rem;
-    }
+.form-title {
+  text-align: center;
+  margin-top: -0.3rem;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
 
-    .form-box {
-      height: 4rem;
-      border: 2px solid black;
-      border-radius: 0.3125rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      margin-bottom: 0.5rem;
-    }
+.form-box {
+  height: 4rem;
+  border: 2px solid black;
+  border-radius: 0.3125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
 
-    .form-box-text {
-      height: 6rem;
-      border: 2px solid black;
-      border-radius: 0.3125rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      margin-bottom: 0.5rem;
-    }
+.form-box-text {
+  height: 6rem;
+  border: 2px solid black;
+  border-radius: 0.3125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
 
-    .form-label {
-      font-family: DM Sans;
-      font-size: 0.8125rem;
-      font-weight: bold;
-      color: #9e0000;
-      position: relative;
-      display: block;
-      text-align: right;
-      margin-top: 0.5rem;
-    }
+.form-label {
+  font-family: DM Sans;
+  font-size: 0.8125rem;
+  font-weight: bold;
+  color: #9e0000;
+  position: relative;
+  display: block;
+  text-align: right;
+  margin-top: 0.5rem;
+}
 
-    .form-group {
-      margin-bottom: 15px;
-    }
+.form-group {
+  margin-bottom: 15px;
+}
 
-    .form-group-label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 0.9rem;
-      font-weight: bold;
-    }
+.form-group-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
 
-    .form-select {
-      width: 100%;
-      padding: 8px;
-      border: 2px solid black;
-      border-radius: 4px;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-color: white;
-    }
+.form-select {
+  width: 100%;
+  padding: 8px;
+  border: 2px solid black;
+  border-radius: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+}
 
-    .select-container {
-      position: relative;
-    }
+.select-container {
+  position: relative;
+}
 
-    .select-arrow {
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 5px solid #333;
-      pointer-events: none;
-    }
+.select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #333;
+  pointer-events: none;
+}
 
-    .form-textarea {
-      width: 100%;
-      height: 100%;
-      border: none;
-      resize: none;
-      padding: 0;
-      font-family: sans-serif;
-      border-radius: 4px;
-      outline: none;
-    }
+.form-textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+  padding: 0;
+  font-family: sans-serif;
+  border-radius: 4px;
+  outline: none;
+}
 
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
 
-    .form-group input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 
-    .button-group {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
 
-    .button-group button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+.button-group button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-    .button-group button[type="submit"] {
-      background-color: #5cb85c;
-      color: white;
-    }
+.button-group button[type="submit"] {
+  background-color: #5cb85c;
+  color: white;
+}
 
-    .button-group button[type="button"] {
-      background-color: #d9534f;
-      color: white;
-    }
+.button-group button[type="button"] {
+  background-color: #d9534f;
+  color: white;
+}
+
+.date-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.form-date-input {
+  width: 100%;
+  max-width: 7rem;
+  padding: 0.5rem;
+  border: 2px solid black !important;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.9rem;
+ 
+}
+
+.no-calendar::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.date-input-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Ajusta el espacio entre los elementos */
+  width: 100%;
+  
+}
+
+.calendar-button {
+  padding-left: 10px ;
+  padding-bottom: 15px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-button-icon-calendar {
+  width: 2.2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: contain; /* Asegura que la imagen se ajuste sin distorsión */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+.calendar-button:hover {
+  background-color: #def1fa;
+}
+
+.calendar-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 101;
+}
+
+.select-button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.select-button:hover {
+  background-color: #0056b3;
+}
+
+.time-picker-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Espaciado entre las filas */
+}
+
+.time-picker-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem; /* Espaciado entre los inputs */
+}
+
+.time-picker-item {
+  flex: 1;
+}
+
+.input-container {
+  display: flex;
+  height: 2.5rem ;
+  width: 10rem;
+}
+
+input {
+  background-color: #ffffff !important;
+  height: 2.5rem !important;
+  width: 8rem!important;
+  padding: 0 !important;
+  margin-top: 0.1rem !important;
+  margin-bottom: 1rem !important;
+  border: 2px solid black !important;
+  border-radius: 4px;
+  display: flex;
+}
+
+.form-group-label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Si aún hay espacio, intenta eliminar los márgenes de los contenedores del timepicker */
+.MuiMobileTimePicker-root {
+  margin: 0; /* Elimina márgenes de los contenedores del timepicker */
+}
