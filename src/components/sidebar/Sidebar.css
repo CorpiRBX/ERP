@@ -285,3 +285,37 @@
   border-radius: 50%; /* Hace que la imagen sea circular */
   border: 1.5px solid white;
 }
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-up {
+  position: absolute;
+  bottom: 100%; /* Despliega hacia arriba */
+  left: 0;
+  width: 100%;
+  background-color: #060606;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  display: block;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}

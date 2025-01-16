@@ -1,10 +1,39 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Sidebar.css";
 
-const Sidebar = ({ isOpen, toggleSidebar, onFichajesClick, onDashboardClick }) => {
+const Sidebar = ({
+  isOpen,
+  toggleSidebar,
+  onFichajesClick,
+  onDashboardClick,
+}) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isExpanded, setIsExpanded] = useState(false);
   const [transition, setTransition] = useState("width 0.3s ease-in-out");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const popupRef = useRef(null);
+
+  const togglePopup = (event) => {
+    event.stopPropagation(); // Evita que el clic se propague y dispare el cierre
+    setIsPopupOpen(!isPopupOpen);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Verifica si el clic fue fuera del popup y cierra el popup
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setIsPopupOpen(false); // Cierra el popup
+      }
+    };
+
+    // Añadir evento para escuchar clics
+    document.addEventListener("click", handleClickOutside);
+
+    // Limpiar el evento al desmontar el componente
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -70,30 +99,30 @@ const Sidebar = ({ isOpen, toggleSidebar, onFichajesClick, onDashboardClick }) =
               }`}
             >
               <button className="dashboard-button" onClick={onDashboardClick}>
-              <img
-                src="../../../src/assets/icons/IconDashboard.png"
-                className="sidebar-fichajes-icon-dashboard"
-                alt="Image"
-              />
-               <span className="dashboard-text">DASHBOARD</span>
+                <img
+                  src="../../../src/assets/icons/IconDashboard.png"
+                  className="sidebar-fichajes-icon-dashboard"
+                  alt="Image"
+                />
+                <span className="dashboard-text">DASHBOARD</span>
               </button>
 
               <button className="dashboard-button" onClick={onDashboardClick}>
-              <img
-                src="../../../src/assets/icons/IconMAterial.png"
-                className="sidebar-fichajes-icon-dashboard"
-                alt="Image"
-              />
-               <span className="dashboard-text">MATERIAL DE OFICINA</span>
+                <img
+                  src="../../../src/assets/icons/IconMAterial.png"
+                  className="sidebar-fichajes-icon-dashboard"
+                  alt="Image"
+                />
+                <span className="dashboard-text">MATERIAL DE OFICINA</span>
               </button>
 
               <button className="dashboard-button" onClick={onDashboardClick}>
-              <img
-                src="../../../src/assets/icons/IconRopa.png"
-                className="sidebar-fichajes-icon-dashboard"
-                alt="Image"
-              />
-               <span className="dashboard-text">ROPA RBX</span>
+                <img
+                  src="../../../src/assets/icons/IconRopa.png"
+                  className="sidebar-fichajes-icon-dashboard"
+                  alt="Image"
+                />
+                <span className="dashboard-text">ROPA RBX</span>
               </button>
             </div>
           </div>
@@ -114,7 +143,9 @@ const Sidebar = ({ isOpen, toggleSidebar, onFichajesClick, onDashboardClick }) =
       {!isOpen && !isMobile && (
         <>
           <div
-            className={`sidebar-button-compress ${isExpanded ? "expanded" : ""}`}
+            className={`sidebar-button-compress ${
+              isExpanded ? "expanded" : ""
+            }`}
             onClick={handleExpandClick}
           >
             <div>
@@ -129,28 +160,37 @@ const Sidebar = ({ isOpen, toggleSidebar, onFichajesClick, onDashboardClick }) =
                 isExpanded ? "show" : ""
               }`}
             >
-              <button className="dashboard-button-tablet" onClick={onDashboardClick}>
-              <img
-                src="../../../src/assets/icons/IconDashboard.png"
-                className="sidebar-fichajes-icon-dashboard-tablet"
-                alt="Image"
-              />
+              <button
+                className="dashboard-button-tablet"
+                onClick={onDashboardClick}
+              >
+                <img
+                  src="../../../src/assets/icons/IconDashboard.png"
+                  className="sidebar-fichajes-icon-dashboard-tablet"
+                  alt="Image"
+                />
               </button>
 
-              <button className="dashboard-button-tablet" onClick={onDashboardClick}>
-              <img
-                src="../../../src/assets/icons/IconMAterial.png"
-                className="sidebar-fichajes-icon-dashboard-tablet"
-                alt="Image"
-              />
+              <button
+                className="dashboard-button-tablet"
+                onClick={onDashboardClick}
+              >
+                <img
+                  src="../../../src/assets/icons/IconMAterial.png"
+                  className="sidebar-fichajes-icon-dashboard-tablet"
+                  alt="Image"
+                />
               </button>
 
-              <button className="dashboard-button-tablet" onClick={onDashboardClick}>
-              <img
-                src="../../../src/assets/icons/IconRopa.png"
-                className="sidebar-fichajes-icon-dashboard-tablet"
-                alt="Image"
-              />
+              <button
+                className="dashboard-button-tablet"
+                onClick={onDashboardClick}
+              >
+                <img
+                  src="../../../src/assets/icons/IconRopa.png"
+                  className="sidebar-fichajes-icon-dashboard-tablet"
+                  alt="Image"
+                />
               </button>
             </div>
           </div>
@@ -171,19 +211,83 @@ const Sidebar = ({ isOpen, toggleSidebar, onFichajesClick, onDashboardClick }) =
       )}
       {isMobile && (
         <div className="sidebar-mobile-container">
-          <button className="sidebar-mobile-button">
+          {/* Botón para abrir/cerrar el popup */}
+          <button
+            className="sidebar-mobile-button"
+            type="button"
+            onClick={togglePopup}
+          >
             <img
               src="../../../src/assets/images/User.jpg"
               className="sidebar-fichajes-user-image-mobile-compress"
-              alt="Image"
+              alt="User"
             />
           </button>
+
+          {/* Popup flotante */}
+          {isPopupOpen && (
+            <ul
+              className="dropdown-menu"
+              ref={popupRef}
+              style={{
+                position: "fixed", // Flotante fuera del contenedor
+                bottom: "4.2rem", // Ajusta según la posición deseada
+                left: "7.1rem", // Centrado horizontalmente
+                transform: "translateX(-50%)", // Ajusta el centrado
+                zIndex: 1050, // Encima de otros elementos
+                backgroundColor: "#222222", // Fondo blanco
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Sombra
+                borderRadius: "8px",
+                padding: "10px",
+                width: "200px", // Ajusta el ancho del popup
+              }}
+            >
+              <li>
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={(e) => {
+                    onDashboardClick(e);
+                    setIsPopupOpen(false); // Cierra el popup después de la acción
+                  }}
+                >
+                  DASHBOARD
+                </a>
+              </li>
+              <li>
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={(e) => {
+                    onDashboardClick(e);
+                    setIsPopupOpen(false); // Cierra el popup después de la acción
+                  }}
+                >
+                  MATERIAL DE OFICINA
+                </a>
+              </li>
+              <li>
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={(e) => {
+                    onDashboardClick(e);
+                    setIsPopupOpen(false); // Cierra el popup después de la acción
+                  }}
+                >
+                  ROPA RBX
+                </a>
+              </li>
+            </ul>
+          )}
+
+          {/* Botón adicional para fichajes */}
           <button className="sidebar-mobile-button" onClick={onFichajesClick}>
             <div>
               <img
                 src="../../../src/assets/icons/IconFichar.png"
                 className="sidebar-fichajes-icon-compress"
-                alt="Image"
+                alt="Fichar"
               />
             </div>
           </button>
