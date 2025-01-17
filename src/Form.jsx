@@ -1,45 +1,30 @@
 import React, { useState } from "react";
 import "./Form.css";
 import { DateRange } from "react-date-range";
+import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { format } from "date-fns";
-import { MobileTimePicker } from "@mui/x-date-pickers";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { IconButton, TextField } from "@mui/material";
-import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Asegúrate de importar el icono de AccessTime
+import "rsuite/dist/rsuite.min.css";
 
-function Form({ onClose }) {
+
+const Form = ({ onClose }) => {
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
       endDate: new Date(),
       key: "selection",
-      endDate: "",
     },
   ]);
 
   const [time1, setTime1] = useState(new Date());
   const [time2, setTime2] = useState(() => {
     const newTime = new Date();
-    newTime.setHours(newTime.getHours() + 9); // Agrega 9 horas a la hora actual
+    newTime.setHours(newTime.getHours() + 9);
     return newTime;
   });
-  const [time3, setTime3] = useState(() => {
-    const newTime = new Date();
-    newTime.setHours(1, 0, 0, 0); // Establece la hora a las 01:00:00
-    return newTime;
-  });
-  const [openPicker1, setOpenPicker1] = useState(false);
-  const [openPicker2, setOpenPicker2] = useState(false);
-  const [openPicker3, setOpenPicker3] = useState(false);
+  const [time3, setTime3] = useState("01:00");
 
-  const handleClickOpen1 = () => setOpenPicker1(true);
-  const handleClickOpen2 = () => setOpenPicker2(true);
-  const handleClickOpen3 = () => setOpenPicker3(true);
-
-  const [showCalendar, setShowCalendar] = useState(false); // Controlar la visibilidad del calendario popup
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const handleDateChange = (item) => {
     setDateRange([item.selection]);
@@ -51,7 +36,19 @@ function Form({ onClose }) {
   };
 
   const toggleCalendar = () => {
-    setShowCalendar(!showCalendar); // Alterna la visibilidad del calendario
+    setShowCalendar(!showCalendar);
+  };
+
+  const handleTime1Change = (value) => {
+    if (value) {
+      setTime1(value);
+    }
+  };
+
+  const handleTime2Change = (value) => {
+    if (value) {
+      setTime2(value);
+    }
   };
 
   return (
@@ -60,7 +57,6 @@ function Form({ onClose }) {
         <form onSubmit={handleSubmit}>
           <h2 className="form-title">FICHAJE</h2>
           <div className="form-box"></div>
-
           {/* OFICINAS */}
           <label className="form-label">OFICINAS</label>
           <div className="form-group">
@@ -77,7 +73,6 @@ function Form({ onClose }) {
               <div className="select-arrow"></div>
             </div>
           </div>
-
           {/* PROYECTO */}
           <div className="form-group">
             <label htmlFor="proyecto" className="form-group-label">
@@ -93,13 +88,11 @@ function Form({ onClose }) {
               <div className="select-arrow"></div>
             </div>
           </div>
-
           {/* OBSERVACIONES */}
           <label className="form-group-label">OBSERVACIONES</label>
           <div className="form-box-text">
             <textarea id="observaciones" className="form-textarea"></textarea>
           </div>
-
           {/* FECHA */}
           <label className="form-group-label">FECHA</label>
           <div className="form-group date-inputs">
@@ -120,8 +113,9 @@ function Form({ onClose }) {
                 className="form-date-input no-calendar"
                 placeholder="dd/mm/yyyy"
                 value={
-                  dateRange[0].endDate === "" ||
-                  dateRange[0].startDate === dateRange[0].endDate
+                  dateRange[0].endDate === null ||
+                  dateRange[0].startDate.getTime() ===
+                    dateRange[0].endDate?.getTime()
                     ? ""
                     : format(dateRange[0].endDate, "dd/MM/yyyy")
                 }
@@ -140,15 +134,7 @@ function Form({ onClose }) {
               </button>
             </div>
             {showCalendar && (
-              <div
-                className="calendar-popup"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <div className="calendar-popup">
                 <DateRange
                   editableDateInputs={true}
                   onChange={handleDateChange}
@@ -167,112 +153,58 @@ function Form({ onClose }) {
           </div>
 
           {/* TIME PICKER */}
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <div className="time-picker-container">
-              <div className="time-picker-row">
-                <div className="time-picker-item">
-                  <label htmlFor="entrada" className="form-group-label">
-                    HORA DE ENTRADA
-                  </label>
-                  <div className="input-container">
-                    <TextField
-                      value={time1.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                      variant="outlined"
-                      fullWidth
-                      inputProps={{ readOnly: true }} // Esto asegura que no se pueda editar el input directamente
-                    />
-                    <IconButton onClick={handleClickOpen1}>
-                      <AccessTimeIcon />
-                    </IconButton>
-                    {openPicker1 && (
-                      <MobileTimePicker
-                        open={openPicker1}
-                        value={time1}
-                        onChange={(newTime) => setTime1(newTime)}
-                        onClose={() => setOpenPicker1(false)}
-                        renderInput={(props) => <input {...props} />}
-                      />
-                    )}
-                  </div>
-                </div>
 
-                <div className="time-picker-item">
-                  <label htmlFor="salida" className="form-group-label">
-                    HORA DE SALIDA
-                  </label>
-                  <div className="input-container">
-                    <TextField
-                      value={time2.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                      variant="outlined"
-                      fullWidth
-                      inputProps={{ readOnly: true }} // También aseguramos que el input no se pueda editar
-                    />
-                    <IconButton onClick={handleClickOpen2}>
-                      <AccessTimeIcon />
-                    </IconButton>
-                    {openPicker2 && (
-                      <MobileTimePicker
-                        open={openPicker2}
-                        value={time2}
-                        onChange={(newTime) => setTime2(newTime)}
-                        onClose={() => setOpenPicker2(false)}
-                        renderInput={(props) => <input {...props} />}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="time-picker-row">
-                <div className="time-picker-item">
-                  <label htmlFor="break" className="form-group-label">
-                    BREAK
-                  </label>
-                  <div className="input-container">
-                    <TextField
-                      value={time3.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                      variant="outlined"
-                      fullWidth
-                      inputProps={{ readOnly: true }} // Lo mismo aquí, el input es solo de lectura
-                    />
-                    <IconButton onClick={handleClickOpen3}>
-                      <AccessTimeIcon />
-                    </IconButton>
-                    {openPicker3 && (
-                      <MobileTimePicker
-                        open={openPicker3}
-                        value={time3}
-                        onChange={(newTime) => setTime3(newTime)}
-                        onClose={() => setOpenPicker3(false)}
-                        renderInput={(props) => <input {...props} />}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
+          <div className="time-picker-row">
+            <div>
+              <label className="form-group-label">HORA DE ENTRADA</label>
+              <input
+                type="time"
+                className="time-input time-12"
+                value={time1.toTimeString().slice(0, 5)}
+                onChange={(e) => {
+                  const [hours, minutes] = e.target.value.split(":");
+                  const updatedTime = new Date(time1);
+                  updatedTime.setHours(Number(hours));
+                  updatedTime.setMinutes(Number(minutes));
+                  setTime1(updatedTime);
+                }}
+              />
             </div>
-          </LocalizationProvider>
-
-          {/* BUTTONS */}
-          <div className="button-group">
-            <button type="submit">Submit</button>
-            <button type="button" onClick={onClose}>
-              Close
-            </button>
+            <div className="time-picker-input">
+              <label className="form-group-label">HORA DE SALIDA</label>
+              <input
+                type="time"
+                className="time-input time-12"
+                value={time2.toTimeString().slice(0, 5)}
+                onChange={(e) => {
+                  const [hours, minutes] = e.target.value.split(":");
+                  const updatedTime = new Date(time2);
+                  updatedTime.setHours(Number(hours));
+                  updatedTime.setMinutes(Number(minutes));
+                  setTime2(updatedTime);
+                }}
+              />
+            </div>
+          </div>
+          <label className="form-group-label">DESCANSO</label>
+          <div>
+            <input
+              type="time"
+              className="time-input time-3"
+              defaultValue="01:00"
+              onChange={(e) => {
+                console.log("Nuevo valor:", e.target.value);
+              }}
+            />
+          </div>
+          <div>
+            <label className="form-group-label">FIRMA</label>
+            
           </div>
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default Form;

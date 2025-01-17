@@ -161,7 +161,6 @@
   border-radius: 4px;
   text-align: center;
   font-size: 0.9rem;
- 
 }
 
 .no-calendar::-webkit-calendar-picker-indicator {
@@ -173,11 +172,10 @@
   align-items: center;
   gap: 0.5rem; /* Ajusta el espacio entre los elementos */
   width: 100%;
-  
 }
 
 .calendar-button {
-  padding-left: 10px ;
+  padding-left: 10px;
   padding-bottom: 15px;
   background-color: transparent;
   color: white;
@@ -246,20 +244,28 @@
 
 .input-container {
   display: flex;
-  height: 2.5rem ;
+  height: 2.5rem;
   width: 10rem;
+}
+
+.input-container-break {
+  display: flex;
+  height: 2.5rem;
+  width: 7.4rem;
 }
 
 input {
   background-color: #ffffff !important;
   height: 2.5rem !important;
-  width: 8rem!important;
+  width: 7rem !important;
   padding: 0 !important;
   margin-top: 0.1rem !important;
   margin-bottom: 1rem !important;
   border: 2px solid black !important;
   border-radius: 4px;
-  display: flex;
+  text-align: center !important;
+  padding-left: 0 !important;
+  padding-right: -0 !important;
 }
 
 .form-group-label {
@@ -267,7 +273,56 @@ input {
   margin-bottom: 0.5rem;
 }
 
-/* Si aún hay espacio, intenta eliminar los márgenes de los contenedores del timepicker */
-.MuiMobileTimePicker-root {
-  margin: 0; /* Elimina márgenes de los contenedores del timepicker */
+.text-field-noborder .MuiOutlinedInput-root {
+  border: none; /* Elimina los bordes */
+}
+
+.text-field-noborder .MuiOutlinedInput-notchedOutline {
+  border: none; /* Elimina el contorno (outline) */
+}
+
+.time-picker-wrapper {
+  position: relative;
+  z-index: 1; /* Esto asegura que el selector de tiempo se muestre encima del fondo */
+}
+
+.form-container {
+  position: relative;
+  z-index: 0;
+}
+
+.time-picker {
+  display: flex;
+  flex-direction: column;
+}
+
+.time-picker-input{
+  margin-left: -10rem;
+  
+}
+
+.time-picker-row {
+  gap: 0rem;
+  
+  display:flex;
+}
+
+.time-input {
+  text-align: center; /* Centra el contenido dentro del input */
+  padding-left: none; /* Elimina el padding que podría descentrar el texto */
+  margin: 0;
+  
+}
+
+.time-12::-webkit-calendar-picker-indicator {
+  padding-right: 1rem;
+}
+.time-3::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.time-input::-webkit-outer-spin-button,
+.time-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
