@@ -16,10 +16,19 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 50%;
-  max-width: 600px;
   position: relative;
   height: auto;
+  overflow-y: auto;
+  max-height: 90vh; 
+}
+
+.form-container.isMobile {
+  width: 100%;
+}
+
+.form-container.isDesktop {
+  max-width: 600px !important;
+  width: 50% !important;
 }
 
 .form-title {
@@ -30,7 +39,7 @@
 }
 
 .form-box {
-  height: 4rem;
+  height: 5rem;
   border: 2px solid black;
   border-radius: 0.3125rem;
   display: flex;
@@ -38,6 +47,33 @@
   align-items: center;
   padding: 0;
   margin-bottom: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-state-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0.3125rem;
+}
+
+.form-state-img.oficina {
+  object-position: center 0%;
+}
+
+.form-state-img.onsite {
+  object-position: center 2.5rem;
+}
+
+.form-state-img.vacaciones {
+  object-position: center -1rem;
+}
+
+.form-state-img.baja {
+  object-position: center 35%;
 }
 
 .form-box-text {
@@ -55,7 +91,7 @@
   font-family: DM Sans;
   font-size: 0.8125rem;
   font-weight: bold;
-  color: #9e0000;
+  color: #050505;
   position: relative;
   display: block;
   text-align: right;
@@ -67,8 +103,7 @@
 }
 
 .form-group-label {
-  display: block;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
   font-size: 0.9rem;
   font-weight: bold;
 }
@@ -170,19 +205,30 @@
 .date-input-container {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* Ajusta el espacio entre los elementos */
+  gap: 0.5rem;
+  /* Ajusta el espacio entre los elementos */
   width: 100%;
 }
 
 .calendar-button {
-  padding-left: 10px;
-  padding-bottom: 15px;
+  display: flex; /* Activa Flexbox para centrar contenido */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  padding: 0; /* Asegúrate de que no haya padding innecesario */
+  width: 2.5rem; /* Ajusta el tamaño del botón según sea necesario */
+  height: 2.5rem; /* Ajusta el tamaño del botón según sea necesario */
   background-color: transparent;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
+
+
+.form-button-icon {
+  background-color: white; /* Asegura que no haya fondo */
+  display: block; /* Asegura que la imagen no tenga márgenes */
+}
+
 
 .form-button-icon-calendar {
   width: 2.2rem;
@@ -190,10 +236,47 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-size: contain; /* Asegura que la imagen se ajuste sin distorsión */
-  background-position: center; /* Centra la imagen */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  background-size: contain;
+  /* Asegura que la imagen se ajuste sin distorsión */
+  background-position: center;
+  /* Centra la imagen */
+  background-repeat: no-repeat;
+  /* Evita que la imagen se repita */
+  cursor: pointer;
+  /* Cambia el cursor al pasar por encima */
+}
+
+.form-button-reload img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: white; /* Asegura que el fondo del botón sea blanco */
+  border: none; /* Elimina cualquier borde predeterminado */
+  margin-bottom: 10px; /* Elimina el padding extra */
+}
+
+.align-right {
+  display: flex; /* Utiliza flexbox para manejar la alineación */
+  justify-content: flex-end; /* Alinea el contenido (hijos) hacia la derecha */
+  align-items: center; /* Alinea verticalmente al centro */
+  width: 100%; /* Asegura que ocupe todo el espacio disponible */
+  background-color: white;
+}
+
+.form-button-reload {
+  width: 1.5rem;
+  /* Definir el ancho del botón */
+  height: 1.5rem;
+  /* Definir la altura del botón */
+  padding: 0;
+  /* Eliminar el padding para que ocupe todo el espacio */
+  display: flex;
+  /* Usar flexbox para que la imagen ocupe todo el contenedor */
+  justify-content: center;
+  /* Centrar la imagen horizontalmente */
+  align-items: center;
+  /* Centrar la imagen verticalmente */
+  background-color: white;
 }
 
 .calendar-button:hover {
@@ -229,13 +312,15 @@
 .time-picker-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem; /* Espaciado entre las filas */
+  gap: 1rem;
+  /* Espaciado entre las filas */
 }
 
 .time-picker-row {
   display: flex;
   justify-content: space-between;
-  gap: 1rem; /* Espaciado entre los inputs */
+  gap: 1rem;
+  /* Espaciado entre los inputs */
 }
 
 .time-picker-item {
@@ -260,8 +345,8 @@ input {
   width: 7rem !important;
   padding: 0 !important;
   margin-top: 0.1rem !important;
-  margin-bottom: 1rem !important;
-  border: 2px solid black !important;
+  margin-bottom: 1rem ;
+  border: 2px solid black;
   border-radius: 4px;
   text-align: center !important;
   padding-left: 0 !important;
@@ -271,19 +356,25 @@ input {
 .form-group-label {
   font-size: 1rem;
   margin-bottom: 0.5rem;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  overflow: hidden;    /* Recorta el texto si no cabe */
+  text-overflow: ellipsis;
 }
 
 .text-field-noborder .MuiOutlinedInput-root {
-  border: none; /* Elimina los bordes */
+  border: none;
+  /* Elimina los bordes */
 }
 
 .text-field-noborder .MuiOutlinedInput-notchedOutline {
-  border: none; /* Elimina el contorno (outline) */
+  border: none;
+  /* Elimina el contorno (outline) */
 }
 
 .time-picker-wrapper {
   position: relative;
-  z-index: 1; /* Esto asegura que el selector de tiempo se muestre encima del fondo */
+  z-index: 1;
+  /* Esto asegura que el selector de tiempo se muestre encima del fondo */
 }
 
 .form-container {
@@ -296,27 +387,34 @@ input {
   flex-direction: column;
 }
 
-.time-picker-input{
-  margin-left: -10rem;
-  
+.time-picker-input.isMobile {
+  margin-right: 30%;
+}
+
+.time-picker-input.isDesktop {
+  margin-right: 45%;
 }
 
 .time-picker-row {
   gap: 0rem;
-  
-  display:flex;
+
+  display: flex;
 }
 
 .time-input {
-  text-align: center; /* Centra el contenido dentro del input */
-  padding-left: none; /* Elimina el padding que podría descentrar el texto */
+  text-align: center;
+  /* Centra el contenido dentro del input */
+  padding-left: none;
+  /* Elimina el padding que podría descentrar el texto */
   margin: 0;
-  
+
 }
 
 .time-12::-webkit-calendar-picker-indicator {
   padding-right: 1rem;
+  margin-left: -1rem
 }
+
 .time-3::-webkit-calendar-picker-indicator {
   display: none;
 }
@@ -325,4 +423,55 @@ input {
 .time-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.form-draw-box {
+  border: 2px solid black;
+  border-radius: 6px;
+  width: 100%;
+  /* Asegura que el contenedor ocupe todo el ancho */
+  height: 100%;
+  /* Asegura que el contenedor ocupe toda la altura disponible */
+  display: flex;
+  /* Usa flexbox para que el hijo ocupe todo el espacio */
+}
+
+.form-draw-box canvas {
+  width: 100%;
+  /* Asegura que el canvas ocupe todo el ancho */
+  height: 100%;
+  /* Asegura que el canvas ocupe toda la altura */
+}
+
+.form-button-ends {
+  display: flex;
+  justify-content: center; /* Centra los botones en el contenedor */
+  margin-top: 2rem;
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+}
+
+.form-button-ends button {
+  margin: 0 2rem; /* Separa los botones entre sí por 10rem en total (5rem a cada lado) */
+}
+
+.form-button-submit {
+  padding: 10px 15px;
+  width: 7rem;
+  height: 3rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-button-cancel {
+  padding: 10px 15px;
+  width: 7rem;
+  height: 3rem;
+  background-color: #8b8b8b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

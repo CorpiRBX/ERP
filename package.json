@@ -4,7 +4,7 @@
       "version": "0.0.0",
       "type": "module",
       "scripts": {
-            "dev": "vite",
+            "dev": "vite --host",
             "build": "vite build",
             "preview": "vite preview"
       },
@@ -17,9 +17,12 @@
             "@mui/material": "^6.4.0",
             "@mui/x-date-pickers": "^7.23.6",
             "date-fns": "^3.6.0",
+            "font-awesome": "^4.7.0",
             "react": "^18.2.0",
             "react-date-range": "^2.0.1",
             "react-dom": "^18.2.0",
+            "react-icons": "^5.4.0",
+            "react-sketch-canvas": "^6.2.0",
             "rsuite": "^5.76.3"
       },
       "devDependencies": {
