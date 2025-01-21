@@ -214,10 +214,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
           </button>
 
           {isPopupOpen && (
-            <ul className="dropdown-menu" ref={popupRef}>
+            <ul className="dropdown-menu-popup" ref={popupRef}>
               <li>
                 <a
-                  className="dropdown-item"
+                  className="dropdown-item-popup"
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
@@ -230,7 +230,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
               </li>
               <li>
                 <a
-                  className="dropdown-item"
+                  className="dropdown-item-popup"
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
@@ -243,7 +243,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
               </li>
               <li>
                 <a
-                  className="dropdown-item"
+                  className="dropdown-item-popup"
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();

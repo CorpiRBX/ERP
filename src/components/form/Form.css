@@ -39,7 +39,9 @@
   text-align: center;
   margin-top: -0.3rem;
   margin-bottom: 20px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-family: DM Sans;
+  font-weight: bold;
 }
 
 .form-box {
@@ -476,15 +478,17 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid #222222;
 }
 
 .form-button-cancel {
   padding: 10px 15px;
   width: 7rem;
   height: 3rem;
-  background-color: #8b8b8b;
+  background-color: #7c7c7c;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid #222222;
 }

@@ -77,9 +77,9 @@ const App: React.FC = () => {
             />
             <Route
               path="/timesheets"
-              // element={
-              //   <Timesheets toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-              // }
+              element={
+                <Timesheets toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+              }
             />
           </Routes>
         </div>
