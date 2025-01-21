@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import RBXLogo from '../../assets/logos/RBXWhite.jpg';
 import './MainContent.css'; // Importa el archivo CSS
 
-const MainContent = () => {
+// Define la interfaz para las propiedades del componente
+interface MainContentProps {
+  toggleSidebar: () => void;
+  isSidebarOpen: boolean;
+}
+
+const MainContent: React.FC<MainContentProps> = ({ toggleSidebar, isSidebarOpen }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
 
   const handleResize = () => {

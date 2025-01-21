@@ -1,27 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Sidebar.css";
 
-const Sidebar = ({
-  isOpen,
-  toggleSidebar,
-  onFichajesClick,
-  onDashboardClick,
-}) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [transition, setTransition] = useState("width 0.3s ease-in-out");
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const popupRef = useRef(null);
+interface SidebarProps {
+  isOpen: boolean;
+  toggleSidebar: () => void; // Esto estaba faltando en la declaración
+  onFichajesClick: () => void;
+  onDashboardClick: () => void;
+}
 
-  const togglePopup = (event) => {
+
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClick, onDashboardClick }) => {
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [transition, setTransition] = useState<string>("width 0.3s ease-in-out");
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const popupRef = useRef<HTMLUListElement | null>(null);
+
+  const togglePopup = (event: React.MouseEvent) => {
     event.stopPropagation(); // Evita que el clic se propague y dispare el cierre
     setIsPopupOpen(!isPopupOpen);
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       // Verifica si el clic fue fuera del popup y cierra el popup
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
+      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
         setIsPopupOpen(false); // Cierra el popup
       }
     };
@@ -41,6 +44,10 @@ const Sidebar = ({
     };
 
     window.addEventListener("resize", handleResize);
+
+    // Llamada inicial
+    handleResize();
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -54,7 +61,7 @@ const Sidebar = ({
     : isOpen
     ? "250px"
     : "0";
-  const sidebarHeight = isMobile ? "60px" : "100vh";
+  const sidebarHeight = isMobile ? "60px" : "54.8rem";
   const sidebarPosition = isMobile ? "fixed" : "static";
   const flexDirection = isMobile ? "row" : "column";
   const justifyContent = isMobile ? "space-around" : "flex-start";
@@ -94,9 +101,7 @@ const Sidebar = ({
               <p className="sidebar-button-text">Nombre de usuario</p>
             </div>
             <div
-              className={`sidebar-button-expanded-content ${
-                isExpanded ? "show" : ""
-              }`}
+              className={`sidebar-button-expanded-content ${isExpanded ? "show" : ""}`}
             >
               <button className="dashboard-button" onClick={onDashboardClick}>
                 <img
@@ -143,9 +148,7 @@ const Sidebar = ({
       {!isOpen && !isMobile && (
         <>
           <div
-            className={`sidebar-button-compress ${
-              isExpanded ? "expanded" : ""
-            }`}
+            className={`sidebar-button-compress ${isExpanded ? "expanded" : ""}`}
             onClick={handleExpandClick}
           >
             <div>
@@ -156,14 +159,9 @@ const Sidebar = ({
               />
             </div>
             <div
-              className={`sidebar-button-expanded-content ${
-                isExpanded ? "show" : ""
-              }`}
+              className={`sidebar-button-expanded-content ${isExpanded ? "show" : ""}`}
             >
-              <button
-                className="dashboard-button-tablet"
-                onClick={onDashboardClick}
-              >
+              <button className="dashboard-button-tablet" onClick={onDashboardClick}>
                 <img
                   src="../../../src/assets/icons/IconDashboard.png"
                   className="sidebar-fichajes-icon-dashboard-tablet"
@@ -171,10 +169,7 @@ const Sidebar = ({
                 />
               </button>
 
-              <button
-                className="dashboard-button-tablet"
-                onClick={onDashboardClick}
-              >
+              <button className="dashboard-button-tablet" onClick={onDashboardClick}>
                 <img
                   src="../../../src/assets/icons/IconMAterial.png"
                   className="sidebar-fichajes-icon-dashboard-tablet"
@@ -182,10 +177,7 @@ const Sidebar = ({
                 />
               </button>
 
-              <button
-                className="dashboard-button-tablet"
-                onClick={onDashboardClick}
-              >
+              <button className="dashboard-button-tablet" onClick={onDashboardClick}>
                 <img
                   src="../../../src/assets/icons/IconRopa.png"
                   className="sidebar-fichajes-icon-dashboard-tablet"
@@ -195,10 +187,7 @@ const Sidebar = ({
             </div>
           </div>
 
-          <button
-            className="sidebar-fichajes-button-compress"
-            onClick={onFichajesClick}
-          >
+          <button className="sidebar-fichajes-button-compress" onClick={onFichajesClick}>
             <div>
               <img
                 src="../../../src/assets/icons/IconFichar.png"
@@ -209,9 +198,9 @@ const Sidebar = ({
           </button>
         </>
       )}
+
       {isMobile && (
         <div className="sidebar-mobile-container">
-          {/* Botón para abrir/cerrar el popup */}
           <button
             className="sidebar-mobile-button"
             type="button"
@@ -224,31 +213,16 @@ const Sidebar = ({
             />
           </button>
 
-          {/* Popup flotante */}
           {isPopupOpen && (
-            <ul
-              className="dropdown-menu"
-              ref={popupRef}
-              style={{
-                position: "fixed", // Flotante fuera del contenedor
-                bottom: "4.2rem", // Ajusta según la posición deseada
-                left: "7.1rem", // Centrado horizontalmente
-                transform: "translateX(-50%)", // Ajusta el centrado
-                zIndex: 1050, // Encima de otros elementos
-                backgroundColor: "#222222", // Fondo blanco
-                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Sombra
-                borderRadius: "8px",
-                padding: "10px",
-                width: "200px", // Ajusta el ancho del popup
-              }}
-            >
+            <ul className="dropdown-menu" ref={popupRef}>
               <li>
                 <a
                   className="dropdown-item"
                   href="#"
                   onClick={(e) => {
-                    onDashboardClick(e);
-                    setIsPopupOpen(false); // Cierra el popup después de la acción
+                    e.preventDefault();
+                    onDashboardClick();
+                    setIsPopupOpen(false);
                   }}
                 >
                   DASHBOARD
@@ -259,8 +233,9 @@ const Sidebar = ({
                   className="dropdown-item"
                   href="#"
                   onClick={(e) => {
-                    onDashboardClick(e);
-                    setIsPopupOpen(false); // Cierra el popup después de la acción
+                    e.preventDefault();
+                    onDashboardClick();
+                    setIsPopupOpen(false);
                   }}
                 >
                   MATERIAL DE OFICINA
@@ -271,8 +246,9 @@ const Sidebar = ({
                   className="dropdown-item"
                   href="#"
                   onClick={(e) => {
-                    onDashboardClick(e);
-                    setIsPopupOpen(false); // Cierra el popup después de la acción
+                    e.preventDefault();
+                    onDashboardClick();
+                    setIsPopupOpen(false);
                   }}
                 >
                   ROPA RBX
@@ -281,7 +257,6 @@ const Sidebar = ({
             </ul>
           )}
 
-          {/* Botón adicional para fichajes */}
           <button className="sidebar-mobile-button" onClick={onFichajesClick}>
             <div>
               <img
