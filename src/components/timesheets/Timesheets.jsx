@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Timesheets.css";
 import Form from "../form/Form";
+import TimesheetList from "./TimesheetList";
 
 const Timesheets = () => {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [formState, setFormState] = useState(false);
+  const [timesheetHistory, setTimesheetHistory] = useState([]); // Estado para guardar los datos de la lista
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,6 +34,10 @@ const Timesheets = () => {
   const handleCloseForm = () => {
     console.log("Cerrar formulario");
     setShowForm(false);
+  };
+
+  const handleDataUpdate = (data) => {
+    setTimesheetHistory(data); // Actualiza el historial con los datos obtenidos de TimesheetList
   };
 
   return (
@@ -151,39 +157,17 @@ const Timesheets = () => {
           </div>
         </div>
         <div className="timesheets-history-content">
-          <ul>
-            <li>Elemento 1</li>
-            <li>Elemento 2</li>
-            <li>Elemento 3</li>
-            <li>Elemento 4</li>
-            <li>Elemento 5</li>
-            <li>Elemento 6</li>
-            <li>Elemento 7</li>
-            <li>Elemento 8</li>
-            <li>Elemento 9</li>
-            <li>Elemento 10</li>
-            <li>Elemento 11</li>
-            <li>Elemento 12</li>
-            <li>Elemento 13</li>
-            <li>Elemento 14</li>
-            <li>Elemento 15</li>
-            <li>Elemento 16</li>
-            <li>Elemento 17</li>
-            <li>Elemento 18</li>
-            <li>Elemento 19</li>
-            <li>Elemento 20</li>
-            <li>Elemento 21</li>
-            <li>Elemento 22</li>
-            <li>Elemento 23</li>
-            <li>Elemento 24</li>
-            <li>Elemento 25</li>
-            <li>Elemento 26</li>
-            <li>Elemento 27</li>
-            <li>Elemento 28</li>
-            <li>Elemento 29</li>
-            <li>Elemento 30</li>
-          </ul>
-        </div>
+            <TimesheetList onDataUpdate={handleDataUpdate} />
+            <ul>
+              {timesheetHistory.map((item) => (
+                <li key={item.id}>
+                  <span>ID: {item.id}</span> - 
+                  <span>Empleado: {item.employeeId}</span> - 
+                  <span>Fecha: {item.date}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
       </div>
     </div>
   );
