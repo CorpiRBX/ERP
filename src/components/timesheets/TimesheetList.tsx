@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getPagedTimesheets } from "../../services/timesheets/timesheetService";
+import { getEmployeeById } from "../../services/employees/employeeService"; // Importa el servicio de empleados
 import { TimesheetDto } from "../../dtos/TimesheetDto";
 
 interface TimesheetListProps {
-  onDataUpdate: (data: TimesheetDto[]) => void;
+  onDataUpdate: (data: TimesheetDto[], employeeNames: { [key: number]: string }) => void;
 }
 
 const TimesheetList: React.FC<TimesheetListProps> = ({ onDataUpdate }) => {
@@ -15,7 +16,20 @@ const TimesheetList: React.FC<TimesheetListProps> = ({ onDataUpdate }) => {
     setError(null);
     try {
       const response = await getPagedTimesheets({ pageNumber: 1, pageSize: 10 });
-      onDataUpdate(response.data); // Envía los datos al componente padre
+      const timesheets = response.data;
+
+      // Obtener los nombres de los empleados
+      const employeeNames: { [key: number]: string } = {};
+      await Promise.all(
+        timesheets.map(async (timesheet) => {
+          if (!employeeNames[timesheet.employeeId]) {
+            const employeeResponse = await getEmployeeById(timesheet.employeeId);
+            employeeNames[timesheet.employeeId] = employeeResponse.data.name;
+          }
+        })
+      );
+
+      onDataUpdate(timesheets, employeeNames); // Envía los fichajes y los nombres de los empleados
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -23,16 +37,14 @@ const TimesheetList: React.FC<TimesheetListProps> = ({ onDataUpdate }) => {
     }
   };
 
-  // Llamada inicial para cargar los datos al montar el componente
   useEffect(() => {
     fetchTimesheets();
-  }, []); // Se ejecuta una vez al cargar
+  }, []);
 
   return (
     <div>
       {loading && <p>Cargando...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {/* Botón para disparar la carga manual */}
       <button onClick={fetchTimesheets}>Aplicar Filtros</button>
     </div>
   );

@@ -10,6 +10,7 @@ const Timesheets = () => {
   const [showForm, setShowForm] = useState(false);
   const [formState, setFormState] = useState(false);
   const [timesheetHistory, setTimesheetHistory] = useState([]); // Estado para guardar los datos de la lista
+  const [employeeNames, setEmployeeNames] = useState({});
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,8 +37,9 @@ const Timesheets = () => {
     setShowForm(false);
   };
 
-  const handleDataUpdate = (data) => {
-    setTimesheetHistory(data); // Actualiza el historial con los datos obtenidos de TimesheetList
+  const handleDataUpdate = (data, names) => {
+    setTimesheetHistory(data); // Actualiza la lista de fichajes
+    setEmployeeNames(names); // Actualiza los nombres de empleados
   };
 
   return (
@@ -161,8 +163,7 @@ const Timesheets = () => {
             <ul>
               {timesheetHistory.map((item) => (
                 <li key={item.id}>
-                  <span>ID: {item.id}</span> - 
-                  <span>Empleado: {item.employeeId}</span> - 
+                  <span>Empleado: {employeeNames[item.employeeId] || "Cargando..."}</span> - 
                   <span>Fecha: {item.date}</span>
                 </li>
               ))}
