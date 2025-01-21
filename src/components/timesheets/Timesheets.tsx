@@ -12,6 +12,7 @@ const Timesheets: React.FC = () => {
   const [formState, setFormState] = useState<string | boolean>(false);
   const [timesheetHistory, setTimesheetHistory] = useState<TimesheetDto[]>([]); // Estado para guardar los datos de la lista
   const [employeeNames, setEmployeeNames] = useState<{ [key: number]: string }>({}); // Mapeo de nombres de empleados
+  const [fetchTimesheetsFn, setFetchTimesheetsFn] = useState<(() => void) | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,6 +24,12 @@ const Timesheets: React.FC = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+// carga inicial
+  useEffect(() => {
+    if (fetchTimesheetsFn) {
+      fetchTimesheetsFn(); // Cargar fichajes automáticamente al inicio
+    }
+  }, [fetchTimesheetsFn]); 
 
   const handleGoBack = () => {
     navigate("/");
@@ -46,6 +53,12 @@ const Timesheets: React.FC = () => {
     setEmployeeNames(names); // Actualiza los nombres de empleados
   };
 
+  const handleApplyFilters = () => {
+    if (fetchTimesheetsFn) {
+      fetchTimesheetsFn(); // Llama a la función de filtros
+    }
+  };
+  
   return (
     <div className="timesheets-container">
       <div className="timesheets-main-container">
@@ -173,33 +186,42 @@ const Timesheets: React.FC = () => {
                 type="checkbox"
                 className="timesheets-history-filter-checkbox"
               />
+              <button onClick={handleApplyFilters} className="filter-button">
+                Aplicar filtros
+              </button>
             </div>
           </div>
-          <div className="timesheets-history-header-bottom">
-            <span className="timesheets-history-header-bottom-label">Nombre</span>
-            <span className="timesheets-history-header-bottom-label">Entrada</span>
-            <span className="timesheets-history-header-bottom-label">Salida</span>
-            <span className="timesheets-history-header-bottom-label">Break</span>
-            <span className="timesheets-history-header-bottom-label">
-              Proyecto
-            </span>
-            <span className="timesheets-history-header-bottom-label">
-              Departamento
-            </span>
-          </div>
         </div>
+        <TimesheetList
+          onDataUpdate={handleDataUpdate}
+          onFetchTimesheets={(fn) => setFetchTimesheetsFn(() => fn)}
+        />
         <div className="timesheets-history-content">
           <TimesheetList onDataUpdate={handleDataUpdate} />
-          <ul>
-            {timesheetHistory.map((item) => (
-              <li key={item.id}>
-                <span>
-                  Empleado: {employeeNames[item.employeeId] || "Cargando..."}
-                </span>{" "}
-                - <span>Fecha: {item.date}</span>
-              </li>
-            ))}
-          </ul>
+          <table className="timesheets-table">
+            <thead>
+              <tr>
+                <th className="timesheets-history-header-bottom-label">Nombre</th>
+                <th className="timesheets-history-header-bottom-label">Entrada</th>
+                <th className="timesheets-history-header-bottom-label">Salida</th>
+                <th className="timesheets-history-header-bottom-label">Break</th>
+                <th className="timesheets-history-header-bottom-label">Proyecto</th>
+                <th className="timesheets-history-header-bottom-label">Departamento</th>
+              </tr>
+            </thead>
+            <tbody>
+              {timesheetHistory.map((item) => (
+                <tr key={item.id}>
+                  <td>{employeeNames[item.employeeId] || "Cargando..."}</td>
+                  <td>{item.timeIn}</td>
+                  <td>{item.timeOut}</td>
+                  <td>{item.break}</td>
+                  <td>{item.projectId}</td>
+                  <td>{item.departmentsId}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -5,9 +5,10 @@ import { TimesheetDto } from "../../dtos/TimesheetDto";
 
 interface TimesheetListProps {
   onDataUpdate: (data: TimesheetDto[], employeeNames: { [key: number]: string }) => void;
+  onFetchTimesheets?: (fn: () => void) => void; // Nueva prop opcional para exponer la función
 }
 
-const TimesheetList: React.FC<TimesheetListProps> = ({ onDataUpdate }) => {
+const TimesheetList: React.FC<TimesheetListProps> = ({ onDataUpdate, onFetchTimesheets }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,7 +19,6 @@ const TimesheetList: React.FC<TimesheetListProps> = ({ onDataUpdate }) => {
       const response = await getPagedTimesheets({ pageNumber: 1, pageSize: 10 });
       const timesheets = response.data;
 
-      // Obtener los nombres de los empleados
       const employeeNames: { [key: number]: string } = {};
       await Promise.all(
         timesheets.map(async (timesheet) => {
@@ -37,15 +37,19 @@ const TimesheetList: React.FC<TimesheetListProps> = ({ onDataUpdate }) => {
     }
   };
 
+  // Llama a la función para que el padre pueda controlarla
   useEffect(() => {
-    fetchTimesheets();
+    if (onFetchTimesheets) {
+      onFetchTimesheets(() => {
+        fetchTimesheets(); // Exponer solo la referencia de la función
+      });
+    }
   }, []);
 
   return (
     <div>
       {loading && <p>Cargando...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <button onClick={fetchTimesheets}>Aplicar Filtros</button>
     </div>
   );
 };
