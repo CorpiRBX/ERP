@@ -291,7 +291,11 @@ const Form = ({ onClose, state, isMobile }) => {
             >
               Cancelar
             </button>
-            <button type="submit" className="form-button-submit">
+            <button
+              type="submit"
+              className="form-button-submit"
+              onClick={handleSubmit}
+            >
               Enviar
             </button>
           </div>

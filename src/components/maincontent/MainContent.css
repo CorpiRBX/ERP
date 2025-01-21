@@ -1,0 +1,21 @@
+.main-content-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh; /* Ocupa toda la pantalla */
+  }
+  
+  /* Estilo de la imagen */
+  .main-content-logo {
+    max-width: 60%;
+    max-height: 60%;
+    object-fit: contain;
+    transform: translateY(-3rem); /* Desplaza 3rem hacia arriba */
+  }
+  
+  .main-content-logo.mobile {
+    max-width: 100%;
+    max-height: 100%;
+  }

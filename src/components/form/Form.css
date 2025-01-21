@@ -11,6 +11,10 @@
   z-index: 1000;
 }
 
+.isHidden {
+  display: none;
+}
+
 .form-container {
   background-color: white;
   padding: 20px;
