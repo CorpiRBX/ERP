@@ -3,14 +3,15 @@ import { useNavigate } from "react-router-dom";
 import "./Timesheets.css";
 import Form from "../form/Form";
 import TimesheetList from "./TimesheetList";
+import { TimesheetDto } from "../../dtos/TimesheetDto";
 
-const Timesheets = () => {
+const Timesheets: React.FC = () => {
   const navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-  const [formState, setFormState] = useState(false);
-  const [timesheetHistory, setTimesheetHistory] = useState([]); // Estado para guardar los datos de la lista
-  const [employeeNames, setEmployeeNames] = useState({});
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [formState, setFormState] = useState<string | boolean>(false);
+  const [timesheetHistory, setTimesheetHistory] = useState<TimesheetDto[]>([]); // Estado para guardar los datos de la lista
+  const [employeeNames, setEmployeeNames] = useState<{ [key: number]: string }>({}); // Mapeo de nombres de empleados
 
   useEffect(() => {
     const handleResize = () => {
@@ -27,7 +28,7 @@ const Timesheets = () => {
     navigate("/");
   };
 
-  const handleOpenForm = (state) => {
+  const handleOpenForm = (state: string) => {
     setFormState(state); // Establece el estado adecuado cuando se abre el formulario
     setShowForm(true);
   };
@@ -37,7 +38,10 @@ const Timesheets = () => {
     setShowForm(false);
   };
 
-  const handleDataUpdate = (data, names) => {
+  const handleDataUpdate = (
+    data: TimesheetDto[],
+    names: { [key: number]: string }
+  ) => {
     setTimesheetHistory(data); // Actualiza la lista de fichajes
     setEmployeeNames(names); // Actualiza los nombres de empleados
   };
@@ -49,9 +53,18 @@ const Timesheets = () => {
           <h2 className="timesheets-title">FICHAJE</h2>
         </div>
         <div className="timesheets-button-container">
-        <button className="timesheets-button-oficina" onClick={() => handleOpenForm("oficina")}>
-        {showForm && (formState === "oficina") && (<Form onClose={handleCloseForm} state={"oficina"} isMobile={isMobile} />)}
-          <img
+          <button
+            className="timesheets-button-oficina"
+            onClick={() => handleOpenForm("oficina")}
+          >
+            {showForm && formState === "oficina" && (
+              <Form
+                onClose={handleCloseForm}
+                state={"oficina"}
+                isMobile={isMobile}
+              />
+            )}
+            <img
               src="../../../src/assets/images/Oficinas.jpg"
               className="timesheets-button-img"
               alt="Onsite"
@@ -60,8 +73,17 @@ const Timesheets = () => {
           <span className="timesheets-label">OFICINAS</span>
         </div>
         <div className="timesheets-button-container">
-        <button className="timesheets-button-onsite" onClick={() => handleOpenForm("onsite")}>
-            {showForm && formState === "onsite" && (<Form onClose={handleCloseForm} state={"onsite"} isMobile={isMobile} />)}
+          <button
+            className="timesheets-button-onsite"
+            onClick={() => handleOpenForm("onsite")}
+          >
+            {showForm && formState === "onsite" && (
+              <Form
+                onClose={handleCloseForm}
+                state={"onsite"}
+                isMobile={isMobile}
+              />
+            )}
             <img
               src="../../../src/assets/images/OnSite.jpg"
               className="timesheets-button-img-onsite"
@@ -72,26 +94,44 @@ const Timesheets = () => {
         </div>
         <div className="timesheets-button-group">
           <div className="timesheets-button-wrapper">
-          <button className="timesheets-button-vacaciones" onClick={() => handleOpenForm("vacaciones")}>
-          {showForm && formState === "vacaciones" && (<Form onClose={handleCloseForm} state={"vacaciones"} isMobile={isMobile} />)}
+            <button
+              className="timesheets-button-vacaciones"
+              onClick={() => handleOpenForm("vacaciones")}
+            >
+              {showForm && formState === "vacaciones" && (
+                <Form
+                  onClose={handleCloseForm}
+                  state={"vacaciones"}
+                  isMobile={isMobile}
+                />
+              )}
               <img
                 src="../../../src/assets/images/Vacaciones.jpg"
                 className="timesheets-button-img-vacaciones"
-                alt="Onsite">                
-              </img>
+                alt="Onsite"
+              ></img>
             </button>
             <span className="timesheets-label-right">VACACIONES</span>
           </div>
 
           <div className="timesheets-button-wrapper">
-          <button className="timesheets-button-baja" onClick={() => handleOpenForm("baja")}>
-          {showForm && formState === "baja" && (<Form onClose={handleCloseForm} state={"baja"} isMobile={isMobile} />)}
-            <img
-              src="../../../src/assets/images/Baja.jpg"
-              className="timesheets-button-img-baja"
-              alt="Onsite"
-            ></img>
-              </button>
+            <button
+              className="timesheets-button-baja"
+              onClick={() => handleOpenForm("baja")}
+            >
+              {showForm && formState === "baja" && (
+                <Form
+                  onClose={handleCloseForm}
+                  state={"baja"}
+                  isMobile={isMobile}
+                />
+              )}
+              <img
+                src="../../../src/assets/images/Baja.jpg"
+                className="timesheets-button-img-baja"
+                alt="Onsite"
+              ></img>
+            </button>
             <span className="timesheets-label-right">BAJA</span>
           </div>
         </div>
@@ -100,9 +140,7 @@ const Timesheets = () => {
           <label className="timesheets-last-entry-label">ULTIMO FICHAJE</label>
           <label className="timesheets-last-entry-type">OFICINAS</label>
           <div className="timesheets-last-entry-details">
-            <label className="timesheets-last-entry-detail-label">
-              ENTRADA
-            </label>
+            <label className="timesheets-last-entry-detail-label">ENTRADA</label>
             <label className="timesheets-last-entry-detail-label">SALIDA</label>
             <label className="timesheets-last-entry-detail-label">
               PROYECTO
@@ -138,18 +176,10 @@ const Timesheets = () => {
             </div>
           </div>
           <div className="timesheets-history-header-bottom">
-            <span className="timesheets-history-header-bottom-label">
-              Nombre
-            </span>
-            <span className="timesheets-history-header-bottom-label">
-              Entrada
-            </span>
-            <span className="timesheets-history-header-bottom-label">
-              Salida
-            </span>
-            <span className="timesheets-history-header-bottom-label">
-              Break
-            </span>
+            <span className="timesheets-history-header-bottom-label">Nombre</span>
+            <span className="timesheets-history-header-bottom-label">Entrada</span>
+            <span className="timesheets-history-header-bottom-label">Salida</span>
+            <span className="timesheets-history-header-bottom-label">Break</span>
             <span className="timesheets-history-header-bottom-label">
               Proyecto
             </span>
@@ -159,16 +189,18 @@ const Timesheets = () => {
           </div>
         </div>
         <div className="timesheets-history-content">
-            <TimesheetList onDataUpdate={handleDataUpdate} />
-            <ul>
-              {timesheetHistory.map((item) => (
-                <li key={item.id}>
-                  <span>Empleado: {employeeNames[item.employeeId] || "Cargando..."}</span> - 
-                  <span>Fecha: {item.date}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <TimesheetList onDataUpdate={handleDataUpdate} />
+          <ul>
+            {timesheetHistory.map((item) => (
+              <li key={item.id}>
+                <span>
+                  Empleado: {employeeNames[item.employeeId] || "Cargando..."}
+                </span>{" "}
+                - <span>Fecha: {item.date}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
