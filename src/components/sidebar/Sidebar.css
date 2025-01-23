@@ -98,6 +98,10 @@ html, body {
   box-sizing: border-box;
 }
 
+.fichajes-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 .sidebar-fichajes-button button {
   height: 98%;
   width: 100%;
@@ -165,7 +169,7 @@ html, body {
   width: 1.5rem; /* Reduce el tamaño del ícono */
   height: 1.5rem; /* Reduce el tamaño del ícono */
   margin-right: -0.7rem; /* Espacio entre el ícono y el texto */
-  margin-left: 0.5rem; /* Espacio entre el ícono y el texto */
+  margin-left: 0.1rem; /* Espacio entre el ícono y el texto */
 }
 
 .sidebar-fichajes-icon-dashboard-tablet {
@@ -219,7 +223,6 @@ html, body {
 
 .dashboard-button:hover {
   background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
 }
 
 .dashboard-button-tablet {
@@ -248,6 +251,7 @@ html, body {
   align-items: center; /* Centra verticalmente el contenido */
   justify-content: flex-start; /* Alinea todo al principio */
   margin-bottom: 1rem;
+  
 }
 
 .dashboard-button-tablet:hover {
