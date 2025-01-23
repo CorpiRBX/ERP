@@ -195,30 +195,75 @@ const Timesheets: React.FC = () => {
           <div className="timesheets-history-header-top">
             <h2 className="timesheets-history-title">HISTORIAL DE FICHAJES</h2>
             <div className="timesheets-history-filters">
-              <span className="timesheets-history-filter-label">ID Empleado:</span>
-                <input
-                  type="number"
-                  className="timesheets-history-filter-input"
-                  placeholder="Introduce ID"
-                  value={filters.employeeId || ""}
-                  onChange={(e) =>
-                    updateFilter("employeeId", e.target.value ? parseInt(e.target.value) : undefined)
-                  }
-                />
-                
-                <input
-                  type="number"
-                  className="timesheets-history-filter-input"
-                  placeholder="Introduce año"
-                  value={filters.year || ""}
-                  onChange={(e) =>
-                    updateFilter("year", e.target.value ? parseInt(e.target.value) : undefined)
-                  }
-                />
+            <button onClick={() => setFiltersVisible(!filtersVisible)} className="filter-toggle-button">
+  <i className={`bi ${filtersVisible ? "bi-filter-circle-fill" : "bi-filter-circle"}`}></i>
+</button>
 
-                <button onClick={handleApplyFilters} className="filter-button">
+              <div className={`filters-container ${filtersVisible ? "filters-visible" : "filters-hidden"}`}>
+                <div className="filter-row">
+                  <label>Nombre:</label>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Nombre"
+                    onChange={(e) =>
+                      updateFilter("employeeId", e.target.value ? parseInt(e.target.value) : undefined)
+                    }
+                  />
+                </div>
+                <div className="filter-row">
+                  <label>Entrada:</label>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Entrada"
+                    onChange={(e) => updateFilter("timeIn", e.target.value)}
+                  />
+                </div>
+                <div className="filter-row">
+                  <label>Salida:</label>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Salida"
+                    onChange={(e) => updateFilter("timeOut", e.target.value)}
+                  />
+                </div>
+                <div className="filter-row">
+                  <label>Break:</label>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Break"
+                    onChange={(e) => updateFilter("break", e.target.value)}
+                  />
+                </div>
+                <div className="filter-row">
+                  <label>Proyecto:</label>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Proyecto"
+                    onChange={(e) =>
+                      updateFilter("projectId", e.target.value ? parseInt(e.target.value) : undefined)
+                    }
+                  />
+                </div>
+                <div className="filter-row">
+                  <label>Departamento:</label>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Departamento"
+                    onChange={(e) =>
+                      updateFilter("departmentsId", e.target.value ? parseInt(e.target.value) : undefined)
+                    }
+                  />
+                </div>
+                <button onClick={handleApplyFilters} className="apply-filters-button">
                   Aplicar filtros
                 </button>
+              </div>
             </div>
           </div>
         </div>
@@ -233,77 +278,6 @@ const Timesheets: React.FC = () => {
           />
           <table className="timesheets-table">
             <thead>
-              {/* Fila con los botones */}
-              <tr>
-                <th colSpan={6} className="filters-header">
-                  <button onClick={() => setOpenRow(!isOpenRow)} className="filter-toggle-button">
-                    <span className="icon">&#x1F50D;</span> {/* Icono de lupa */}
-                    Filtros
-                  </button>
-                  <button onClick={handleApplyFilters} disabled={!isOpenRow} className="apply-filters-button">
-                      Aplicar filtros
-                    </button>
-                </th>
-              </tr>
-
-              {/* Contenedor de filtros con animación */}
-              <tr className={`filters-row ${isOpenRow ? "open" : "close"}`}>
-                <th>
-                  <input
-                    type="text"
-                    className="filter-input"
-                    placeholder="Filtrar Nombre"
-                    onChange={(e) =>
-                      updateFilter("employeeId", e.target.value ? parseInt(e.target.value) : undefined)
-                    }
-                  />
-                </th>
-                <th>
-                  <input
-                    type="text"
-                    className="filter-input"
-                    placeholder="Filtrar Entrada"
-                    onChange={(e) => updateFilter("timeIn", e.target.value)}
-                  />
-                </th>
-                <th>
-                  <input
-                    type="text"
-                    className="filter-input"
-                    placeholder="Filtrar Salida"
-                    onChange={(e) => updateFilter("timeOut", e.target.value)}
-                  />
-                </th>
-                <th>
-                  <input
-                    type="text"
-                    className="filter-input"
-                    placeholder="Filtrar Break"
-                    onChange={(e) => updateFilter("break", e.target.value)}
-                  />
-                </th>
-                <th>
-                  <input
-                    type="text"
-                    className="filter-input"
-                    placeholder="Filtrar Proyecto"
-                    onChange={(e) =>
-                      updateFilter("projectId", e.target.value ? parseInt(e.target.value) : undefined)
-                    }
-                  />
-                </th>
-                <th>
-                  <input
-                    type="text"
-                    className="filter-input"
-                    placeholder="Filtrar Departamento"
-                    onChange={(e) =>
-                      updateFilter("departmentsId", e.target.value ? parseInt(e.target.value) : undefined)
-                    }
-                  />
-                </th>
-              </tr>
-              {/* Fila de nombres de columnas */}
               <tr>
                 <th className="timesheets-history-header-bottom-label">Nombre</th>
                 <th className="timesheets-history-header-bottom-label">Entrada</th>

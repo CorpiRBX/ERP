@@ -270,10 +270,9 @@
 
     .timesheets-history-header-top {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.625rem;
-      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
     }
 
     .timesheets-history-title {
@@ -284,10 +283,7 @@
     }
 
     .timesheets-history-filters {
-      display: flex;
-      align-items: center;
-      position: relative;
-      top: 0.625rem;
+      width: 100%;
     }
 
     .timesheets-history-filter-label {
@@ -410,3 +406,73 @@
     .open {
       max-height: 100px;
     }
+
+    .filters-container {
+      display: flex;
+      /* flex-direction: column; */
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .filters-visible {
+      height: auto;
+    }
+    
+    .filters-hidden {
+      max-height: 0;
+    }
+    
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .filter-input {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+    .filter-toggle-button {
+      padding: 8px 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .apply-filters-button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+
+    .filter-toggle-button {
+      padding: 8px;
+      background-color: transparent; /* Sin fondo */
+      border: none;
+      cursor: pointer;
+      font-size: 24px; /* Ajusta el tamaño del ícono */
+      color: #a0a0a0; /* Azul predeterminado */
+      transition: transform 0.3s ease; /* Animación suave */
+    }
+    
+    .filter-toggle-button:hover {
+      color: #525252; /* Azul más oscuro al pasar el mouse */
+    }
+    
