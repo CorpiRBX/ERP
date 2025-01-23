@@ -63,7 +63,7 @@ const Home: React.FC = () => {
         <div style={contentStyle}>
           <Routes>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="timesheets" element={<Timesheets toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />} />
+          <Route path="timesheets" element={<Timesheets />} />
           </Routes>
         </div>
       </div>

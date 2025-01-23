@@ -6,16 +6,29 @@ import Timesheets from './components/timesheets/Timesheets';
 import Topbar from './components/topbar/Topbar';
 import LoginForm from './components/login/LoginForm';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
-import { AuthProvider } from './context/AuthContext'
-
+import { AuthProvider } from './context/AuthContext';
 
 const App: React.FC = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/home" replace />} />
-      <Route path="/home/*" element={<Home />} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        {/* Redirige / a /login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
 
+        {/* Ruta para el formulario de inicio de sesión */}
+        <Route path="/login" element={<LoginForm />} />
+
+        {/* Rutas privadas (requieren autenticación) */}
+        <Route
+          path="/home/*"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </AuthProvider>
   );
 };
 

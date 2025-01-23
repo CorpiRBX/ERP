@@ -5,12 +5,9 @@ import Form from "../form/Form";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal } from 'react-bootstrap';
 
-interface TimesheetsProps {
-  toggleSidebar: () => void;
-  isSidebarOpen: boolean;
-}
 
-const Timesheets: React.FC<TimesheetsProps> = ({ toggleSidebar, isSidebarOpen }) => {
+
+const Timesheets: React.FC = () => {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -137,15 +134,6 @@ const Timesheets: React.FC<TimesheetsProps> = ({ toggleSidebar, isSidebarOpen })
           <div className="timesheets-history-header-top">
             <h2 className="timesheets-history-title">HISTORIAL DE FICHAJES</h2>
             <div className="timesheets-history-filters">
-              {/* <span className="timesheets-history-filter-label">FILTROS</span>
-              <input
-                type="checkbox"
-                className="timesheets-history-filter-checkbox"
-              />
-              <input
-                type="checkbox"
-                className="timesheets-history-filter-checkbox"
-              /> */}
             </div>
           </div>
           <div className="timesheets-history-header-bottom">
