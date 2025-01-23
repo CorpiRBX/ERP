@@ -4,6 +4,7 @@ import "./Timesheets.css";
 import Form from "../form/Form";
 import TimesheetList from "./TimesheetList";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
+import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
 
 const Timesheets: React.FC = () => {
   const navigate = useNavigate();
@@ -12,7 +13,12 @@ const Timesheets: React.FC = () => {
   const [formState, setFormState] = useState<string | boolean>(false);
   const [timesheetHistory, setTimesheetHistory] = useState<TimesheetDto[]>([]); // Estado para guardar los datos de la lista
   const [employeeNames, setEmployeeNames] = useState<{ [key: number]: string }>({}); // Mapeo de nombres de empleados
-  const [fetchTimesheetsFn, setFetchTimesheetsFn] = useState<(() => void) | null>(null);
+  const [filters, setFilters] = useState<GetPagedTimesheetsParams>({
+    pageNumber: 1,
+    pageSize: 10,
+  }); // Estado para manejar los filtros
+  const [fetchTimesheetsFn, setFetchTimesheetsFn] = useState<((filters: GetPagedTimesheetsParams) => void) | null>(null);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -27,9 +33,10 @@ const Timesheets: React.FC = () => {
 // carga inicial
   useEffect(() => {
     if (fetchTimesheetsFn) {
-      fetchTimesheetsFn(); // Cargar fichajes automáticamente al inicio
+      fetchTimesheetsFn(filters); // Cargar fichajes automáticamente al inicio
     }
-  }, [fetchTimesheetsFn]); 
+  // }, [fetchTimesheetsFn, filters]);  // Pasandole filters actualiza con los filtros al escribirlos sin darle al boton de Aplicar filtros
+  }, [fetchTimesheetsFn]);
 
   const handleGoBack = () => {
     navigate("/");
@@ -55,8 +62,15 @@ const Timesheets: React.FC = () => {
 
   const handleApplyFilters = () => {
     if (fetchTimesheetsFn) {
-      fetchTimesheetsFn(); // Llama a la función de filtros
+      fetchTimesheetsFn(filters); // Llama a la función de filtros
     }
+  };
+  
+  const updateFilter = (key: keyof GetPagedTimesheetsParams, value: any) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   };
   
   return (
@@ -177,27 +191,31 @@ const Timesheets: React.FC = () => {
           <div className="timesheets-history-header-top">
             <h2 className="timesheets-history-title">HISTORIAL DE FICHAJES</h2>
             <div className="timesheets-history-filters">
-              <span className="timesheets-history-filter-label">FILTROS</span>
-              <input
-                type="checkbox"
-                className="timesheets-history-filter-checkbox"
-              />
-              <input
-                type="checkbox"
-                className="timesheets-history-filter-checkbox"
-              />
-              <button onClick={handleApplyFilters} className="filter-button">
-                Aplicar filtros
-              </button>
+              <span className="timesheets-history-filter-label">ID Empleado:</span>
+                <input
+                  type="number"
+                  className="timesheets-history-filter-input"
+                  placeholder="Introduce ID"
+                  value={filters.employeeId || ""}
+                  onChange={(e) =>
+                    updateFilter("employeeId", e.target.value ? parseInt(e.target.value) : undefined)
+                  }
+                />
+                <button onClick={handleApplyFilters} className="filter-button">
+                  Aplicar filtros
+                </button>
             </div>
           </div>
         </div>
-        <TimesheetList
-          onDataUpdate={handleDataUpdate}
-          onFetchTimesheets={(fn) => setFetchTimesheetsFn(() => fn)}
-        />
         <div className="timesheets-history-content">
-          <TimesheetList onDataUpdate={handleDataUpdate} />
+          <TimesheetList
+            onDataUpdate={handleDataUpdate}
+            onFetchTimesheets={(fn) => {
+              if (!fetchTimesheetsFn) {
+                setFetchTimesheetsFn(() => fn); // Establece la función solo una vez
+              }
+            }}
+          />
           <table className="timesheets-table">
             <thead>
               <tr>
