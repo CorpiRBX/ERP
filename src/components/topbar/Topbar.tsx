@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import './Topbar.css';
 import logo from '../../assets/logos/RBXTransparente.png';
@@ -11,6 +12,7 @@ const Topbar: React.FC = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 800);
   const [prevScrollPos, setPrevScrollPos] = useState<number>(window.pageYOffset);
   const [visible, setVisible] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   let labelText = '';
 
@@ -45,10 +47,14 @@ const Topbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos, isMobile]);
 
+  const handleHomeClick = () => {
+    navigate('/home');
+  };
+
   // Establecer el texto de la etiqueta según la ruta
-  if (location.pathname === '/') {
+  if (location.pathname === '/home/dashboard') {
     labelText = 'DASHBOARD';
-  } else if (location.pathname === '/timesheets') {
+  } else if (location.pathname === '/home/timesheets') {
     labelText = 'FICHAJES';
   }
 
@@ -64,6 +70,7 @@ const Topbar: React.FC = () => {
         src={logo}
         alt="Logo"
         className="topbar-logo"
+        onClick={handleHomeClick}
       />
       <label className="topbar-label">
         {labelText}
