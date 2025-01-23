@@ -3,38 +3,71 @@ import "./Sidebar.css";
 
 interface SidebarProps {
   isOpen: boolean;
-  toggleSidebar: () => void; // Esto estaba faltando en la declaración
+  userRol: number;
+  toggleSidebar: () => void;
   onFichajesClick: () => void;
   onDashboardClick: () => void;
 }
 
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClick, onDashboardClick }) => {
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [transition, setTransition] = useState<string>("width 0.3s ease-in-out");
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-  const popupRef = useRef<HTMLUListElement | null>(null);
+const Sidebar: React.FC<SidebarProps> = ({
+  isOpen,
+  userRol,
+  toggleSidebar,
+  onFichajesClick,
+  onDashboardClick
+}) => {
 
-  const togglePopup = (event: React.MouseEvent) => {
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [isExpandedUser, setisExpandedUser] = useState<boolean>(false);
+  const [isExpandedFichajes, setisExpandedFichajes] = useState<boolean>(false);
+  const [isUserPopupOpen, setisUserPopupOpen] = useState<boolean>(false);
+  const [isFichajePopupOpen, setisFichajePopupOpen] = useState<boolean>(false);
+  const popupUserRef = useRef<HTMLUListElement | null>(null);
+  const popupFichajeRef = useRef<HTMLUListElement | null>(null);
+  const userRef = useRef<HTMLDivElement | null>(null);
+  const fichajesRef = useRef<HTMLDivElement | null>(null);
+
+  const toggleUserPopup = (event: React.MouseEvent) => {
     event.stopPropagation(); // Evita que el clic se propague y dispare el cierre
-    setIsPopupOpen(!isPopupOpen);
+    setisUserPopupOpen(!isUserPopupOpen);
+  };
+
+  const toggleFichajePopup = (event: React.MouseEvent) => {
+    event.stopPropagation(); // Evita que el clic se propague y dispare el cierre
+    setisFichajePopupOpen(!isFichajePopupOpen);
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // Verifica si el clic fue fuera del popup y cierra el popup
-      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
-        setIsPopupOpen(false); // Cierra el popup
+      const target = event.target as Node;
+
+      // Cierra la expansión de usuario si se hace clic fuera del área correspondiente
+      if (userRef.current && !userRef.current.contains(target)) {
+        setisExpandedUser(false);
+      }
+
+      // Cierra la expansión de fichajes si se hace clic fuera del área correspondiente
+      if (fichajesRef.current && !fichajesRef.current.contains(target)) {
+        setisExpandedFichajes(false);
+      }
+
+      // Cierra el popup si se hace clic fuera de él
+      if (popupUserRef.current && !popupUserRef.current.contains(target)) {
+        setisUserPopupOpen(false);
+      }
+
+      if (popupFichajeRef.current && !popupFichajeRef.current.contains(target)) {
+        setisFichajePopupOpen(false);
       }
     };
 
-    // Añadir evento para escuchar clics
-    document.addEventListener("click", handleClickOutside);
+    // Agrega el listener para manejar clics
+    document.addEventListener("mousedown", handleClickOutside);
 
-    // Limpiar el evento al desmontar el componente
+    // Limpia el listener al desmontar el componente
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -59,8 +92,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
       ? "100%"
       : "6rem"
     : isOpen
-    ? "250px"
-    : "0";
+      ? "250px"
+      : "0";
   const sidebarHeight = isMobile ? "60px" : "54.8rem";
   const sidebarPosition = isMobile ? "fixed" : "static";
   const flexDirection = isMobile ? "row" : "column";
@@ -69,9 +102,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
   const zIndex = isMobile ? 1000 : "auto";
   const bottom = isMobile ? 0 : "auto";
 
-  const handleExpandClick = () => {
-    setIsExpanded(!isExpanded);
+  const handleExpandUserClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setisExpandedUser(!isExpandedUser);
   };
+
+  const handleExpandFichajesClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setisExpandedFichajes(!isExpandedFichajes);
+  };
+
 
   return (
     <div
@@ -89,8 +129,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
       {isOpen && !isMobile && (
         <>
           <div
-            className={`sidebar-button ${isExpanded ? "expanded" : ""}`}
-            onClick={handleExpandClick}
+            ref={userRef}
+            className={`sidebar-button ${isExpandedUser ? "expanded" : ""}`}
+            onClick={handleExpandUserClick}
           >
             <div className="sidebar-button-content">
               <img
@@ -101,7 +142,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
               <p className="sidebar-button-text">Nombre de usuario</p>
             </div>
             <div
-              className={`sidebar-button-expanded-content ${isExpanded ? "show" : ""}`}
+              className="sidebar-button-expanded-content"
             >
               <button className="dashboard-button" onClick={onDashboardClick}>
                 <img
@@ -111,7 +152,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
                 />
                 <span className="dashboard-text">DASHBOARD</span>
               </button>
-
               <button className="dashboard-button" onClick={onDashboardClick}>
                 <img
                   src="../../../src/assets/icons/IconMAterial.png"
@@ -120,7 +160,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
                 />
                 <span className="dashboard-text">MATERIAL DE OFICINA</span>
               </button>
-
               <button className="dashboard-button" onClick={onDashboardClick}>
                 <img
                   src="../../../src/assets/icons/IconRopa.png"
@@ -132,24 +171,60 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
             </div>
           </div>
 
-          <button className="sidebar-fichajes-button" onClick={onFichajesClick}>
-            <div>
-              <img
-                src="../../../src/assets/icons/IconFichar.png"
-                className="sidebar-fichajes-icon"
-                alt="Image"
-              />
+          {userRol < 3 ? (
+            <div
+              ref={fichajesRef}
+              className={`sidebar-fichajes-button ${isExpandedFichajes ? "expanded" : ""}`}
+              onClick={handleExpandFichajesClick}
+            >
+              <div>
+                <img
+                  src="../../../src/assets/icons/IconFichar.png"
+                  className="sidebar-fichajes-icon"
+                  alt="Image"
+                />
+                <label className="sidebar-fichajes-button-text">FICHAJES</label>
+              </div>
+              <div className="sidebar-fichaje-button-expanded-content">
+                <button className="fichajes-button" onClick={onFichajesClick}>
+                  <img
+                    src="../../../src/assets/icons/IconFichar.png"
+                    className="sidebar-fichajes-icon-dashboard"
+                    alt="Icono Fichar"
+                  />
+                  <span className="dashboard-text">FICHAR</span>
+                </button>
+                <button className="fichajes-button" onClick={onFichajesClick}>
+                  <img
+                    src="../../../src/assets/icons/IconRevisarFichaje.png"
+                    className="sidebar-fichajes-icon-dashboard"
+                    alt="Icono Revisar Fichajes"
+                  />
+                  <span className="dashboard-text">REVISAR FICHAJES</span>
+                </button>
+              </div>
             </div>
-            <strong className="sidebar-fichajes-button-text">FICHAJES</strong>
-          </button>
+          ) : (
+            <button className="sidebar-fichajes-button" onClick={onFichajesClick}>
+              <div>
+                <img
+                  src="../../../src/assets/icons/IconFichar.png"
+                  className="sidebar-fichajes-icon"
+                  alt="Image"
+                />
+              </div>
+              <strong className="sidebar-fichajes-button-text">FICHAJES</strong>
+            </button>
+          )}
         </>
       )}
 
       {!isOpen && !isMobile && (
         <>
           <div
-            className={`sidebar-button-compress ${isExpanded ? "expanded" : ""}`}
-            onClick={handleExpandClick}
+            ref={userRef}
+            className={`sidebar-button-compress ${isExpandedUser ? "expanded" : ""}`}
+            onClick={handleExpandUserClick}
           >
             <div>
               <img
@@ -159,7 +234,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
               />
             </div>
             <div
-              className={`sidebar-button-expanded-content ${isExpanded ? "show" : ""}`}
+              className={`sidebar-button-expanded-content ${isExpandedUser ? "show" : ""}`}
             >
               <button className="dashboard-button-tablet" onClick={onDashboardClick}>
                 <img
@@ -171,7 +246,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
 
               <button className="dashboard-button-tablet" onClick={onDashboardClick}>
                 <img
-                  src="../../../src/assets/icons/IconMAterial.png"
+                  src="../../../src/assets/icons/IconMaterial.png"
                   className="sidebar-fichajes-icon-dashboard-tablet"
                   alt="Image"
                 />
@@ -187,15 +262,49 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
             </div>
           </div>
 
-          <button className="sidebar-fichajes-button-compress" onClick={onFichajesClick}>
-            <div>
-              <img
-                src="../../../src/assets/icons/IconFichar.png"
-                className="sidebar-fichajes-icon-compress"
-                alt="Image"
-              />
+          {userRol < 3 ? (
+            <div
+              ref={fichajesRef}
+              className={`sidebar-fichajes-button-compress ${isExpandedFichajes ? "expanded" : ""}`}
+              onClick={handleExpandFichajesClick}
+            >
+              <div>
+                <img
+                  src="../../../src/assets/icons/IconFichar.png"
+                  className="sidebar-fichajes-icon-compress"
+                  alt="Image"
+                />
+              </div>
+
+              <div className={`sidebar-fichaje-button-expanded-content ${isExpandedFichajes ? "expanded" : ""}`}>
+                <button className="fichajes-button-tablet" onClick={onFichajesClick}>
+                  <img
+                    src="../../../src/assets/icons/IconFichar.png"
+                    className="sidebar-fichajes-icon-dashboard-tablet"
+                    alt="Icono Fichar"
+                  />
+                </button>
+                <button className="fichajes-button-tablet" onClick={onFichajesClick}>
+                  <img
+                    src="../../../src/assets/icons/IconRevisarFichaje.png"
+                    className="sidebar-fichajes-icon-dashboard-tablet"
+                    alt="Icono Revisar Fichajes"
+                  />
+                </button>
+              </div>
+
             </div>
-          </button>
+          ) : (
+            <button className="sidebar-fichajes-button-compress" onClick={onFichajesClick}>
+              <div>
+                <img
+                  src="../../../src/assets/icons/IconFichar.png"
+                  className="sidebar-fichajes-icon-compress"
+                  alt="Image"
+                />
+              </div>
+            </button>
+          )}
         </>
       )}
 
@@ -204,7 +313,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
           <button
             className="sidebar-mobile-button"
             type="button"
-            onClick={togglePopup}
+            onClick={toggleUserPopup}
           >
             <img
               src="../../../src/assets/images/User.jpg"
@@ -213,63 +322,105 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onFichajesClic
             />
           </button>
 
-          {isPopupOpen && (
-            <ul className="dropdown-menu-popup" ref={popupRef}>
+          {isUserPopupOpen && (
+            <ul className="dropdown-menu-popup" ref={popupUserRef}>
               <li>
-                <a
+                <button
                   className="dropdown-item-popup"
-                  href="#"
                   onClick={(e) => {
                     e.preventDefault();
                     onDashboardClick();
-                    setIsPopupOpen(false);
+                    setisUserPopupOpen(false);
                   }}
                 >
                   DASHBOARD
-                </a>
+                </button>
               </li>
               <li>
-                <a
+                <button
                   className="dropdown-item-popup"
-                  href="#"
                   onClick={(e) => {
                     e.preventDefault();
                     onDashboardClick();
-                    setIsPopupOpen(false);
+                    setisUserPopupOpen(false);
                   }}
                 >
                   MATERIAL DE OFICINA
-                </a>
+                </button>
               </li>
               <li>
-                <a
+                <button
                   className="dropdown-item-popup"
-                  href="#"
                   onClick={(e) => {
                     e.preventDefault();
                     onDashboardClick();
-                    setIsPopupOpen(false);
+                    setisUserPopupOpen(false);
                   }}
                 >
                   ROPA RBX
-                </a>
+                </button>
               </li>
             </ul>
           )}
 
-          <button className="sidebar-mobile-button" onClick={onFichajesClick}>
-            <div>
-              <img
-                src="../../../src/assets/icons/IconFichar.png"
-                className="sidebar-fichajes-icon-compress"
-                alt="Fichar"
-              />
-            </div>
-          </button>
+          {userRol < 3 ? (
+            <>
+              <button
+                className="sidebar-mobile-button"
+                onClick={toggleFichajePopup}
+              >
+                <div>
+                  <img
+                    src="../../../src/assets/icons/IconFichar.png"
+                    className="sidebar-fichajes-icon-mobile-compress"
+                    alt="Fichar"
+                  />
+                </div>
+              </button>
+
+              {isFichajePopupOpen && (
+                <ul className="dropdown-menu-popup fichaje" ref={popupFichajeRef}>
+                  <li>
+                    <button
+                      className="dropdown-item-popup"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onFichajesClick();
+                        setisFichajePopupOpen(false);
+                      }}
+                    >
+                      FICHAR
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className="dropdown-item-popup"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onFichajesClick();
+                        setisFichajePopupOpen(false);
+                      }}
+                    >
+                      REVISAR FICHAJES
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </>
+          ) : (
+            <button className="sidebar-mobile-button" onClick={onFichajesClick}>
+              <div>
+                <img
+                  src="../../../src/assets/icons/IconFichar.png"
+                  className="sidebar-fichajes-icon-mobile-compress"
+                  alt="Fichar"
+                />
+              </div>
+            </button>
+          )}
         </div>
       )}
     </div>
-  );
+  )
 };
-
 export default Sidebar;

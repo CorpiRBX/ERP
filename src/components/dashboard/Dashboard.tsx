@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD:src/components/maincontent/MainContent.tsx
 // import RBXLogo from '../../assets/logos/RBXWhite.jpg';
 import RBXLogo from '../../assets/logos/RBXWhite.jpg'
 import './MainContent.css'; // Importa el archivo CSS
 
 
 const MainContent: React.FC = () => {
+=======
+import RBXLogo from '../../assets/logos/RBXWhite.jpg';
+import './Dashboard.css'; // Importa el archivo CSS
+
+const Dashboard: React.FC = () => {
+>>>>>>> formulario:src/components/dashboard/Dashboard.tsx
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
 
   const handleResize = () => {
@@ -32,4 +39,4 @@ const MainContent: React.FC = () => {
   );
 };
 
-export default MainContent;
+export default Dashboard;
