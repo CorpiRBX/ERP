@@ -11,8 +11,9 @@ import { LoginResponseDto } from '../../Dtos/LoginResponseDto';
   
       // Retorna el objeto con ambas propiedades
       return {
-        token: response.data.token,
-        employeeId: response.data.employeeId,
+        token: response.data.data.token,
+        employeeId: response.data.data.employeeId,
+        roleId: response.data.data.roleId
       };
     } catch (error) {
       console.error('Error en el login', error);

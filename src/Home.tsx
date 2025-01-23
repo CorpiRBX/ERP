@@ -8,6 +8,8 @@ import Topbar from './components/topbar/Topbar';
 const Home: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [roleId,setRoleId] = useState<number>(3);
+
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
@@ -26,6 +28,10 @@ const Home: React.FC = () => {
     const handleResize = () => {
       setIsSidebarOpen(window.innerWidth >= 1200);
       setIsMobile(window.innerWidth < 800);
+      //convert strings from local storage to number
+      const stringRoleId = localStorage.getItem('roleId');
+      const id = stringRoleId ? parseInt(stringRoleId, 10) : 3;
+      setRoleId(id);
     };
 
     handleResize();
@@ -54,7 +60,7 @@ const Home: React.FC = () => {
       <div style={appStyle}>
         <Sidebar
           isOpen={isSidebarOpen}
-          userRol={2}
+          userRol={roleId}
           toggleSidebar={toggleSidebar}
           onFichajesClick={handleFichajesClick}
           onDashboardClick={handleDashboardClick}

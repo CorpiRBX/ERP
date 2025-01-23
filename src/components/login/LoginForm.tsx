@@ -29,7 +29,7 @@ const LoginForm: React.FC = () => {
     try {
       await login(username,password); // Llamamos al servicio de login      
       // setIsAuthenticated(true);
-      navigate('/dashboard')
+      navigate('/home/dashboard')
     } catch (error) {
       setErrorMessage('Credenciales inválidas o error al iniciar sesión.');
     }

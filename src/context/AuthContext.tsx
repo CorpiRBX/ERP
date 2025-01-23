@@ -6,6 +6,7 @@ interface AuthContextProps {
   token: string | null;
   employeeId: string | null;
   isLoading : boolean | null;
+  roleId : number | null
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -17,11 +18,12 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [employeeId, setEmployeeId] = useState<string | null>(null);
+  const [roleId,setRoleId] = useState<number | null>(null);
   const [isLoading,setIsLoading] = useState<boolean>(true);
-
+  
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
-    // console.log(storedToken);
+
     if (storedToken) {
       setToken(storedToken);
     }
@@ -32,11 +34,15 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
   const login = async (username: string, password: string) => {
     try {
-      const { token, employeeId } = await loginUser(username, password);
+      const { token, employeeId, roleId} = await loginUser(username, password);
+      
       setToken(token);
       setEmployeeId(employeeId);
+      setRoleId(roleId);
+
       localStorage.setItem('authToken', token);
       localStorage.setItem('employeeId', employeeId.toString());
+      localStorage.setItem('roleId',roleId.toString());
     } catch (error) {
       console.error('Error en el login:', error);
       throw error;
@@ -48,10 +54,11 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     setEmployeeId(null);
     localStorage.removeItem('authToken');
     localStorage.removeItem('employeeId');
+    localStorage.removeItem('roleId');
   };
 
   return (
-    <AuthContext.Provider value={{ token, employeeId, isLoading ,login, logout}}>
+    <AuthContext.Provider value={{ token, employeeId, isLoading, roleId,login, logout}}>
       {children}
     </AuthContext.Provider>
   );
