@@ -38,6 +38,21 @@ html, body {
   box-sizing: border-box; /* Asegura que los márgenes se excluyan del cálculo del ancho */
 }
 
+.sidebar-button.expanded {
+  height: 16.5rem; /* Aumentar la altura cuando se expande */
+}
+
+.sidebar-button-expanded-content {
+  display: none; /* Oculto por defecto */
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 2rem;
+}
+
+.sidebar-button.expanded .sidebar-button-expanded-content {
+  display: block; /* Mostrar contenido cuando se expande */
+}
+
 .sidebar-button-content {
   display: flex;
   flex-direction: row;
@@ -46,7 +61,6 @@ html, body {
   gap: 10px;
   position: relative;
 }
-
 
 .sidebar-button-icon {
   width: 4rem;
@@ -64,27 +78,64 @@ html, body {
 }
 
 .sidebar-fichajes-button {
-  background-color: #252323;
-  color: white;
-  padding: 10px 10px;
+  background-color: transparent;
   border: 1.5px solid white;
   border-radius: 15px;
-  cursor: pointer;
+  padding: 10px 10px;
   width: calc(100% - 20px);
   margin: 5px;
-  text-align: center;
-  height: 50px;
+  height: 3.125rem;
   display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Alinea los elementos desde el inicio */
+  align-items: flex-start;
+  justify-content: flex-start;
   position: relative;
+  cursor: pointer;
+  transition: height 0.3s ease;
+  z-index: 1000;
+  text-align: center;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.sidebar-fichajes-user-image {
-  width: 4rem; /* Tamaño de la imagen */
-  height: 4rem; /* Tamaño de la imagen */
-  border-radius: 50%; /* Hace que la imagen sea circular */
-  border: 2px solid white;
+.sidebar-fichajes-button button {
+  height: 98%;
+  width: 100%;
+  border: none;
+  padding: 10px 10px;
+  text-align: center;
+  align-items: center;
+}
+
+.sidebar-fichajes-button.expanded {
+  height: 10rem; /* Aumentar la altura cuando se expande */
+  flex-direction: column;
+} 
+
+.sidebar-fichajes-button.expanded .sidebar-button-expanded-content {
+  display: block;
+} 
+
+.sidebar-fichaje-button-expanded-content {
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+  margin-left: 0.6rem;
+  width: 100%;
+}
+
+.sidebar-fichaje-button-expanded-content.expanded{
+  display: flex;
+  margin-left: 0.3;
+}
+
+.sidebar-fichajes-button.expanded .sidebar-fichaje-button-expanded-content {
+  display: flex; /* Asegura el uso de Flexbox */
+  flex-direction: column; /* Ordena los elementos en columna */
+  align-items: center; /* Alinea los elementos al centro */
+  gap: 10px; /* Espaciado entre botones */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
 }
 
 .sidebar-fichajes-button-icon {
@@ -99,34 +150,61 @@ html, body {
 .sidebar-fichajes-icon {
   height: 1.8rem;
   width: 1.8rem;
-  margin-top: 0.3rem;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
+  margin-right: 2rem !important;
 }
 
-.sidebar-fichajes-button-text {
-  font-weight: bold;
-  text-align: center;
-  flex-grow: 1;  /* Esto hace que el texto ocupe el espacio restante y se centre */
-  margin-left: -1.8rem;
+.sidebar-fichajes-icon-compress {
+  height: 1.8rem;
+  width: 1.8rem;
+  margin-top: 0.6rem;
+  margin-left: 1.3rem !important;
 }
 
-/* PC Expanded configuration */
-
-.sidebar-button.expanded {
-  height: 16.5rem; /* Aumentar la altura cuando se expande */
+.sidebar-fichajes-icon-dashboard {
+  width: 1.5rem; /* Reduce el tamaño del ícono */
+  height: 1.5rem; /* Reduce el tamaño del ícono */
+  margin-right: -0.7rem; /* Espacio entre el ícono y el texto */
+  margin-left: 0.5rem; /* Espacio entre el ícono y el texto */
 }
 
-.sidebar-button-expanded-content {
-  display: none; /* Oculto por defecto */
-  width: 100%;
-  border-radius: 10px;
-  margin-top: 2rem;
+.sidebar-fichajes-icon-dashboard-tablet {
+  width: 1.5rem; /* Reduce el tamaño del ícono */
+  height: 1.5rem; /* Reduce el tamaño del ícono */
+  margin-right: -0.7rem; /* Espacio entre el ícono y el texto */
+  margin-left: 0.5rem; /* Espacio entre el ícono y el texto */
+}
+
+.sidebar-fichajes-user-image {
+  width: 4rem; /* Tamaño de la imagen */
+  height: 4rem; /* Tamaño de la imagen */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  border: 2px solid white;
+}
+
+.sidebar-fichajes-user-image-compress {
+  width: 3.5rem; /* Tamaño de la imagen */
+  height: 3.5rem; /* Tamaño de la imagen */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  border: 2px solid white;
+}
+
+.sidebar-fichajes-user-image-mobile-compress {
+  width: 2.3rem; /* Tamaño de la imagen */
+  height: 2.3rem; /* Tamaño de la imagen */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  border: 1.5px solid white;
+}
+
+.sidebar-fichajes-icon-mobile-compress {
+  width: 2rem; /* Tamaño de la imagen */
+  height: 2rem; /* Tamaño de la imagen */
 }
 
 .dashboard-button {
   background-color: transparent; /* Fondo transparente */
   color: white; /* Color de las letras blanco */
-  padding: 6px;
+  padding: 6px !important;
   border-radius: 10px;
   border: none; /* Sin borde */
   cursor: pointer;
@@ -144,92 +222,21 @@ html, body {
   color: #ffffff;
 }
 
-.sidebar-fichajes-icon-dashboard {
-  width: 1.5rem; /* Reduce el tamaño del ícono */
-  height: 1.5rem; /* Reduce el tamaño del ícono */
-  margin-right: -0.7rem; /* Espacio entre el ícono y el texto */
-  margin-left: 0.5rem; /* Espacio entre el ícono y el texto */
-}
-
-.dashboard-text {
-  flex-grow: 1; /* Hace que el texto ocupe solo el espacio necesario */
-}
-
-.sidebar-button.expanded .sidebar-button-expanded-content {
-  display: block; /* Mostrar contenido cuando se expande */
-}
-
-/* Tablet configuration*/
-
-.sidebar-button-compress {
-  margin: 5px;
-  text-align: center;
-  background-color: transparent;
-  border: 1.5px solid white;
-  border-radius: 15px;
-  padding: 13px 8px;
-  width: calc(100% - 20px);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  cursor: pointer;
-  transition: height 0.3s ease-in-out;
-  overflow: hidden;
-  position: relative;
-  height: 88px;
-  box-sizing: border-box; /* Asegura que los márgenes se excluyan del cálculo del ancho */
-}
-
-.sidebar-button-compress.expanded {
-  height: 16.5rem; /* Aumentar la altura cuando se expande */
-}
-
-.sidebar-button-compress.expanded .sidebar-button-expanded-content {
-  display: block; /* Mostrar contenido cuando se expande */
-}
-
-.sidebar-fichajes-button-compress {
-  background-color: #252323;
-  color: white;
-  padding: 10px 10px;
-  border: 1.5px solid white;
-  border-radius: 15px;
-  cursor: pointer;
-  width: calc(100% - 20px);
-  margin: 5px;
-  text-align: center;
-  height: 50px;
-  display: flex;
-  align-items: center; /* Centra el contenido verticalmente */
-  justify-content: center; /* Centra el contenido horizontalmente */
-  position: relative;
-}
-
-
-.sidebar-fichajes-icon-compress {
-  height: 1.8rem;
-  width: 1.8rem;
-  margin-top: 0.3rem;
-}
-
-.sidebar-button-icon-compress {
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 80%;
-  background-color: white;
-}
-
-.sidebar-fichajes-user-image-compress {
-  width: 3.5rem; /* Tamaño de la imagen */
-  height: 3.5rem; /* Tamaño de la imagen */
-  border-radius: 50%; /* Hace que la imagen sea circular */
-  border: 2px solid white;
-}
-
-/* Tablet Expanded configuration*/
-
 .dashboard-button-tablet {
+  background-color: transparent; /* Fondo transparente */
+  color: white; /* Color de las letras blanco */
+  padding: 6px;
+  border-radius: 10px;
+  border: none; /* Sin borde */
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: flex-start; /* Alinea todo al principio */
+  margin-bottom: 1rem;
+}
+
+.fichajes-button-tablet {
   background-color: transparent; /* Fondo transparente */
   color: white; /* Color de las letras blanco */
   padding: 6px;
@@ -247,19 +254,63 @@ html, body {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.sidebar-fichajes-icon-dashboard-tablet {
-  width: 1.5rem; /* Reduce el tamaño del ícono */
-  height: 1.5rem; /* Reduce el tamaño del ícono */
-  margin-right: -0.7rem; /* Espacio entre el ícono y el texto */
-  margin-left: 0.5rem; /* Espacio entre el ícono y el texto */
+.dashboard-text {
+  flex-grow: 1; /* Hace que el texto ocupe solo el espacio necesario */
 }
 
-/* Mobile configuration*/
-
-.sidebar-mobile-container {
+.fichajes-button {
+  background-color: transparent; /* Fondo transparente */
+  color: white; /* Color de las letras blanco */
+  padding: 6px !important;
+  border-radius: 10px;
+  border: none; /* Sin borde */
+  cursor: pointer;
+  width: 100%;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: flex-start; /* Alinea todo al principio */
+  font-weight: bold; /* Fuente en negrita */
+  font-size: 12px; /* Ajusta el tamaño de fuente */
+  margin-bottom: 0.2rem;
+}
+
+.dropdown-item-popup {
+  text-align: center; /* Centra el texto */
+  padding: 10px; /* Añade espacio interno uniforme */
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #252323; /* Color de fondo */
+  cursor: pointer;
+}
+
+.dropdown-item-popup:hover {
+  background-color: #333333;
+}
+
+.dropdown-menu-popup {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  position: fixed;
+  bottom: 4rem;
+  left: 0.2rem;
+  z-index: 2000;
+  background-color: #222222;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 14rem;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  box-sizing: border-box; /* Asegura que el padding no distorsione el tamaño */
+}
+
+.dropdown-menu-popup.fichaje{
+  width: 12rem;
+}
+
+.dropdown-menu-popup li {
+  margin: 0; /* Elimina cualquier margen adicional predeterminado */
+  padding: 0; /* Asegura que no haya padding por defecto */
 }
 
 .sidebar-mobile-button {
@@ -285,61 +336,69 @@ html, body {
   background-color: white;
 }
 
-.sidebar-fichajes-user-image-mobile-compress {
-  width: 2.rem; /* Tamaño de la imagen */
-  height: 2.3rem; /* Tamaño de la imagen */
-  border-radius: 50%; /* Hace que la imagen sea circular */
+.sidebar-mobile-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* Tablet configuration */
+
+.sidebar-button-compress {
+  margin: px;
+  text-align: center;
+  background-color: transparent;
   border: 1.5px solid white;
-}
-
-.dropdown-up {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  width: 100%;
-  background-color: #060606;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 9999;  /* Valor más alto para asegurarse de que quede sobre otros elementos */
-}
-
-
-.dropdown-up {
-  position: absolute;
-  bottom: 100%; /* Despliega hacia arriba */
-  left: 0;
-  width: 100%;
-  background-color: #060606;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-}
-
-.dropdown-menu-popup {
-  list-style: none;
-  padding: 10px;
-  margin: 0;
-  position: fixed;
-  bottom: 4.2rem;
-  left: 0.2rem;
-  z-index: 2000;
-  background-color: #222222;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 14rem;
+  border-radius: 15px;
+  padding: 13px 9px;
+  width: calc(100% - 20px);
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+  height: 5.25rem;
+  box-sizing: border-box; /* Asegura que los márgenes se excluyan del cálculo del ancho */
 }
 
-.dropdown-item-popup {
-  color: white;
-  text-decoration: none;
-  padding: 8px 12px;
-  display: block;
+.sidebar-fichajes-button-compress {
+  margin: 5px;
+  text-align: center;
+  background-color: transparent;
+  border: 1.5px solid white;
+  border-radius: 15px;
+  width: calc(100% - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+  height: 3.125rem;
+  box-sizing: border-box; /* Asegura que los márgenes se excluyan del cálculo del ancho */
 }
 
-.dropdown-item-popup:hover {
-  background-color: #333333;
+.sidebar-button-compress.expanded {
+  height: 16.5rem; /* Aumentar la altura cuando se expande */
+}
+
+.sidebar-button-compress.expanded .sidebar-button-expanded-content {
+  display: block; /* Mostrar contenido cuando se expande */
+}
+
+.sidebar-fichajes-button-compress.expanded {
+  height: 10rem; /* Aumentar la altura cuando se expande */
+}
+
+.sidebar-fichajes-button-compress.expanded .sidebar-button-expanded-content {
+  display: block; /* Mostrar contenido cuando se expande */
+}
+
+.sidebar-button.expanded .sidebar-fichajes-button-compress {
+  display: block; /* Mostrar contenido cuando se expande */
 }

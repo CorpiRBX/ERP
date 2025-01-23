@@ -62,6 +62,7 @@ const App: React.FC = () => {
       <div style={appStyle}>
         <Sidebar
           isOpen={isSidebarOpen}
+          userRol={3}
           toggleSidebar={toggleSidebar}
           onFichajesClick={handleFichajesClick}
           onDashboardClick={handleDashboardClick}
