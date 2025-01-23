@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import RBXLogo from '../../assets/logos/RBXWhite.jpg';
+// import RBXLogo from '../../assets/logos/RBXWhite.jpg';
+import RBXLogo from '../../assets/logos/RBXWhite.jpg'
 import './MainContent.css'; // Importa el archivo CSS
+
 
 // Define la interfaz para las propiedades del componente
 interface MainContentProps {
@@ -8,7 +10,7 @@ interface MainContentProps {
   isSidebarOpen: boolean;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ toggleSidebar, isSidebarOpen }) => {
+const MainContent: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
 
   const handleResize = () => {
