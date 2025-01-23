@@ -341,3 +341,72 @@
     .timesheets-table th {
       background-color: #f2f2f2;
     }
+
+    .filters-header {
+      text-align: left;
+      padding: 8px;
+    }
+    
+    .filter-toggle-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+    
+    .filter-row.show {
+      height: 50px; /* Altura de la fila */
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    .filter-row.hide {
+      height: 0;
+      visibility: hidden;
+      opacity: 0;
+    }
+    
+    .filter-input {
+      width: 100%;
+      padding: 4px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    
+    .filters-row {
+      overflow: hidden;
+      transition: all 0.5s ease;
+      display: flex;
+    }
+    
+    .filters-visible {
+      opacity: 1;
+      visibility: visible;
+      transition: visibility 0.5s ease, opacity 0.5s ease;
+    }
+    
+    .filters-hidden {
+      opacity: 0;
+      visibility: collapse;
+      transition: visibility 0.5s ease, opacity 0.5s ease;
+    }
+
+    .tableTr {
+      background-color: red;
+      transition: all 0.5s ease;
+      display: flex;
+      overflow: hidden;
+    }
+    
+    .close {
+      max-height: 0;
+    }
+    
+    .open {
+      max-height: 100px;
+    }

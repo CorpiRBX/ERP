@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Timesheets.css";
 import Form from "../form/Form";
 import TimesheetList from "./TimesheetList";
+import GridComponent from "./GridComponent";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
 
@@ -19,6 +20,9 @@ const Timesheets: React.FC = () => {
   }); // Estado para manejar los filtros
   const [fetchTimesheetsFn, setFetchTimesheetsFn] = useState<((filters: GetPagedTimesheetsParams) => void) | null>(null);
 
+  const [filtersVisible, setFiltersVisible] = useState<boolean>(false); // Estado para controlar la visibilidad de la fila de filtros
+
+  const [isOpenRow, setOpenRow] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -201,6 +205,17 @@ const Timesheets: React.FC = () => {
                     updateFilter("employeeId", e.target.value ? parseInt(e.target.value) : undefined)
                   }
                 />
+                
+                <input
+                  type="number"
+                  className="timesheets-history-filter-input"
+                  placeholder="Introduce año"
+                  value={filters.year || ""}
+                  onChange={(e) =>
+                    updateFilter("year", e.target.value ? parseInt(e.target.value) : undefined)
+                  }
+                />
+
                 <button onClick={handleApplyFilters} className="filter-button">
                   Aplicar filtros
                 </button>
@@ -218,6 +233,77 @@ const Timesheets: React.FC = () => {
           />
           <table className="timesheets-table">
             <thead>
+              {/* Fila con los botones */}
+              <tr>
+                <th colSpan={6} className="filters-header">
+                  <button onClick={() => setOpenRow(!isOpenRow)} className="filter-toggle-button">
+                    <span className="icon">&#x1F50D;</span> {/* Icono de lupa */}
+                    Filtros
+                  </button>
+                  <button onClick={handleApplyFilters} disabled={!isOpenRow} className="apply-filters-button">
+                      Aplicar filtros
+                    </button>
+                </th>
+              </tr>
+
+              {/* Contenedor de filtros con animación */}
+              <tr className={`filters-row ${isOpenRow ? "open" : "close"}`}>
+                <th>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Nombre"
+                    onChange={(e) =>
+                      updateFilter("employeeId", e.target.value ? parseInt(e.target.value) : undefined)
+                    }
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Entrada"
+                    onChange={(e) => updateFilter("timeIn", e.target.value)}
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Salida"
+                    onChange={(e) => updateFilter("timeOut", e.target.value)}
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Break"
+                    onChange={(e) => updateFilter("break", e.target.value)}
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Proyecto"
+                    onChange={(e) =>
+                      updateFilter("projectId", e.target.value ? parseInt(e.target.value) : undefined)
+                    }
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Departamento"
+                    onChange={(e) =>
+                      updateFilter("departmentsId", e.target.value ? parseInt(e.target.value) : undefined)
+                    }
+                  />
+                </th>
+              </tr>
+              {/* Fila de nombres de columnas */}
               <tr>
                 <th className="timesheets-history-header-bottom-label">Nombre</th>
                 <th className="timesheets-history-header-bottom-label">Entrada</th>
