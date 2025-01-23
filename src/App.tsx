@@ -4,6 +4,10 @@ import Sidebar from './components/sidebar/Sidebar';
 import MainContent from './components/maincontent/MainContent';
 import Timesheets from './components/timesheets/Timesheets';
 import Topbar from './components/topbar/Topbar';
+import LoginForm from './components/login/LoginForm';
+import PrivateRoute from './components/privateRoute/PrivateRoute';
+import { AuthProvider } from './context/AuthContext'
+
 
 // Tipos para las propiedades del componente Sidebar
 interface SidebarProps {
@@ -12,6 +16,7 @@ interface SidebarProps {
   onFichajesClick: () => void;
   onDashboardClick: () => void;
 }
+
 
 const App: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -32,8 +37,13 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
+      //handle reszing 
       setIsSidebarOpen(window.innerWidth >= 1200);
       setIsMobile(window.innerWidth < 800);
+
+      //handle user token
+      const token = localStorage.getItem('token');
+
     };
 
     handleResize();
@@ -57,7 +67,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
+    <AuthProvider>
       <Topbar />
       <div style={appStyle}>
         <Sidebar
@@ -66,25 +76,32 @@ const App: React.FC = () => {
           onFichajesClick={handleFichajesClick}
           onDashboardClick={handleDashboardClick}
         />
-
         <div style={contentStyle}>
           <Routes>
             <Route
+              path='/login'
+              element={<LoginForm />}
+            />
+            <Route
               path="/"
               element={
-                <MainContent toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                <PrivateRoute>
+                  <MainContent />
+                </PrivateRoute>
               }
             />
             <Route
               path="/timesheets"
               element={
-                <Timesheets toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                <PrivateRoute>
+                  <Timesheets toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                </PrivateRoute>
               }
             />
           </Routes>
         </div>
       </div>
-    </div>
+    </AuthProvider>     
   );
 };
 
