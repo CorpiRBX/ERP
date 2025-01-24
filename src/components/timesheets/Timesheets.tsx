@@ -6,6 +6,7 @@ import TimesheetList from "./TimesheetList";
 import GridComponent from "./GridComponent";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
+import { getEmployeeByName } from "../../services/employees/employeeService";
 
 const Timesheets: React.FC = () => {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ const Timesheets: React.FC = () => {
   const [filtersVisible, setFiltersVisible] = useState<boolean>(false); // Estado para controlar la visibilidad de la fila de filtros
 
   const [isOpenRow, setOpenRow] = useState(false);
+
+  const debounceTimeout = useRef<number  | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -75,6 +78,38 @@ const Timesheets: React.FC = () => {
       ...prev,
       [key]: value,
     }));
+  };
+
+  // const normalizeText = (text: string) =>
+  //   text
+  //     .toLowerCase() // Convierte todo a minúsculas
+  //     .normalize("NFD") // Descompone caracteres acentuados
+  //     .replace(/[\u0300-\u036f]/g, ""); // Elimina las marcas diacríticas (tildes)
+
+  const handleEmployeeNameFilter = (name: string) => {
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current); // Limpia el timeout anterior
+    }
+  
+    debounceTimeout.current = setTimeout(async () => {
+      // const normalizedName = normalizeText(name); // Normaliza el texto ingresado
+      // if (normalizedName.length >= 5) {
+      if (name.length >= 5) {
+        try {
+          const response = await getEmployeeByName(name); // Llama al servicio
+          if (response.success && response.data) {
+            const employeeId = response.data.id; // Extrae el ID del empleado
+            updateFilter("employeeId", employeeId); // Actualiza el filtro con el ID
+          } else {
+            updateFilter("employeeId", undefined); // Limpia el filtro si no hay resultados
+          }
+        } catch (error) {
+          console.error("Error buscando el empleado por nombre:", error);
+        }
+      } else {
+        updateFilter("employeeId", undefined); // Limpia el filtro si no hay suficientes caracteres
+      }
+    }, 1000); // Retraso de 1000 ms
   };
   
   return (
@@ -196,21 +231,47 @@ const Timesheets: React.FC = () => {
             <h2 className="timesheets-history-title">HISTORIAL DE FICHAJES</h2>
             <div className="timesheets-history-filters">
             <button onClick={() => setFiltersVisible(!filtersVisible)} className="filter-toggle-button">
-  <i className={`bi ${filtersVisible ? "bi-filter-circle-fill" : "bi-filter-circle"}`}></i>
-</button>
+              <i className={`bi ${filtersVisible ? "bi-filter-circle-fill" : "bi-filter-circle"}`}></i>
+            </button>
 
               <div className={`filters-container ${filtersVisible ? "filters-visible" : "filters-hidden"}`}>
+                {/* <div className="filter-row">
+                  <label>Nombre:</label>
+                  <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filtrar Nombre"
+                    onChange={async (e) => {
+                      const employeeName = e.target.value;
+                      if (employeeName) {
+                        try {
+                          const response = await getEmployeeByName(employeeName); // Llama al nuevo servicio
+                          if (response.success && response.data) {
+                            const employeeId = response.data.id; // Obtén el ID del empleado
+                            updateFilter("employeeId", employeeId); // Actualiza el filtro con el ID
+                          } else {
+                            updateFilter("employeeId", undefined); // Limpia el filtro si no hay resultados
+                          }
+                        } catch (error) {
+                          console.error("Error buscando el empleado por nombre:", error);
+                        }
+                      } else {
+                        updateFilter("employeeId", undefined); // Limpia el filtro si no hay texto
+                      }
+                    }}
+                  />
+                </div> */}
+
                 <div className="filter-row">
                   <label>Nombre:</label>
                   <input
                     type="text"
                     className="filter-input"
                     placeholder="Filtrar Nombre"
-                    onChange={(e) =>
-                      updateFilter("employeeId", e.target.value ? parseInt(e.target.value) : undefined)
-                    }
+                    onChange={(e) => handleEmployeeNameFilter(e.target.value)}
                   />
                 </div>
+
                 <div className="filter-row">
                   <label>Entrada:</label>
                   <input

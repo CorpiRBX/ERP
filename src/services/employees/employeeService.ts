@@ -15,3 +15,16 @@ export const getEmployeeById = async (id: number): Promise<ApiResponse<EmployeeD
     }
   }
 };
+
+export const getEmployeeByName = async (name: string): Promise<ApiResponse<EmployeeDto>> => {
+  try {
+    const response = await axios.get<ApiResponse<EmployeeDto>>(`${API_BASE_URL}/api/employees/GetByEmployeeName/${name}`);
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data.message || "Error al buscar empleado por nombre.");
+    } else {
+      throw new Error("No se pudo conectar con el servidor.");
+    }
+  }
+};
