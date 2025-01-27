@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ApiResponse } from "../../types/ApiResponse";
 import { EmployeeDto } from "../../dtos/EmployeeDto";
-import { API_BASE_URL } from "../../config/apiConfig";
+import { API_BASE_URL } from "../../config/ApiConfig";
 
 export const getEmployeeById = async (id: number): Promise<ApiResponse<EmployeeDto>> => {
   try {

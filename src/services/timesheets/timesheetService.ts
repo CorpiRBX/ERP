@@ -2,7 +2,7 @@ import axios from "axios";
 import { ApiResponse } from "../../types/ApiResponse";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
-import { API_BASE_URL } from "../../config/apiConfig";
+import { API_BASE_URL } from "../../config/ApiConfig";
 
 // Función para obtener un timesheet por ID
 export const getTimesheetById = async (id: number): Promise<ApiResponse<TimesheetDto>> => {
