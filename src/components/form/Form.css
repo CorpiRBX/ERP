@@ -110,6 +110,7 @@
 .form-group-label {
   font-size: 0.9rem;
   font-weight: bold;
+  color:#050505;
 }
 
 .form-button-filter {
@@ -491,4 +492,32 @@
   border-radius: 5px;
   cursor: pointer;
   border: 1px solid #222222;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Alinea el título y el botón en los extremos */
+  align-items: center; /* Alinea verticalmente los elementos */
+  padding: 10px;
+}
+
+.title {
+  flex: 1; /* Hace que el título ocupe el espacio disponible */
+  text-align: center; /* Centra el texto del título */
+  font-size: 1.3rem;
+  font-family: DM Sans;
+}
+
+.close-btn {
+  background-color: #ff4d4d; /* Color de fondo del botón (rojo, por ejemplo) */
+  color: white; /* Color del texto del botón */
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 15px; /* Aquí redondeamos los bordes */
+
+}
+
+.close-btn:hover {
+  background-color: #cc0000; /* Cambia el color de fondo cuando el ratón pasa por encima */
 }

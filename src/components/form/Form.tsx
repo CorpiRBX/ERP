@@ -1,13 +1,17 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import "./Form.css";
-import { DateRange } from "react-date-range"; // Importamos solo DateRange
+import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "rsuite/dist/rsuite.min.css";
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import { ReactSketchCanvasRef } from "react-sketch-canvas";
+import DepartmentSelect from "./DepartmentSelect";
+import ProjectSelect from "./ProjectsSelect";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface FormProps {
   onClose: () => void;
@@ -88,7 +92,13 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h2 className="form-title">FICHAJE</h2>
+        {/* <h2 className="form-title">FICHAJE</h2> */}
+        <div className="header-container">
+          <h2 className="title">FICHAJE</h2>
+          <button className="close-btn"onClick={onClose}>
+            <FontAwesomeIcon icon= {faTimes}></FontAwesomeIcon>
+          </button>
+        </div>
         <div className="form-box">
           {stateToImageMap[state || ""] ? (
             <div>
@@ -111,14 +121,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                   DEPARTAMENTO
                 </label>
               </div>
-              <div className="select-container">
-                <select id="departamento" className="form-select">
-                  <option value="rrhh">RRHH</option>
-                  <option value="it">IT</option>
-                  <option value="marketing">Marketing</option>
-                  <option value="ventas">Ventas</option>
-                </select>
-              </div>
+              <DepartmentSelect />
             </div>
             <div className="form-group">
               <div className="form-group-label-filter">
@@ -126,14 +129,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                   PROYECTO
                 </label>
               </div>
-              <div className="select-container">
-                <select id="proyecto" className="form-select">
-                  <option value="proyecto1">Proyecto 1</option>
-                  <option value="proyecto2">Proyecto 2</option>
-                  <option value="proyecto3">Proyecto 3</option>
-                  <option value="proyecto4">Proyecto 4</option>
-                </select>
-              </div>
+              <ProjectSelect />
             </div>
             <div className="form-group">
               <label className="form-group-label">OBSERVACIONES</label>
@@ -167,7 +163,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                 placeholder="dd/mm/yyyy"
                 value={
                   dateRange[0].endDate === null ||
-                  dateRange[0].startDate.getTime() ===
+                    dateRange[0].startDate.getTime() ===
                     dateRange[0].endDate?.getTime()
                     ? ""
                     : format(dateRange[0].endDate, "dd/MM/yyyy")
@@ -233,9 +229,8 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                   />
                 </div>
                 <div
-                  className={`time-picker-input ${
-                    isMobile ? "isMobile" : "isDesktop"
-                  }`}
+                  className={`time-picker-input ${isMobile ? "isMobile" : "isDesktop"
+                    }`}
                 >
                   <label className="form-group-label">HORA DE SALIDA</label>
                   <input

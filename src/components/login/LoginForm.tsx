@@ -1,20 +1,15 @@
 import React, { useState, FormEvent } from 'react';
-// import './LoginForm.css';
 import { loginUser } from '../../services/Login/LoginServices';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './LoginForm.css'
-
-interface LoginFormProps {
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const navigate = useNavigate();
-  const {login} = useAuth();
+  const { login } = useAuth();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,42 +22,78 @@ const LoginForm: React.FC = () => {
 
 
     try {
-      await login(username,password); // Llamamos al servicio de login      
+      await login(username, password); // Llamamos al servicio de login      
       // setIsAuthenticated(true);
-      navigate('/home/dashboard')
+      navigate('/home')
     } catch (error) {
       setErrorMessage('Credenciales inválidas o error al iniciar sesión.');
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+    <div className="login-wrapper">
+      
+      <img
+        src="../../../src/assets/logos/LogoRBXRobot.png"
+        className="logo-robot"
+        alt="Robot"
+      />
+      <img
+        src="../../../src/assets/logos/RBXWhite.jpg"
+        className="logo-RBX-White"
+        alt="RBX"
+      />
+      <div
+        className="login-container">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <div className='icon-position'>
+              <img
+                src="../../../src/assets/icons/IconUsuario.png"
+                className="icon-user"
+                alt="User"
+              />
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                placeholder="Username"
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <div className='icon-position'>
+              <img
+                src="../../../src/assets/icons/IconCandado.png"
+                className="icon-user"
+                alt="Password"
+              />
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Password"
+              />
+            </div>
+          </div>
+          <div>
+            <a className="container-password-forgotten" href="/register">Has olvidado tu contraseña?</a>
+          </div>
+          <div className='form-button-container'>
+            <button className='button-form' type="submit">Login</button>
+          </div>
+        </form>
+        <div className="error-message-container">
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button className='button-form' type="submit">Login</button>
-      </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </div>
     </div>
+    
   );
 }
 

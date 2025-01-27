@@ -32,6 +32,9 @@ const Home: React.FC = () => {
       const stringRoleId = localStorage.getItem('roleId');
       const id = stringRoleId ? parseInt(stringRoleId, 10) : 3;
       setRoleId(id);
+
+      
+
     };
 
     handleResize();

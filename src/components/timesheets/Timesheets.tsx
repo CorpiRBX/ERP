@@ -18,6 +18,7 @@ const Timesheets: React.FC = () => {
       setIsMobile(window.innerWidth < 800);
     };
 
+    //
     handleResize();
     window.addEventListener("resize", handleResize);
 
