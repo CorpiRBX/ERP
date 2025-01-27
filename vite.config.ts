@@ -8,7 +8,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': '/src',  // Agregar un alias para facilitar las rutas
+      '@': './src',  // Agregar un alias para facilitar las rutas
     },
   },
 });
