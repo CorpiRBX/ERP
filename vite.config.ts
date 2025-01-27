@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+// @ts-ignore
 import VitePluginHistory from 'vite-plugin-history';
 
 export default defineConfig({
