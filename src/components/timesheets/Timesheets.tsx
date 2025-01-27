@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./Timesheets.css";
 import Form from "../form/Form";
 import { useTimesheets } from "./useTimesheets";
+import Filters from "./Filters";
+import { FilterConfig } from "../../interfaces/FilterConfig";
 
 const Timesheets: React.FC = () => {
   const navigate = useNavigate();
@@ -19,6 +21,16 @@ const Timesheets: React.FC = () => {
     updateFilter,
     handleEmployeeNameFilter,
   } = useTimesheets();
+
+  const filtersConfig: FilterConfig[] = [
+    { key: "employeeId", type: "text", placeholder: "Filtrar por empleado" },
+    { key: "year", type: "number", placeholder: "Año" },
+    { key: "month", type: "number", placeholder: "Mes" },
+    { key: "day", type: "number", placeholder: "Dia" }
+    // { key: "timeOut", type: "date", placeholder: "Fecha de salida" },
+    // { key: "projectId", type: "number", placeholder: "ID del proyecto" },
+    // { key: "departmentsId", type: "number", placeholder: "ID del departamento" },
+  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -163,17 +175,18 @@ const Timesheets: React.FC = () => {
             <button onClick={() => setFiltersVisible(!filtersVisible)} className="filter-toggle-button">
               <i className={`bi ${filtersVisible ? "bi-filter-circle-fill" : "bi-filter-circle"}`}></i>
             </button>
-            <div className={`filters-container ${filtersVisible ? "filters-visible" : "filters-hidden"}`}>
-              <div className="filter-row">
-                <label>Nombre:</label>
-                <input
-                  type="text"
-                  className="filter-input"
-                  placeholder="Filtrar Nombre"
-                  onChange={(e) => handleEmployeeNameFilter(e.target.value)}
-                />
-              </div>
-            </div>
+            {filtersVisible && (
+              <Filters
+                config={filtersConfig}
+                onFilterChange={(key, value) => {
+                  if (key === "employeeId") {
+                    handleEmployeeNameFilter(value);
+                  } else {
+                    updateFilter(key, value);
+                  }
+                }}
+              />
+            )}
           </div>
         </div>
 
