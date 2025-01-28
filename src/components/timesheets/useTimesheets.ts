@@ -3,11 +3,12 @@ import { getPagedTimesheets } from "../../services/timesheets/timesheetService";
 import { getEmployeeById, getEmployeeByName } from "../../services/employees/employeeService";
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
+import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
 
 export const useTimesheets = () => {
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
   const [employeeNames, setEmployeeNames] = useState<{ [key: number]: string }>({});
-  const [filters, setFilters] = useState<GetPagedTimesheetsParams>({ pageNumber: 1, pageSize: 10 });
+  const [filters, setFilters] = useState<TimesheetFilters>({ });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const debounceTimeout = useRef<number | null>(null);
@@ -17,7 +18,12 @@ export const useTimesheets = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await getPagedTimesheets(filters);
+        const filtersForApi: GetPagedTimesheetsParams = {
+            ...filters, // Solo los filtros
+            pageNumber: 1, // Parámetros adicionales
+            pageSize: 10,
+          };
+      const response = await getPagedTimesheets(filtersForApi);
       const data = response.data;
 
       // Obtener nombres de empleados en batch
@@ -41,7 +47,7 @@ export const useTimesheets = () => {
   }, [filters]);
 
   // Función para actualizar filtros
-  const updateFilter = (key: keyof GetPagedTimesheetsParams, value: any) => {
+  const updateFilter = (key: keyof TimesheetFilters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 

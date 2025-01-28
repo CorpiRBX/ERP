@@ -5,6 +5,7 @@ import Form from "../form/Form";
 import { useTimesheets } from "./useTimesheets";
 import Filters from "./Filters";
 import { FilterConfig } from "../../interfaces/FilterConfig";
+import DatePicker from "./DatePicker";
 
 const Timesheets: React.FC = () => {
   const navigate = useNavigate();
@@ -24,9 +25,7 @@ const Timesheets: React.FC = () => {
 
   const filtersConfig: FilterConfig[] = [
     { key: "employeeId", type: "text", placeholder: "Filtrar por empleado" },
-    { key: "year", type: "number", placeholder: "Año" },
-    { key: "month", type: "number", placeholder: "Mes" },
-    { key: "day", type: "number", placeholder: "Dia" }
+    { key: "date", type: "date", placeholder: "Año" }
     // { key: "timeOut", type: "date", placeholder: "Fecha de salida" },
     // { key: "projectId", type: "number", placeholder: "ID del proyecto" },
     // { key: "departmentsId", type: "number", placeholder: "ID del departamento" },
@@ -52,6 +51,10 @@ const Timesheets: React.FC = () => {
 
   const handleCloseForm = () => {
     setShowForm(false);
+  };
+
+  const handleDateChange = (date) => {
+    console.log("Selected Date:", date);
   };
 
   return (
@@ -175,6 +178,10 @@ const Timesheets: React.FC = () => {
             <button onClick={() => setFiltersVisible(!filtersVisible)} className="filter-toggle-button">
               <i className={`bi ${filtersVisible ? "bi-filter-circle-fill" : "bi-filter-circle"}`}></i>
             </button>
+            <div>
+              <h1>Custom Date Picker</h1>
+              <DatePicker onChange={handleDateChange} />
+            </div>
             {filtersVisible && (
               <Filters
                 config={filtersConfig}

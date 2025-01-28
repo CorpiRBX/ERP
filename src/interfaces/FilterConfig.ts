@@ -1,7 +1,7 @@
-import { GetPagedTimesheetsParams } from "../types/GetPagedTimesheetsParams";
+import { TimesheetFilters } from "./TimesheetFilters";
 
 export interface FilterConfig {
-    key: keyof GetPagedTimesheetsParams;
+    key: keyof TimesheetFilters;
     type: "text" | "date" | "number";
     placeholder: string;
   }
