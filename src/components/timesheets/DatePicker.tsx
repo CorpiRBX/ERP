@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import "./DatePicker.css";
 
 const DatePicker = ({ onChange }) => {
   const [date, setDate] = useState("");
@@ -141,7 +142,7 @@ const DatePicker = ({ onChange }) => {
   };
 
   return (
-    <div style={{ position: "relative", maxWidth: "300px", margin: "0 auto" }}>
+    <div className="date-picker">
       <input
         ref={inputRef}
         type="text"
@@ -149,23 +150,23 @@ const DatePicker = ({ onChange }) => {
         onChange={handleInputChange}
         placeholder="yyyy/mm/dd"
         onFocus={toggleCalendar}
-        style={{ width: "100%", padding: "8px", fontSize: "16px" }}
+        className="date-picker-input"
       />
 
       {calendarOpen && (
-        <div ref={calendarRef} style={{ position: "absolute", top: "100%", left: 0, background: "#fff", border: "1px solid #ccc", borderRadius: "5px", boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", zIndex: 10, padding: "10px", width: "100%" }}>
+        <div ref={calendarRef} className="date-picker-calendar">
           {view === "year" && (
             <>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+              <div className="date-picker-nav">
                 <button onClick={() => setCalendarOpen(false)}>⬅ Back</button>
                 <button onClick={setToday}>Today</button>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+              <div className="date-picker-nav">
                 <button onClick={handlePreviousYearPage} disabled={yearPage === 0}>◀ Prev</button>
                 <span>{paginatedYears[paginatedYears.length - 1]} - {paginatedYears[0]}</span>
                 <button onClick={handleNextYearPage} disabled={(yearPage + 1) * 16 >= years.length}>Next ▶</button>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "5px" }}>
+              <div className="date-picker-grid year">
                 {paginatedYears.map((y) => (
                   <button key={y} onClick={() => handleYearClick(y)}>{y}</button>
                 ))}
@@ -174,16 +175,16 @@ const DatePicker = ({ onChange }) => {
           )}
           {view === "month" && (
             <>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+              <div className="date-picker-nav">
                 <button onClick={() => setView("year")}>⬅ Back</button>
                 <button onClick={setToday}>Today</button>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+              <div className="date-picker-nav">
                 <button onClick={() => handleMonthChange(-1)}>◀ Prev</button>
                 <span>{year}</span>
                 <button onClick={() => handleMonthChange(1)}>Next ▶</button>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "5px" }}>
+              <div className="date-picker-grid month">
                 {months.map((m) => (
                   <button key={m.value} onClick={() => handleMonthClick(m.value)}>{m.label}</button>
                 ))}
@@ -192,19 +193,21 @@ const DatePicker = ({ onChange }) => {
           )}
           {view === "day" && (
             <>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+              <div className="date-picker-nav">
                 <button onClick={() => setView("month")}>⬅ Back</button>
                 <button onClick={setToday}>Today</button>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+              <div className="date-picker-nav">
                 <button onClick={() => handleMonthChange(-1)}>◀ Prev</button>
                 <span>{year}/{String(month).padStart(2, "0")}</span>
                 <button onClick={() => handleMonthChange(1)}>Next ▶</button>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "5px" }}>
+              <div className="date-picker-day-names">
                 {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((dayName) => (
-                  <div key={dayName} style={{ textAlign: "center", fontWeight: "bold" }}>{dayName}</div>
+                  <div key={dayName}>{dayName}</div>
                 ))}
+              </div>
+              <div className="date-picker-grid day">
                 {getPaddedDays(year, month).map((day, index) => (
                   <button key={index} onClick={() => day && handleDayClick(day)} disabled={!day}>
                     {day || ""}
