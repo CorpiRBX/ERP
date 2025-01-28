@@ -19,7 +19,10 @@ export const useTimesheets = () => {
     setError(null);
     try {
         const filtersForApi: GetPagedTimesheetsParams = {
-            ...filters, // Solo los filtros
+            year: filters.date ? new Date(filters.date).getFullYear() : undefined,
+            month: filters.date ? new Date(filters.date).getMonth() +1 : undefined,
+            day: filters.date ? new Date(filters.date).getDate() : undefined,
+            employeeId: filters.employeeId,
             pageNumber: 1, // Parámetros adicionales
             pageSize: 10,
           };
@@ -75,6 +78,24 @@ export const useTimesheets = () => {
     }, 1000);
   };
 
+  const handleDateFilter = (date: Date) => {
+    // if (debounceTimeout.current) {
+    //   clearTimeout(debounceTimeout.current);
+    // }
+
+    // debounceTimeout.current = window.setTimeout(async () => {
+      try {
+        if (date != null) {
+          updateFilter("date", date);
+        } else {
+          updateFilter("date", undefined);
+        }
+      } catch {
+        updateFilter("date", undefined);
+      }
+    // }, 1000);
+  };
+
   // Cargar fichajes cuando cambian los filtros
   useEffect(() => {
     fetchTimesheets();
@@ -87,5 +108,6 @@ export const useTimesheets = () => {
     error,
     updateFilter,
     handleEmployeeNameFilter,
+    handleDateFilter
   };
 };

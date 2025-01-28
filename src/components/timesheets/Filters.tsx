@@ -24,7 +24,7 @@ const Filters: React.FC<FiltersProps> = ({ config, onFilterChange }) => {
     //   onFilterChange("month", undefined);
     //   onFilterChange("day", undefined);
     // }
-    onFilterChange("date", date?.getFullYear());
+    onFilterChange("date", date);
   };
 
   return (

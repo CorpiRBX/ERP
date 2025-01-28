@@ -21,6 +21,7 @@ const Timesheets: React.FC = () => {
     error,
     updateFilter,
     handleEmployeeNameFilter,
+    handleDateFilter,
   } = useTimesheets();
 
   const filtersConfig: FilterConfig[] = [
@@ -188,9 +189,13 @@ const Timesheets: React.FC = () => {
                 onFilterChange={(key, value) => {
                   if (key === "employeeId") {
                     handleEmployeeNameFilter(value);
-                  } else {
-                    updateFilter(key, value);
                   }
+                  if (key === "date") {
+                    handleDateFilter(value);
+                  } 
+                  // else {
+                  //   updateFilter(key, value);
+                  // }
                 }}
               />
             )}
