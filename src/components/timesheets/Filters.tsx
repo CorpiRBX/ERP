@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FilterConfig } from "../../interfaces/FilterConfig";
 import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
-import DatePicker from "react-datepicker";
+import DatePicker from "./DatePicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface FiltersProps {
@@ -10,10 +10,11 @@ interface FiltersProps {
 }
 
 const Filters: React.FC<FiltersProps> = ({ config, onFilterChange }) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
+  const handleDateChange = (date: string | null) => {
+    console.log('handleDateChange', date);
+    // setSelectedDate(date);
 
     // if (date) {
     //   onFilterChange("year", date.getFullYear());
@@ -34,15 +35,7 @@ const Filters: React.FC<FiltersProps> = ({ config, onFilterChange }) => {
           // Renderizado único para el filtro "Fecha"
           <div className="filter-row" key={filter.key}>
             <label>{filter.placeholder}:</label>
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              dateFormat="yyyy-MM-dd"
-              placeholderText="Selecciona una fecha"
-              isClearable
-              showMonthYearPicker // Permite seleccionar solo mes y año
-              showYearPicker // Permite seleccionar solo año
-            />
+            <DatePicker onChange={handleDateChange} />
           </div>
         ) : (
           // Renderizado para otros filtros

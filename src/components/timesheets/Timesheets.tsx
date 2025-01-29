@@ -26,7 +26,7 @@ const Timesheets: React.FC = () => {
 
   const filtersConfig: FilterConfig[] = [
     { key: "employeeId", type: "text", placeholder: "Filtrar por empleado" },
-    { key: "date", type: "date", placeholder: "Año" }
+    { key: "date", type: "string", placeholder: "Año" }
     // { key: "timeOut", type: "date", placeholder: "Fecha de salida" },
     // { key: "projectId", type: "number", placeholder: "ID del proyecto" },
     // { key: "departmentsId", type: "number", placeholder: "ID del departamento" },

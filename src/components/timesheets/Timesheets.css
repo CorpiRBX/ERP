@@ -417,7 +417,7 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       margin-bottom: 20px;
-      overflow: hidden;
+      /* overflow: hidden; */
       transition: all 0.3s ease;
     }
     
