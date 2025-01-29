@@ -74,73 +74,41 @@ const DatePicker = ({ onChange }) => {
   };
   
   const handleDateChange = (newYear: number | null, newMonth: number | null, newDay: number | null) => {
-    if (newYear && newMonth && newDay) {
-      const dateObj = new Date(newYear, newMonth - 1, newDay); // Create a valid Date object
-      const dateString = getStringDate(newYear, newMonth, newDay);
-      console.log('getStringDate() anyo, mes y dia', dateString);
-      console.log('dateObj. newYear && newMonth && newDay', dateObj);
-      onChange(dateString);
-    } 
-    else if (newYear && newMonth) {
-      const dateObj = new Date(newYear, newMonth - 1); // Create a valid Date object
-      const dateString = getStringDate(newYear, newMonth, newDay);
-      console.log('dateObjgetMonth. newYear && newMonth', dateObj.getMonth());
-      console.log('getStringDate() anyo y mes', dateString);
-      onChange(dateString);
-    }
-    else if (newYear) {
-      const dateObj = new Date(newYear); // Create a valid Date object
-      const dateString = getStringDate(newYear, newMonth, newDay);
-      console.log('dateObjgetMonth. newYear', dateObj.getMonth());
-      console.log('getStringDate() anyo', dateString);
-      onChange(dateString);
-    } else {
-      onChange(null); // Invalid or partial date
-    }
+    const dateString = getStringDate(newYear, newMonth, newDay);
+    onChange(dateString);
   };
   
   const handleInputChange = (e) => {
-    // console.log('eeeeeeeeeeee', e);
     const value = e.target.value;
-    // console.log('valueeeeeeeeeeeee', value);
     setDate(value);
     const [newYear, newMonth, newDay] = value.split("/").map(Number);
     setYear(newYear || null);
     setMonth(newMonth || null);
     setDay(newDay || null);
-    handleDateChange(newYear || null, newMonth || null, newDay || null); // Pass the parsed values directly
+    handleDateChange(newYear || null, newMonth || null, newDay || null);
   };
   
   const handleYearClick = (selectedYear) => {
     setYear(selectedYear);
     setDate(`${selectedYear}`);
     setView("month");
-    console.log('handleYearClick newYear', selectedYear);
-    handleDateChange(selectedYear, null, null); // Pass the new values directly
+    handleDateChange(selectedYear, null, null);
   };
-  
+
   const handleMonthClick = (selectedMonth) => {
-    const newYear = year;
     setMonth(selectedMonth);
-    setDate(`${newYear}/${String(selectedMonth).padStart(2, "0")}`);
+    setDate(`${year}/${String(selectedMonth).padStart(2, "0")}`);
     setView("day");
-    console.log('handleMonthClick newYear', newYear);
-    console.log('handleMonthClick selectedMonth', selectedMonth);
-    handleDateChange(newYear, selectedMonth, null); // Pass the new values directly
+    handleDateChange(year, selectedMonth, null);
   };
-  
+
   const handleDayClick = (selectedDay) => {
-    const newYear = year;
-    const newMonth = month;
     setDay(selectedDay);
     setCalendarOpen(false);
-    setDate(`${newYear}/${String(newMonth).padStart(2, "0")}/${String(selectedDay).padStart(2, "0")}`);
-    console.log('handleDayClick newYear', newYear);
-    console.log('handleDayClick newMonth', newMonth);
-    console.log('handleDayClick selectedDay', selectedDay);
-    handleDateChange(newYear, newMonth, selectedDay); // Pass the new values directly
+    setDate(`${year}/${String(month).padStart(2, "0")}/${String(selectedDay).padStart(2, "0")}`);
+    handleDateChange(year, month, selectedDay);
   };
-  
+
   const handleMonthChange = (change) => {
     if (!month || !year) return;
     let newMonth = month + change;

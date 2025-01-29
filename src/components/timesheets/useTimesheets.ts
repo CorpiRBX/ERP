@@ -8,96 +8,48 @@ import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
 export const useTimesheets = () => {
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
   const [employeeNames, setEmployeeNames] = useState<{ [key: number]: string }>({});
-  const [filters, setFilters] = useState<TimesheetFilters>({ });
+  const [filters, setFilters] = useState<TimesheetFilters>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const debounceTimeout = useRef<number | null>(null);
 
-  // Función para obtener fichajes
+  const parseDateFilter = (dateString?: string) => {
+    if (!dateString) return {};
+
+    const parts = dateString.split("/");
+    const [year, month, day] = parts.map((part) => parseInt(part, 10));
+
+    return {
+      year: year || undefined,
+      month: month || undefined,
+      day: day || undefined,
+    };
+  };
+
   const fetchTimesheets = useCallback(async () => {
     setLoading(true);
     setError(null);
+
     try {
-      console.log('useTimesheets. filters.date', filters.date);
-      // if(filters.date === '2021/03')
-      // {
-      //   filters.date = filters.date + '/02';
-      //   console.log('useTimesheets. filters.date === 2021/03. filters.date', filters.date);
-      // }
-      // var year = new Date(filters.date!).getFullYear();
-      // var month = new Date(filters.date!).getMonth() +1;
-      // var day = new Date(filters.date!).getDate();
-      let year: number | undefined;
-      let month: number | undefined;
-      let day: number | undefined;
-
-      if (filters.date) {
-        const parts = filters.date.split("/");
-
-        if (filters.date.length === 4) {
-          // Solo año: "2021"
-          year = parseInt(filters.date, 10);
-        } else if (filters.date.length === 7) {
-          // Año y mes: "2021/03"
-          year = parseInt(parts[0], 10);
-          month = parseInt(parts[1], 10);
-        } else if (filters.date.length === 10) {
-          // Año, mes y día: "2021/03/31"
-          year = parseInt(parts[0], 10);
-          month = parseInt(parts[1], 10);
-          day = parseInt(parts[2], 10);
-        }
-      }
-
-      console.log('useTimesheets. year', year);
-      console.log('useTimesheets. month', month);
-      console.log('useTimesheets. day', day);
-        const filtersForApi: GetPagedTimesheetsParams = {
-            // year: filters.date ? new Date(filters.date).getFullYear() : undefined,
-            // month: filters.date ? new Date(filters.date).getMonth() +1 : undefined,
-            // day: filters.date ? new Date(filters.date).getDate() : undefined,
-            employeeId: filters.employeeId,
-            pageNumber: 1, // Parámetros adicionales
-            pageSize: 10,
-          };
-          console.log('useTimesheets2. year', year);
-          console.log('useTimesheets2. month', month);
-          console.log('useTimesheets2. day', day);
-      console.log('useTimesheets. filtersForApi', filtersForApi);
-
-      // Verificar si filters.date tiene un valor válido y descomponerlo en año, mes y día
-      if (filters.date) {
-        const parts = filters.date.split("/");
-
-        if (filters.date.length === 4) {
-          // Solo año: "2021"
-          filtersForApi.year = parseInt(filters.date, 10);
-        } else if (filters.date.length === 7) {
-          // Año y mes: "2021/03"
-          filtersForApi.year = parseInt(parts[0], 10);
-          filtersForApi.month = parseInt(parts[1], 10);
-        } else if (filters.date.length === 10) {
-          // Año, mes y día: "2021/03/31"
-          filtersForApi.year = parseInt(parts[0], 10);
-          filtersForApi.month = parseInt(parts[1], 10);
-          filtersForApi.day = parseInt(parts[2], 10);
-        }
-      }
-      console.log('useTimesheets. filtersForApi2', filtersForApi);
+      const dateFilter = parseDateFilter(filters.date);
+      const filtersForApi: GetPagedTimesheetsParams = {
+        employeeId: filters.employeeId,
+        pageNumber: 1,
+        pageSize: 10,
+        ...dateFilter,
+      };
 
       const response = await getPagedTimesheets(filtersForApi);
-      console.log('useTimesheets. response', response);
       const data = response.data;
-      console.log('useTimesheets. data', data);
 
-      // Obtener nombres de empleados en batch
+      // Fetch employee names in batch
       const names: { [key: number]: string } = {};
+      const uniqueEmployeeIds = new Set(data.map((item) => item.employeeId));
+
       await Promise.all(
-        data.map(async (item) => {
-          if (!names[item.employeeId]) {
-            const employeeResponse = await getEmployeeById(item.employeeId);
-            names[item.employeeId] = employeeResponse.data.name;
-          }
+        Array.from(uniqueEmployeeIds).map(async (id) => {
+          const employeeResponse = await getEmployeeById(id);
+          names[id] = employeeResponse.data.name;
         })
       );
 
@@ -110,26 +62,21 @@ export const useTimesheets = () => {
     }
   }, [filters]);
 
-  // Función para actualizar filtros
   const updateFilter = (key: keyof TimesheetFilters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  // Filtro con debounce
-  const handleEmployeeNameFilter = (name: string) => {
-    if (debounceTimeout.current) {
-      clearTimeout(debounceTimeout.current);
-    }
+  const debounce = (callback: () => void, delay: number) => {
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    debounceTimeout.current = window.setTimeout(callback, delay);
+  };
 
-    debounceTimeout.current = window.setTimeout(async () => {
+  const handleEmployeeNameFilter = (name: string) => {
+    debounce(async () => {
       if (name.length >= 5) {
         try {
           const response = await getEmployeeByName(name);
-          if (response.success && response.data) {
-            updateFilter("employeeId", response.data.id);
-          } else {
-            updateFilter("employeeId", undefined);
-          }
+          updateFilter("employeeId", response.success ? response.data?.id : undefined);
         } catch {
           updateFilter("employeeId", undefined);
         }
@@ -139,26 +86,10 @@ export const useTimesheets = () => {
     }, 1000);
   };
 
-  const handleDateFilter = (date: Date) => {
-    if (debounceTimeout.current) {
-      clearTimeout(debounceTimeout.current);
-    }
-
-    debounceTimeout.current = window.setTimeout(async () => {
-      try {
-        if (date != null) {
-          console.log('date', date);
-          updateFilter("date", date);
-        } else {
-          updateFilter("date", undefined);
-        }
-      } catch {
-        updateFilter("date", undefined);
-      }
-    }, 1000);
+  const handleDateFilter = (date: Date | null) => {
+    debounce(() => updateFilter("date", date ?? undefined), 1000);
   };
 
-  // Cargar fichajes cuando cambian los filtros
   useEffect(() => {
     fetchTimesheets();
   }, [fetchTimesheets]);
@@ -170,6 +101,6 @@ export const useTimesheets = () => {
     error,
     updateFilter,
     handleEmployeeNameFilter,
-    handleDateFilter
+    handleDateFilter,
   };
 };

@@ -208,23 +208,22 @@ const Timesheets: React.FC = () => {
           <table className="timesheets-table">
             <thead>
               <tr>
-                <th className="timesheets-history-header-bottom-label">Nombre</th>
-                <th className="timesheets-history-header-bottom-label">Entrada</th>
-                <th className="timesheets-history-header-bottom-label">Salida</th>
-                <th className="timesheets-history-header-bottom-label">Break</th>
-                <th className="timesheets-history-header-bottom-label">Proyecto</th>
-                <th className="timesheets-history-header-bottom-label">Departamento</th>
+                {["Nombre", "Entrada", "Salida", "Break", "Proyecto", "Departamento"].map((header) => (
+                  <th key={header} className="timesheets-history-header-bottom-label">
+                    {header}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {timesheets.map((item) => (
-                <tr key={item.id}>
-                  <td>{employeeNames[item.employeeId] || "Cargando..."}</td>
-                  <td>{item.timeIn}</td>
-                  <td>{item.timeOut}</td>
-                  <td>{item.break}</td>
-                  <td>{item.projectId}</td>
-                  <td>{item.departmentsId}</td>
+              {timesheets.map(({ id, employeeId, timeIn, timeOut, break: breakTime, projectId, departmentsId }) => (
+                <tr key={id}>
+                  <td>{employeeNames[employeeId] || "Cargando..."}</td>
+                  <td>{timeIn}</td>
+                  <td>{timeOut}</td>
+                  <td>{breakTime}</td>
+                  <td>{projectId}</td>
+                  <td>{departmentsId}</td>
                 </tr>
               ))}
             </tbody>
