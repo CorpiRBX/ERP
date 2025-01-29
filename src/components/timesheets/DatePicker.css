@@ -84,3 +84,11 @@
   border: none;
   cursor: default;
 }
+
+
+.date-picker-icon {
+  /* position: absolute; */
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}

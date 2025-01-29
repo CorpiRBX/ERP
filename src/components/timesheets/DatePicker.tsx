@@ -176,6 +176,7 @@ const DatePicker = ({ onChange }) => {
         onFocus={toggleCalendar}
         className="date-picker-input"
       />
+      <span className="date-picker-icon" onClick={toggleCalendar}>📅</span>
 
       {calendarOpen && (
         <div ref={calendarRef} className="date-picker-calendar">
