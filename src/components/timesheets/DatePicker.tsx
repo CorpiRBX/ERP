@@ -70,7 +70,7 @@ const DatePicker = ({ onChange }) => {
     setDate(`${newYear}/${String(newMonth).padStart(2, "0")}/${String(newDay).padStart(2, "0")}`);
     setView("day");
     setCalendarOpen(false);
-    handleDateChange(newYear, newMonth, newDay); // Pass the new values directly
+    handleDateChange(newYear, newMonth, newDay);
   };
   
   const handleDateChange = (newYear: number | null, newMonth: number | null, newDay: number | null) => {
@@ -146,31 +146,9 @@ const DatePicker = ({ onChange }) => {
     return [...paddedStart, ...daysArray, ...paddedEnd];
   };
 
-  const getStringDate2 = (date) => {
-    var year;
-    var month;
-    var day;
-    if(date)
-    {
-      month = '' + (date.getMonth() + 1);
-      day = '' + date.getDate();
-      year = date.getFullYear();
-    }
-
-    if (month.length < 2) 
-      month = '0' + month;
-    if (day.length < 2) 
-      day = '0' + day;
-
-    return [year, month, day].join('/');
-  }
-
   const getStringDate = (year: number | null, month: number | null, day: number | null): string => {
     if (!year)
-    {
-      console.log('getStringDate function !year');
-      return ""; // Si no hay año, devolver cadena vacía
-    } 
+      return "";
 
     let dateString = `${year}`;
 
@@ -184,7 +162,6 @@ const DatePicker = ({ onChange }) => {
         dateString += `/${formattedDay}`;
     }
 
-    console.log('getStringDate dateString', dateString);
     return dateString;
 };
 
