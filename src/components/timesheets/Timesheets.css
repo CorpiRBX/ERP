@@ -365,15 +365,6 @@
       opacity: 0;
     }
     
-    .filter-input {
-      width: 100%;
-      padding: 4px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
-    
     .filters-row {
       overflow: hidden;
       transition: all 0.5s ease;
@@ -436,10 +427,13 @@
     }
     
     .filter-input {
+      width: 100%;
       flex: 1;
+      box-sizing: border-box;
       padding: 5px;
       border: 1px solid #ccc;
       border-radius: 3px;
+      font-size: 0.9rem;
     }
     
     .filter-toggle-button {

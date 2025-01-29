@@ -174,7 +174,7 @@ const DatePicker = ({ onChange }) => {
         onChange={handleInputChange}
         placeholder="yyyy/mm/dd"
         onFocus={toggleCalendar}
-        className="date-picker-input"
+        className="filter-input"
       />
       <span className="date-picker-icon" onClick={toggleCalendar}>📅</span>
 

@@ -7,13 +7,6 @@
   margin: 0 auto;
 }
 
-/* Input Field */
-.date-picker-input {
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-}
-
 /* Calendar Pop-Up */
 .date-picker-calendar {
   position: absolute;
@@ -88,7 +81,7 @@
 
 .date-picker-icon {
   /* position: absolute; */
-  right: 10px;
+  margin-left: 5px;
   cursor: pointer;
   font-size: 18px;
 }
