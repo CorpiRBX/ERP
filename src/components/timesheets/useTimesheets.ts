@@ -140,11 +140,11 @@ export const useTimesheets = () => {
   };
 
   const handleDateFilter = (date: Date) => {
-    // if (debounceTimeout.current) {
-    //   clearTimeout(debounceTimeout.current);
-    // }
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
 
-    // debounceTimeout.current = window.setTimeout(async () => {
+    debounceTimeout.current = window.setTimeout(async () => {
       try {
         if (date != null) {
           console.log('date', date);
@@ -155,7 +155,7 @@ export const useTimesheets = () => {
       } catch {
         updateFilter("date", undefined);
       }
-    // }, 1000);
+    }, 1000);
   };
 
   // Cargar fichajes cuando cambian los filtros
