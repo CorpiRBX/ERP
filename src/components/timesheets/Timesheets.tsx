@@ -5,7 +5,6 @@ import Form from "../form/Form";
 import { useTimesheets } from "./useTimesheets";
 import Filters from "./Filters";
 import { FilterConfig } from "../../interfaces/FilterConfig";
-import DatePicker from "./DatePicker";
 
 const Timesheets: React.FC = () => {
   const navigate = useNavigate();
@@ -52,10 +51,6 @@ const Timesheets: React.FC = () => {
 
   const handleCloseForm = () => {
     setShowForm(false);
-  };
-
-  const handleDateChange = (date) => {
-    console.log("Selected Date:", date);
   };
 
   return (
@@ -176,13 +171,11 @@ const Timesheets: React.FC = () => {
         <div className="timesheets-history-header">
           <div className="timesheets-history-header-top">
             <h2 className="timesheets-history-title">HISTORIAL DE FICHAJES</h2>
+            
             <button onClick={() => setFiltersVisible(!filtersVisible)} className="filter-toggle-button">
               <i className={`bi ${filtersVisible ? "bi-filter-circle-fill" : "bi-filter-circle"}`}></i>
             </button>
-            <div>
-              <h1>Custom Date Picker</h1>
-              <DatePicker onChange={handleDateChange} />
-            </div>
+            
             {filtersVisible && (
               <Filters
                 config={filtersConfig}
