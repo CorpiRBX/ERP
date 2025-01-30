@@ -1,17 +1,23 @@
+//Hooks
 import React, { useState, useRef, useEffect } from "react";
-import { Modal } from "react-bootstrap";
+import { useGetAllDepartments } from "../../hooks/useDepartments";
+import { useGetAllProjects } from "../../hooks/useProjects";
+//Styles
 import "./Form.css";
-import { DateRange } from "react-date-range";
-import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "rsuite/dist/rsuite.min.css";
+//Components
+import { DateRange } from "react-date-range";
+import { format } from "date-fns";
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import { ReactSketchCanvasRef } from "react-sketch-canvas";
-import DepartmentSelect from "./DepartmentSelect";
-import ProjectSelect from "./ProjectsSelect";
+import { DropdownSelect } from "./DropdownSelect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+//Dtos
+import { DepartmentsDto } from "../../Dtos/DepartmentsDto";
+import { ProjectDto } from "../../Dtos/ProjectsDto";
 
 interface FormProps {
   onClose: () => void;
@@ -60,7 +66,9 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
     event.preventDefault();
     onClose();
   };
-
+  const handleDropdownSelection = (value: string) => {
+    console.log("objeto seleccionado:", value);
+  };
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
   };
@@ -121,7 +129,13 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                   DEPARTAMENTO
                 </label>
               </div>
-              <DepartmentSelect />
+              {/* <DepartmentSelect /> */}
+              <DropdownSelect<DepartmentsDto>
+                queryHook={useGetAllDepartments}
+                getLabel={(option) => option.name}  // Asumiendo que 'name' es la propiedad que quieres mostrar
+                getValue={(option) => option.id.toString()}  // Usamos 'id' como valor
+                onChange={handleDropdownSelection}  // El valor seleccionado será el 'id' de la opción
+              />
             </div>
             <div className="form-group">
               <div className="form-group-label-filter">
@@ -129,7 +143,14 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                   PROYECTO
                 </label>
               </div>
-              <ProjectSelect />
+              {/* <ProjectSelect /> */}
+              {/* <DropdownSelect  "/> */}
+              <DropdownSelect<ProjectDto>
+              	queryHook = {useGetAllProjects}
+                getLabel={(option)=>option.projectName}
+                getValue={(option)=>option.id.toString()}
+                onChange={handleDropdownSelection}
+                />
             </div>
             <div className="form-group">
               <label className="form-group-label">OBSERVACIONES</label>

@@ -1,47 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { getAllProjects } from '../../services/Projects/ProjectServices';
+import React, { useState } from 'react';
 import { ProjectDto } from '../../Dtos/ProjectsDto';
 
-const ProjectSelect: React.FC = () => {
-  const [projects, setDepartments] = useState<ProjectDto[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+interface ProjectSelectProps {
+  projects: ProjectDto[]; // Lista de proyectos pasada como prop
+  onProjectSelect: (selectedId: string | null) => void; // Callback para informar al padre sobre la selección
+}
+
+const ProjectSelect: React.FC<ProjectSelectProps> = ({ projects, onProjectSelect }) => {
   const [selectedProject, setSelectedProject] = useState<string>(''); // Para manejar el valor seleccionado
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setLoading(true); // Indicador de carga
-        const data = await getAllProjects();
-        setDepartments(data); // Actualiza el estado con los departamentos obtenidos
-      } catch (err) {
-        setError('Error fetching projects'); // Maneja el error
-      } finally {
-        setLoading(false); // Finaliza la carga
-      }
-    };
-
-    fetchProjects(); // Llamamos a la función dentro del useEffect
-  }, []); // [] asegura que solo se ejecute al montar el componente
-
-  const handleProjecttChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedProject(e.target.value); // Actualiza el estado con el valor seleccionado
+  const handleProjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = e.target.value; // Obtén el valor seleccionado
+    setSelectedProject(selectedId); // Actualiza el estado local
+    onProjectSelect(selectedId); // Llama al callback con el valor seleccionado
   };
 
   return (
     <div className="select-container">
       <select
-        id="departamento"
+        id="project"
         className="form-select"
         value={selectedProject}
-        onChange={handleProjecttChange}
+        onChange={handleProjectChange}
       >
-        <option value="">Seleccione un Projecto</option> {/* Opción por defecto */}
-        
-        {loading && <option>Loading...</option>} {/* Mostrar mientras carga */}
-        {error && <option disabled>{error}</option>} {/* Mostrar error si lo hay */}
+        <option value="">Seleccione un Proyecto</option> {/* Opción por defecto */}
 
-        {!loading && !error && projects.map((project) => (
+        {projects.map((project) => (
           <option key={project.id} value={project.id.toString()}>
             {project.projectName}
           </option>
