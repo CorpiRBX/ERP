@@ -184,7 +184,12 @@ const DatePicker = ({ onChange, value, clearInput }) => {
         onFocus={toggleCalendar}
         className="filter-input"
       />
-      {value && <button className="clear-button" onClick={clearDate}>❌</button>}
+      {
+        value && 
+        <button className="clear-button" onClick={clearDate}>
+          <i className="bi bi-x-circle"></i>
+        </button>
+      }
       <span className="date-picker-icon" onClick={toggleCalendar}>📅</span>
 
       {calendarOpen && (

@@ -1,0 +1,13 @@
+.clear-button {
+  position: sticky;
+  right: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: gray;
+  margin-left: -34px;
+  background: none !important;
+}
+
+.clear-button:hover {
+  color: black;
+}

@@ -5,6 +5,8 @@
   position: relative;
   max-width: 300px;
   margin: 0 auto;
+  display: flex; /* Evitar que se mueva el icono de calendario al mostrar el icono de borrar filtro */
+  align-items: center;
 }
 
 /* Calendar Pop-Up */
@@ -80,8 +82,8 @@
 
 
 .date-picker-icon {
-  /* position: absolute; */
-  margin-left: 5px;
+  position: absolute;
+  margin-left: 195px;
   cursor: pointer;
   font-size: 18px;
 }
