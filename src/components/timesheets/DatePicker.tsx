@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./DatePicker.css";
 
-const DatePicker = ({ onChange }) => {
+const DatePicker = ({ onChange, value, clearInput }) => {
   const [date, setDate] = useState("");
   const [year, setYear] = useState<number | null>(new Date().getFullYear());
   const [month, setMonth] = useState<number | null>(new Date().getMonth() + 1);
@@ -163,19 +163,28 @@ const DatePicker = ({ onChange }) => {
     }
 
     return dateString;
-};
+  };
+
+  const clearDate = () => {
+    setYearPage(0);
+    setDate("");
+    setView("year");
+    onChange("");
+    clearInput(); // Call parent function to clear filter
+  };
 
   return (
     <div className="date-picker">
       <input
         ref={inputRef}
         type="text"
-        value={date}
+        value={value}
         onChange={handleInputChange}
         placeholder="yyyy/mm/dd"
         onFocus={toggleCalendar}
         className="filter-input"
       />
+      {value && <button className="clear-button" onClick={clearDate}>❌</button>}
       <span className="date-picker-icon" onClick={toggleCalendar}>📅</span>
 
       {calendarOpen && (
