@@ -14,7 +14,7 @@ export const useTimesheets = () => {
   const debounceTimeout = useRef<number | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10); // Default 10 timesheets per page
+  const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
 
   const parseDateFilter = (dateString?: string) => {
@@ -66,7 +66,7 @@ export const useTimesheets = () => {
     } finally {
       setLoading(false);
     }
-  }, [filters, currentPage]);
+  }, [filters, currentPage, pageSize]);
 
   const updateFilter = (key: keyof TimesheetFilters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -112,5 +112,6 @@ export const useTimesheets = () => {
     totalPages,
     pageSize,
     setCurrentPage,
+    setPageSize
   };
 };

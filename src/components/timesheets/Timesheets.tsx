@@ -25,6 +25,7 @@ const Timesheets: React.FC = () => {
     totalPages,
     pageSize,
     setCurrentPage,
+    setPageSize
   } = useTimesheets();
 
   const filtersConfig: FilterConfig[] = [
@@ -67,6 +68,12 @@ const Timesheets: React.FC = () => {
     if (currentPage > 1) {
       setCurrentPage((prev) => prev - 1);
     }
+  };
+
+  const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSize = Number(event.target.value);
+    setPageSize(newSize);
+    setCurrentPage(1);
   };
 
   return (
@@ -241,7 +248,18 @@ const Timesheets: React.FC = () => {
           {/* Pagination Controls */}
           <div className="pagination-controls">
             <button disabled={currentPage === 1} onClick={handlePreviousPage}>Anterior</button>
-            <span>Página {currentPage} de {totalPages} (Mostrando {pageSize} por página)</span>
+            <span>Página {currentPage} de {totalPages} |
+              
+              Fichajes por página:
+              {' '}
+              <select value={pageSize} onChange={handlePageSizeChange}>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+              </select> 
+              
+            </span>
             <button disabled={currentPage === totalPages} onClick={handleNextPage}>Siguiente</button>
           </div>
         </div>
