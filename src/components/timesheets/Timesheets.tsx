@@ -21,6 +21,10 @@ const Timesheets: React.FC = () => {
     updateFilter,
     handleEmployeeNameFilter,
     handleDateFilter,
+    currentPage,
+    totalPages,
+    pageSize,
+    setCurrentPage,
   } = useTimesheets();
 
   const filtersConfig: FilterConfig[] = [
@@ -51,6 +55,18 @@ const Timesheets: React.FC = () => {
 
   const handleCloseForm = () => {
     setShowForm(false);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+  
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   return (
@@ -221,6 +237,13 @@ const Timesheets: React.FC = () => {
               ))}
             </tbody>
           </table>
+
+          {/* Pagination Controls */}
+          <div className="pagination-controls">
+            <button disabled={currentPage === 1} onClick={handlePreviousPage}>Anterior</button>
+            <span>Página {currentPage} de {totalPages} (Mostrando {pageSize} por página)</span>
+            <button disabled={currentPage === totalPages} onClick={handleNextPage}>Siguiente</button>
+          </div>
         </div>
       </div>
     </div>

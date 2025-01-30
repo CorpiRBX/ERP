@@ -13,6 +13,10 @@ export const useTimesheets = () => {
   const [error, setError] = useState<string | null>(null);
   const debounceTimeout = useRef<number | null>(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(10); // Default 10 timesheets per page
+  const [totalPages, setTotalPages] = useState(1);
+
   const parseDateFilter = (dateString?: string) => {
     if (!dateString) return {};
 
@@ -34,8 +38,8 @@ export const useTimesheets = () => {
       const dateFilter = parseDateFilter(filters.date);
       const filtersForApi: GetPagedTimesheetsParams = {
         employeeId: filters.employeeId,
-        pageNumber: 1,
-        pageSize: 10,
+        pageNumber: currentPage,
+        pageSize,
         ...dateFilter,
       };
 
@@ -55,12 +59,14 @@ export const useTimesheets = () => {
 
       setTimesheets(data);
       setEmployeeNames(names);
+      // setTotalPages(data.totalPages); // TODO: Devolver la cantidad total de paginas en el endpoint del backend
+      setTotalPages(10);
     } catch (err: any) {
       setError(err.message || "Error al cargar los fichajes.");
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, currentPage]);
 
   const updateFilter = (key: keyof TimesheetFilters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -102,5 +108,9 @@ export const useTimesheets = () => {
     updateFilter,
     handleEmployeeNameFilter,
     handleDateFilter,
+    currentPage,
+    totalPages,
+    pageSize,
+    setCurrentPage,
   };
 };
