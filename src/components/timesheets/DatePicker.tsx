@@ -178,7 +178,7 @@ const DatePicker = ({ onChange, value, clearInput }) => {
       <input
         ref={inputRef}
         type="text"
-        value={value}
+        value={date}
         onChange={handleInputChange}
         placeholder="yyyy/mm/dd"
         onFocus={toggleCalendar}
