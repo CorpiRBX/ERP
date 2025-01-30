@@ -34,4 +34,15 @@ export const getPagedTimesheets = async (params: GetPagedTimesheetsParams): Prom
   }
 };
 
-
+export const createTimesheet = async (timesheet: TimesheetDto): Promise<TimesheetDto> => {
+  try {
+    const response = await api.post<TimesheetDto>("timesheets/Create", timesheet);
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data.message || "Error al crear el timesheet.");
+    } else {
+      throw new Error("No se pudo conectar con el servidor.");
+    }
+  }
+};

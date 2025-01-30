@@ -18,6 +18,8 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 //Dtos
 import { DepartmentsDto } from "../../Dtos/DepartmentsDto";
 import { ProjectDto } from "../../Dtos/ProjectsDto";
+import { useAsyncError } from "react-router-dom";
+import { ParsedDate } from "../../types/ParsedDate";
 
 interface FormProps {
   onClose: () => void;
@@ -26,7 +28,6 @@ interface FormProps {
 }
 
 const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
-  const text = state ? state : "Estado no definido";
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -35,8 +36,11 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
     },
   ]);
 
-  const [time1, setTime1] = useState<Date | null>(new Date());
-  const [time2, setTime2] = useState<Date | null>(() => {
+  const [departmentId,setDeparmentId] = useState<number|null>(null)
+  const [projectId,setProjectId] = useState<number|null>(null);
+
+  const [entryTime, setEntryTime] = useState<Date | null>(new Date());
+  const [exitTime, setExitTime] = useState<Date | null>(() => {
     const newTime = new Date();
     newTime.setHours(newTime.getHours() + 9);
     return newTime;
@@ -49,7 +53,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
     setDateRange([item.selection]);
   };
 
-  const handleSelect = () => {
+  const handleDateSelect = () => {
     const selectedDates: string[] = [];
     const { startDate, endDate } = dateRange[0];
 
@@ -64,16 +68,29 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    const customEntryDate = new ParsedDate(entryTime ?? new Date())
+    console.log(
+      `Fecha: ${customEntryDate.formattedDate}\nHora: ${customEntryDate.formattedTime}\nSemana del Año: ${customEntryDate.weekOfYear}`
+    );
+    
+    const customExitDate = new ParsedDate(exitTime ?? new Date())
+    console.log(
+      `Fecha: ${customExitDate.formattedDate}\nHora: ${customExitDate.formattedTime}\nSemana del Año: ${customExitDate.weekOfYear}`
+    );
+    const validation = false;
+    console.log('departmentId',departmentId);
+    console.log('projectId',projectId);
+    console.log('observaciones',observacionesRef.current?.value);
+
     onClose();
   };
-  const handleDropdownSelection = (value: string) => {
-    console.log("objeto seleccionado:", value);
-  };
+
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
   };
 
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
+  const observacionesRef = useRef<HTMLTextAreaElement>(null);
 
   const handleClearClick = () => {
     canvasRef.current?.clearCanvas();
@@ -128,13 +145,12 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                 <label htmlFor="departamento" className="form-group-label">
                   DEPARTAMENTO
                 </label>
-              </div>
-              {/* <DepartmentSelect /> */}
+              </div>              
               <DropdownSelect<DepartmentsDto>
                 queryHook={useGetAllDepartments}
                 getLabel={(option) => option.name}  // Asumiendo que 'name' es la propiedad que quieres mostrar
                 getValue={(option) => option.id.toString()}  // Usamos 'id' como valor
-                onChange={handleDropdownSelection}  // El valor seleccionado será el 'id' de la opción
+                onChange={(value)=>setDeparmentId(value ? parseInt(value,10):null)}  // El valor seleccionado será el 'id' de la opción
               />
             </div>
             <div className="form-group">
@@ -143,13 +159,11 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                   PROYECTO
                 </label>
               </div>
-              {/* <ProjectSelect /> */}
-              {/* <DropdownSelect  "/> */}
               <DropdownSelect<ProjectDto>
               	queryHook = {useGetAllProjects}
                 getLabel={(option)=>option.projectName}
                 getValue={(option)=>option.id.toString()}
-                onChange={handleDropdownSelection}
+                onChange={(value)=>setProjectId(value ? parseInt(value,10):null)}
                 />
             </div>
             <div className="form-group">
@@ -158,6 +172,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                 <textarea
                   id="observaciones"
                   className="form-textarea"
+                  ref={observacionesRef}
                 ></textarea>
               </div>
             </div>
@@ -216,7 +231,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                   <button
                     type="button"
                     className="select-button"
-                    onClick={handleSelect}
+                    onClick={handleDateSelect}
                   >
                     Select
                   </button>
@@ -234,18 +249,19 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                   <input
                     type="time"
                     className="time-input time-12"
-                    value={time1 ? time1.toTimeString().slice(0, 5) : ""}
+                    value={entryTime ? entryTime.toTimeString().slice(0, 5) : ""}
                     onChange={(e) => {
                       const value = e.target.value;
                       if (!value) {
-                        setTime1(null);
+                        setEntryTime(null);
                         return;
                       }
                       const [hours, minutes] = value.split(":");
-                      const updatedTime = new Date(time1 || Date.now());
+                      const updatedTime = new Date(entryTime || Date.now());
                       updatedTime.setHours(Number(hours));
                       updatedTime.setMinutes(Number(minutes));
-                      setTime1(updatedTime);
+                      console.log('raw date',updatedTime)
+                      setEntryTime(updatedTime);
                     }}
                   />
                 </div>
@@ -257,18 +273,18 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                   <input
                     type="time"
                     className="time-input time-12"
-                    value={time2 ? time2.toTimeString().slice(0, 5) : ""}
+                    value={exitTime ? exitTime.toTimeString().slice(0, 5) : ""}
                     onChange={(e) => {
                       const value = e.target.value;
                       if (!value) {
-                        setTime2(null);
+                        setExitTime(null);
                         return;
                       }
                       const [hours, minutes] = value.split(":");
-                      const updatedTime = new Date(time2 || Date.now());
+                      const updatedTime = new Date(exitTime || Date.now());
                       updatedTime.setHours(Number(hours));
                       updatedTime.setMinutes(Number(minutes));
-                      setTime2(updatedTime);
+                      setExitTime(updatedTime);
                     }}
                   />
                 </div>
