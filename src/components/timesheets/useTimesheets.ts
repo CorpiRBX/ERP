@@ -45,10 +45,11 @@ export const useTimesheets = () => {
 
       const response = await getPagedTimesheets(filtersForApi);
       const data = response.data;
+      const pagedItemsList = response.data.pagedItemsList;
 
       // Fetch employee names in batch
       const names: { [key: number]: string } = {};
-      const uniqueEmployeeIds = new Set(data.map((item) => item.employeeId));
+      const uniqueEmployeeIds = new Set(pagedItemsList.map((item) => item.employeeId));
 
       await Promise.all(
         Array.from(uniqueEmployeeIds).map(async (id) => {
@@ -57,10 +58,10 @@ export const useTimesheets = () => {
         })
       );
 
-      setTimesheets(data);
+      setTimesheets(pagedItemsList);
       setEmployeeNames(names);
-      // setTotalPages(data.totalPages); // TODO: Devolver la cantidad total de paginas en el endpoint del backend
-      setTotalPages(10);
+      setTotalPages(data.totalPages); // TODO: Devolver la cantidad total de paginas en el endpoint del backend
+      // setTotalPages(10);
     } catch (err: any) {
       setError(err.message || "Error al cargar los fichajes.");
     } finally {
