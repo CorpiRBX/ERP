@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { getPagedTimesheets } from "../../services/timesheets/timesheetService";
 import { getEmployeeById, getEmployeeByName } from "../../services/employees/employeeService";
-import { getNameProjectById, getProjectByName } from "../../services/projects/projectService"; // Importar servicio de proyectos
+import { getNameProjectById, getProjectByName } from "../../services/projects/projectService";
+import { getDepartmentById } from "../../services/departments/departmentService";
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
 import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
 import { TimesheetSortOption } from "../../enums/TimesheetSortOption";
-import { useFetchNames } from "../../hooks/useFetchNames"; // Importamos el nuevo hook
+import { useFetchNames } from "../../hooks/useFetchNames";
 
 export const useTimesheets = () => {
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
@@ -26,6 +27,7 @@ export const useTimesheets = () => {
   // Utilizar el hook para obtener nombres
   const { names: employeeNames, fetchNames: fetchEmployeeNames } = useFetchNames(getEmployeeById);
   const { names: projectNames, fetchNames: fetchProjectNames } = useFetchNames(getNameProjectById);
+  const { names: departmentNames, fetchNames: fetchDepartmentNames } = useFetchNames(getDepartmentById);
 
   const parseDateFilter = (dateString?: string) => {
     if (!dateString) return {};
@@ -59,9 +61,9 @@ export const useTimesheets = () => {
       const data = response.data;
       const pagedItemsList = response.data.pagedItemsList;
 
-      // Obtener nombres de empleados y proyectos en lote
-      await fetchEmployeeNames(pagedItemsList, "employeeId");
+      await fetchEmployeeNames(pagedItemsList, "employeeId"); // Nombre de la propiedad de TimesheetDto
       await fetchProjectNames(pagedItemsList, "projectId");
+      await fetchDepartmentNames(pagedItemsList, "departmentsId");
 
       setTimesheets(pagedItemsList);
       setTotalPages(data.totalPages);
@@ -71,7 +73,7 @@ export const useTimesheets = () => {
     } finally {
       setLoading(false);
     }
-  }, [filters, currentPage, pageSize, sortBy, ascending, fetchEmployeeNames, fetchProjectNames]);
+  }, [filters, currentPage, pageSize, sortBy, ascending, fetchEmployeeNames, fetchProjectNames, fetchDepartmentNames]);
 
   const updateFilter = (key: keyof TimesheetFilters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -108,7 +110,8 @@ export const useTimesheets = () => {
   return {
     timesheets,
     employeeNames,
-    projectNames, // Devuelve también los nombres de proyectos
+    projectNames,
+    departmentNames,
     loading,
     error,
     updateFilter,

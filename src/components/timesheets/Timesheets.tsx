@@ -19,6 +19,7 @@ const Timesheets: React.FC = () => {
     timesheets,
     employeeNames,
     projectNames,
+    departmentNames,
     loading,
     error,
     updateFilter,
@@ -303,7 +304,7 @@ const Timesheets: React.FC = () => {
                   <td>{timeOut}</td>
                   <td>{breakTime}</td>
                   <td>{projectNames[projectId] || "Cargando..."}</td>
-                  <td>{departmentsId}</td>
+                  <td>{departmentNames[departmentsId] || "Cargando..."}</td>
                 </tr>
               ))}
             </tbody>
