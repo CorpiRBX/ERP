@@ -4,6 +4,7 @@ import { getEmployeeById, getEmployeeByName } from "../../services/employees/emp
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
 import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
+import { TimesheetSortOption } from "../../enums/TimesheetSortOption";
 
 export const useTimesheets = () => {
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
@@ -18,6 +19,9 @@ export const useTimesheets = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
 
+  const [sortBy, setSortBy] = useState<TimesheetSortOption>(TimesheetSortOption.Id);
+  const [ascending, setAscending] = useState<boolean>(true);
+  
   const parseDateFilter = (dateString?: string) => {
     if (!dateString) return {};
 
@@ -42,6 +46,8 @@ export const useTimesheets = () => {
         pageNumber: currentPage,
         pageSize,
         ...dateFilter,
+        sortBy: sortBy,
+        ascending: ascending,
       };
 
       const response = await getPagedTimesheets(filtersForApi);
@@ -68,7 +74,7 @@ export const useTimesheets = () => {
     } finally {
       setLoading(false);
     }
-  }, [filters, currentPage, pageSize]);
+  }, [filters, currentPage, pageSize, sortBy, ascending]);
 
   const updateFilter = (key: keyof TimesheetFilters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -115,6 +121,8 @@ export const useTimesheets = () => {
     totalCount,
     pageSize,
     setCurrentPage,
-    setPageSize
+    setPageSize,
+    setSortBy,
+    setAscending
   };
 };

@@ -343,16 +343,6 @@
       padding: 8px;
     }
     
-    .filter-toggle-button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-right: 8px;
-    }
-    
     .filter-row.show {
       height: 50px; /* Altura de la fila */
       visibility: visible;
@@ -440,15 +430,6 @@
       padding-left: 5px !important;
     }
     
-    .filter-toggle-button {
-      padding: 8px 12px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
     .apply-filters-button {
       padding: 10px 15px;
       background-color: #28a745;
@@ -458,7 +439,6 @@
       cursor: pointer;
       margin-top: 10px;
     }
-
 
     .filter-toggle-button {
       padding: 8px;
@@ -512,4 +492,28 @@
     /* Remove arrows (Firefox) */
     .paginator-input[type="number"] {
       -moz-appearance: textfield;
+    }
+
+    .timesheets-sort-container {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.625rem;
+    }
+    
+    .timesheets-sort-dropdown {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .sortby-icon {
+      padding: 8px;
+      background-color: transparent; /* Sin fondo */
+      border: none;
+      font-size: 24px; /* Ajusta el tamaño del ícono */
+      color: #a0a0a0; /* Azul predeterminado */
+      transition: transform 0.3s ease; /* Animación suave */
     }

@@ -5,6 +5,7 @@ import Form from "../form/Form";
 import { useTimesheets } from "./useTimesheets";
 import Filters from "./Filters";
 import { FilterConfig } from "../../interfaces/FilterConfig";
+import { TimesheetSortOption } from "../../enums/TimesheetSortOption";
 
 const Timesheets: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +28,9 @@ const Timesheets: React.FC = () => {
     totalCount,
     pageSize,
     setCurrentPage,
-    setPageSize
+    setPageSize,
+    setSortBy,
+    setAscending
   } = useTimesheets();
 
   const filtersConfig: FilterConfig[] = [
@@ -233,6 +236,50 @@ const Timesheets: React.FC = () => {
             )}
           </div>
         </div>
+
+        <div className="timesheets-sort-container">
+          <label htmlFor="sortOptions" className="sortby-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-down-up" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5"/>
+            </svg>
+          </label>
+          <select
+            id="sortOptions"
+            className="timesheets-sort-dropdown"
+            onChange={(event) => {
+              const value = event.target.value;
+              switch (value) {
+                case "employee-asc":
+                  setSortBy(TimesheetSortOption.EmployeeName);
+                  setAscending(true);
+                  break;
+                case "employee-desc":
+                  setSortBy(TimesheetSortOption.EmployeeName);
+                  setAscending(false);
+                  break;
+                case "date-recent":
+                  setSortBy(TimesheetSortOption.Date);
+                  setAscending(false);
+                  break;
+                case "date-oldest":
+                  setSortBy(TimesheetSortOption.Date);
+                  setAscending(true);
+                  break;
+                default:
+                  setSortBy(TimesheetSortOption.Id);
+                  setAscending(true);
+                  break;
+              }
+            }}
+          >
+            <option value="none">Sin orden específico</option>
+            <option value="employee-asc">Empleado: A-Z</option>
+            <option value="employee-desc">Empleado: Z-A</option>
+            <option value="date-recent">Fecha: Más reciente</option>
+            <option value="date-oldest">Fecha: Más antiguo</option>
+          </select>
+        </div>
+
 
         <div className="timesheets-history-content">
           {loading && <p>Cargando...</p>}
