@@ -12,7 +12,7 @@ const Timesheets: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [formState, setFormState] = useState<string | boolean>(false);
   const [filtersVisible, setFiltersVisible] = useState<boolean>(false);
-  const debounceTimer: number = 500;
+  const debounceTimerInMiliSeconds: number = 500;
 
   const {
     timesheets,
@@ -24,6 +24,7 @@ const Timesheets: React.FC = () => {
     handleDateFilter,
     currentPage,
     totalPages,
+    totalCount,
     pageSize,
     setCurrentPage,
     setPageSize
@@ -85,7 +86,7 @@ const Timesheets: React.FC = () => {
     const timer = setTimeout(() => {
       setCurrentPage(Math.max(1, Math.min(totalPages, inputPage)));
       if(inputPage > totalPages) setInputPage(totalPages);
-    }, debounceTimer);
+    }, debounceTimerInMiliSeconds);
 
     return () => clearTimeout(timer);
   }, [inputPage]);
@@ -258,6 +259,8 @@ const Timesheets: React.FC = () => {
               ))}
             </tbody>
           </table>
+
+          <span>Fichajes totales: {totalCount}</span>
 
           {/* Pagination Controls */}
           <div className="pagination-controls">

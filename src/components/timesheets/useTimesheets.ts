@@ -16,6 +16,7 @@ export const useTimesheets = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
   const parseDateFilter = (dateString?: string) => {
     if (!dateString) return {};
@@ -60,8 +61,8 @@ export const useTimesheets = () => {
 
       setTimesheets(pagedItemsList);
       setEmployeeNames(names);
-      setTotalPages(data.totalPages); // TODO: Devolver la cantidad total de paginas en el endpoint del backend
-      // setTotalPages(10);
+      setTotalPages(data.totalPages);
+      setTotalCount(data.totalCount);
     } catch (err: any) {
       setError(err.message || "Error al cargar los fichajes.");
     } finally {
@@ -111,6 +112,7 @@ export const useTimesheets = () => {
     handleDateFilter,
     currentPage,
     totalPages,
+    totalCount,
     pageSize,
     setCurrentPage,
     setPageSize
