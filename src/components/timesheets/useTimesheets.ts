@@ -1,14 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { getPagedTimesheets } from "../../services/timesheets/timesheetService";
 import { getEmployeeById, getEmployeeByName } from "../../services/employees/employeeService";
+import { getNameProjectById, getProjectByName } from "../../services/projects/projectService"; // Importar servicio de proyectos
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
 import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
 import { TimesheetSortOption } from "../../enums/TimesheetSortOption";
+import { useFetchNames } from "../../hooks/useFetchNames"; // Importamos el nuevo hook
 
 export const useTimesheets = () => {
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
-  const [employeeNames, setEmployeeNames] = useState<{ [key: number]: string }>({});
   const [filters, setFilters] = useState<TimesheetFilters>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +22,11 @@ export const useTimesheets = () => {
 
   const [sortBy, setSortBy] = useState<TimesheetSortOption>(TimesheetSortOption.Id);
   const [ascending, setAscending] = useState<boolean>(true);
-  
+
+  // Utilizar el hook para obtener nombres
+  const { names: employeeNames, fetchNames: fetchEmployeeNames } = useFetchNames(getEmployeeById);
+  const { names: projectNames, fetchNames: fetchProjectNames } = useFetchNames(getNameProjectById);
+
   const parseDateFilter = (dateString?: string) => {
     if (!dateString) return {};
 
@@ -54,19 +59,11 @@ export const useTimesheets = () => {
       const data = response.data;
       const pagedItemsList = response.data.pagedItemsList;
 
-      // Fetch employee names in batch
-      const names: { [key: number]: string } = {};
-      const uniqueEmployeeIds = new Set(pagedItemsList.map((item) => item.employeeId));
-
-      await Promise.all(
-        Array.from(uniqueEmployeeIds).map(async (id) => {
-          const employeeResponse = await getEmployeeById(id);
-          names[id] = employeeResponse.data.name;
-        })
-      );
+      // Obtener nombres de empleados y proyectos en lote
+      await fetchEmployeeNames(pagedItemsList, "employeeId");
+      await fetchProjectNames(pagedItemsList, "projectId");
 
       setTimesheets(pagedItemsList);
-      setEmployeeNames(names);
       setTotalPages(data.totalPages);
       setTotalCount(data.totalCount);
     } catch (err: any) {
@@ -74,7 +71,7 @@ export const useTimesheets = () => {
     } finally {
       setLoading(false);
     }
-  }, [filters, currentPage, pageSize, sortBy, ascending]);
+  }, [filters, currentPage, pageSize, sortBy, ascending, fetchEmployeeNames, fetchProjectNames]);
 
   const updateFilter = (key: keyof TimesheetFilters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -111,6 +108,7 @@ export const useTimesheets = () => {
   return {
     timesheets,
     employeeNames,
+    projectNames, // Devuelve también los nombres de proyectos
     loading,
     error,
     updateFilter,
@@ -123,6 +121,6 @@ export const useTimesheets = () => {
     setCurrentPage,
     setPageSize,
     setSortBy,
-    setAscending
+    setAscending,
   };
 };

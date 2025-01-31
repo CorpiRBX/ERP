@@ -491,6 +491,7 @@
 
     /* Remove arrows (Firefox) */
     .paginator-input[type="number"] {
+      appearance: textfield;
       -moz-appearance: textfield;
     }
 
