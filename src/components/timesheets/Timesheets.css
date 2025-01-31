@@ -498,6 +498,7 @@
 
     .paginator-input {
       width: 60px !important;
+      height: 25px !important;
       margin: 0 5px;
     }
 
