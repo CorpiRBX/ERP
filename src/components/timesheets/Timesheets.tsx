@@ -78,6 +78,7 @@ const Timesheets: React.FC = () => {
     const newSize = Number(event.target.value);
     setPageSize(newSize);
     setCurrentPage(1);
+    setInputPage(1);
   };
 
   const [inputPage, setInputPage] = useState(currentPage);
