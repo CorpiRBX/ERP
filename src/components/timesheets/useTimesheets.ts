@@ -8,6 +8,9 @@ import { TimesheetDto } from "../../dtos/TimesheetDto";
 import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
 import { TimesheetSortOption } from "../../enums/TimesheetSortOption";
 import { useFetchNames } from "../../hooks/useFetchNames";
+import { useEntityFilter } from "../../hooks/useEntityFilter";
+import { EmployeeDto } from "../../dtos/EmployeeDto";
+import { ProjectDto } from "../../dtos/ProjectDto";
 
 export const useTimesheets = () => {
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
@@ -50,6 +53,7 @@ export const useTimesheets = () => {
       const dateFilter = parseDateFilter(filters.date);
       const filtersForApi: GetPagedTimesheetsParams = {
         employeeId: filters.employeeId,
+        projectId: filters.projectId,
         pageNumber: currentPage,
         pageSize,
         ...dateFilter,
@@ -84,20 +88,17 @@ export const useTimesheets = () => {
     debounceTimeout.current = window.setTimeout(callback, delay);
   };
 
-  const handleEmployeeNameFilter = (name: string) => {
-    debounce(async () => {
-      if (name.length >= 5) {
-        try {
-          const response = await getEmployeeByName(name);
-          updateFilter("employeeId", response.success ? response.data?.id : undefined);
-        } catch {
-          updateFilter("employeeId", undefined);
-        }
-      } else {
-        updateFilter("employeeId", undefined);
-      }
-    }, 1000);
-  };
+  const { handleFilter: handleEmployeeNameFilter } = useEntityFilter<EmployeeDto, keyof TimesheetFilters>(
+    getEmployeeByName,
+    updateFilter,
+    "employeeId"
+  );
+
+  const { handleFilter: handleProjectNameFilter } = useEntityFilter<ProjectDto, keyof TimesheetFilters>(
+    getProjectByName,
+    updateFilter,
+    "projectId"
+  );
 
   const handleDateFilter = (date: Date | null) => {
     debounce(() => updateFilter("date", date ?? undefined), 1000);
@@ -116,6 +117,7 @@ export const useTimesheets = () => {
     error,
     updateFilter,
     handleEmployeeNameFilter,
+    handleProjectNameFilter,
     handleDateFilter,
     currentPage,
     totalPages,

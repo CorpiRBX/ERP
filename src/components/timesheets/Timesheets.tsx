@@ -24,6 +24,7 @@ const Timesheets: React.FC = () => {
     error,
     updateFilter,
     handleEmployeeNameFilter,
+    handleProjectNameFilter,
     handleDateFilter,
     currentPage,
     totalPages,
@@ -37,7 +38,8 @@ const Timesheets: React.FC = () => {
 
   const filtersConfig: FilterConfig[] = [
     { key: "employeeId", type: "text", placeholder: "Empleado" },
-    { key: "date", type: "string", placeholder: "Fecha" }
+    { key: "date", type: "string", placeholder: "Fecha" },
+    { key: "projectId", type: "text", placeholder: "Proyecto" }
     // { key: "timeOut", type: "date", placeholder: "Fecha de salida" },
     // { key: "projectId", type: "number", placeholder: "ID del proyecto" },
     // { key: "departmentsId", type: "number", placeholder: "ID del departamento" },
@@ -227,6 +229,11 @@ const Timesheets: React.FC = () => {
                   if (key === "employeeId") {
                     handleEmployeeNameFilter(value);
                   }
+
+                  if (key === "projectId") {
+                    handleProjectNameFilter(value);
+                  }
+
                   if (key === "date") {
                     handleDateFilter(value);
                   } 
@@ -242,7 +249,7 @@ const Timesheets: React.FC = () => {
         <div className="timesheets-sort-container">
           <label htmlFor="sortOptions" className="sortby-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-down-up" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5"/>
+              <path fillRule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5"/>
             </svg>
           </label>
           <select
