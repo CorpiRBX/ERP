@@ -334,3 +334,8 @@
   overflow-y: auto;
   padding: 0.625rem;
 }
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

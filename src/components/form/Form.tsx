@@ -9,7 +9,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "rsuite/dist/rsuite.min.css";
 //Components
-import { DateRange } from "react-date-range";
+import { DateRange } from 'react-date-range';
 import { format } from "date-fns";
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import { ReactSketchCanvasRef } from "react-sketch-canvas";
@@ -19,7 +19,6 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 //Dtos
 import { DepartmentsDto } from "../../Dtos/DepartmentsDto";
 import { ProjectDto } from "../../Dtos/ProjectsDto";
-import { useAsyncError } from "react-router-dom";
 import { ParsedDate } from "../../types/ParsedDate";
 import { TimesheetDto } from "../../Dtos/TimesheetDto";
 
@@ -38,19 +37,17 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
       key: "selection",
     },
   ]);
-
-  const [departmentId, setDeparmentId] = useState<number | null>(null)
-  const [projectId, setProjectId] = useState<number | null>(null);
-
-  const [entryTime, setEntryTime] = useState<Date | null>(new Date());
   const [exitTime, setExitTime] = useState<Date | null>(() => {
     const newTime = new Date();
     newTime.setHours(newTime.getHours() + 9);
     return newTime;
   });
+  const [departmentId, setDeparmentId] = useState<number | null>(null)
+  const [projectId, setProjectId] = useState<number | null>(null);
   const [breakTime,setBreakTime] = useState<string | undefined>(undefined)
-
-  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);  
+  const [entryTime, setEntryTime] = useState<Date | null>(new Date());
+  const [errors, setErrors] = useState<{ departmentId?: string; projectId?: string }>({});
   const maxDate = state !== "vacaciones" ? new Date() : null;
 
   const handleDateChange = (item: any) => {
@@ -71,15 +68,32 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
   };
    // Usar el hook de mutación
   const { mutate: createTimesheet, status, isError, error } = useCreateTimesheet();
+
+  //Handle submit event in button press
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    let validationErrors: { departmentId?: string; projectId?: string } = {};
 
+    if (departmentId === null) {
+      validationErrors.departmentId = "El departamento es obligatorio.";
+    }
+    if (projectId === null) {
+      validationErrors.projectId = "El proyecto es obligatorio.";
+    }
+  
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return; // No continuar si hay errores
+    }
+  
+    // Resetear errores si los campos son válidos
+    setErrors({});
     const customEntryDate = new ParsedDate(entryTime ?? new Date())
     const customExitDate = new ParsedDate(exitTime ?? new Date())
 
     const storedEmployeeId = localStorage.getItem('employeeId');
-
-    if (storedEmployeeId !== null) {
+  
+    if (storedEmployeeId !== null ) {
       const timesheet : TimesheetDto = {
         employeeId: Number(storedEmployeeId),
         date : customEntryDate.formattedDate,
@@ -95,12 +109,23 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
         validation:false,
         branchId :1,
     };
-   
-    createTimesheet(timesheet)
+
     if (status) {
       console.log("Creando timesheet...",status);
     }
 
+    createTimesheet(timesheet,{
+      onSuccess: ()=>{
+        alert("✅ Timesheet creado correctamente.");
+        onClose();
+      },
+      onError: (error) => {
+        console.error("Error al crear el timesheet:", error);
+        alert(`❌ Error al crear el timesheet: ${error.message || "Error desconocido"}`);
+      }
+    });
+
+  
     if (isError && error) {
       console.error("Error al crear el timesheet:", error);
     }
@@ -108,7 +133,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
     } else {
       console.error('No se encontró employeeId en localStorage');
     }
-    onClose();
+    
   };
 
   const toggleCalendar = () => {
@@ -146,7 +171,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
         {/* <h2 className="form-title">FICHAJE</h2> */}
         <div className="header-container">
           <h2 className="title">FICHAJE</h2>
-          <button className="close-btn" onClick={onClose}>
+          <button type='button' className="close-btn" onClick={onClose}>
             <FontAwesomeIcon icon={faTimes}></FontAwesomeIcon>
           </button>
         </div>
@@ -178,6 +203,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                 getValue={(option) => option.id.toString()}  // Usamos 'id' como valor
                 onChange={(value) => setDeparmentId(value ? parseInt(value, 10) : null)}  // El valor seleccionado será el 'id' de la opción
               />
+              {errors.departmentId && <p className="error-text">{errors.departmentId}</p>}
             </div>
             <div className="form-group">
               <div className="form-group-label-filter">
@@ -191,6 +217,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                 getValue={(option) => option.id.toString()}
                 onChange={(value) => setProjectId(value ? parseInt(value, 10) : null)}
               />
+              {errors.departmentId && <p className="error-text">{errors.departmentId}</p>}
             </div>
             <div className="form-group">
               <label className="form-group-label">OBSERVACIONES</label>
@@ -378,7 +405,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
           <button
             type="submit"
             className="form-button-submit"
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
           >
             Enviar
           </button>
