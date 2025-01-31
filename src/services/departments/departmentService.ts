@@ -15,3 +15,16 @@ export const getDepartmentById = async (id: number): Promise<ApiResponse<Departm
     }
   }
 };
+
+export const getDepartmentByName = async (name: string): Promise<ApiResponse<DepartmentDto>> => {
+  try {
+    const response = await axios.get<ApiResponse<DepartmentDto>>(`${API_BASE_URL}/api/departments/GetByName/${name}`);
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data.message || "Error desconocido al obtener el departamento.");
+    } else {
+      throw new Error("No se pudo conectar con el servidor.");
+    }
+  }
+};

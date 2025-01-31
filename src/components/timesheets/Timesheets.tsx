@@ -25,6 +25,7 @@ const Timesheets: React.FC = () => {
     updateFilter,
     handleEmployeeNameFilter,
     handleProjectNameFilter,
+    handleDepartmentNameFilter,
     handleDateFilter,
     currentPage,
     totalPages,
@@ -39,7 +40,8 @@ const Timesheets: React.FC = () => {
   const filtersConfig: FilterConfig[] = [
     { key: "employeeId", type: "text", placeholder: "Empleado" },
     { key: "date", type: "string", placeholder: "Fecha" },
-    { key: "projectId", type: "text", placeholder: "Proyecto" }
+    { key: "projectId", type: "text", placeholder: "Proyecto" },
+    { key: "departmentId", type: "text", placeholder: "Departamento" }
     // { key: "timeOut", type: "date", placeholder: "Fecha de salida" },
     // { key: "projectId", type: "number", placeholder: "ID del proyecto" },
     // { key: "departmentsId", type: "number", placeholder: "ID del departamento" },
@@ -232,6 +234,10 @@ const Timesheets: React.FC = () => {
 
                   if (key === "projectId") {
                     handleProjectNameFilter(value);
+                  }
+
+                  if (key === "departmentId") {
+                    handleDepartmentNameFilter(value);
                   }
 
                   if (key === "date") {

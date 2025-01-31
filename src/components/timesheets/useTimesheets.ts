@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { getPagedTimesheets } from "../../services/timesheets/timesheetService";
 import { getEmployeeById, getEmployeeByName } from "../../services/employees/employeeService";
 import { getNameProjectById, getProjectByName } from "../../services/projects/projectService";
-import { getDepartmentById } from "../../services/departments/departmentService";
+import { getDepartmentById, getDepartmentByName } from "../../services/departments/departmentService";
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
 import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
@@ -11,6 +11,7 @@ import { useFetchNames } from "../../hooks/useFetchNames";
 import { useEntityFilter } from "../../hooks/useEntityFilter";
 import { EmployeeDto } from "../../dtos/EmployeeDto";
 import { ProjectDto } from "../../dtos/ProjectDto";
+import { DepartmentDto } from "../../dtos/DepartmentDto";
 
 export const useTimesheets = () => {
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
@@ -54,6 +55,7 @@ export const useTimesheets = () => {
       const filtersForApi: GetPagedTimesheetsParams = {
         employeeId: filters.employeeId,
         projectId: filters.projectId,
+        departmentId: filters.departmentId,
         pageNumber: currentPage,
         pageSize,
         ...dateFilter,
@@ -100,6 +102,12 @@ export const useTimesheets = () => {
     "projectId"
   );
 
+  const { handleFilter: handleDepartmentNameFilter } = useEntityFilter<DepartmentDto, keyof TimesheetFilters>(
+    getDepartmentByName,
+    updateFilter,
+    "departmentId"
+  );
+
   const handleDateFilter = (date: Date | null) => {
     debounce(() => updateFilter("date", date ?? undefined), 1000);
   };
@@ -118,6 +126,7 @@ export const useTimesheets = () => {
     updateFilter,
     handleEmployeeNameFilter,
     handleProjectNameFilter,
+    handleDepartmentNameFilter,
     handleDateFilter,
     currentPage,
     totalPages,
