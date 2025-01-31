@@ -12,6 +12,7 @@ const Timesheets: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [formState, setFormState] = useState<string | boolean>(false);
   const [filtersVisible, setFiltersVisible] = useState<boolean>(false);
+  const debounceTimer: number = 500;
 
   const {
     timesheets,
@@ -61,12 +62,14 @@ const Timesheets: React.FC = () => {
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1);
+      setInputPage((prev) => prev + 1);
     }
   };
   
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage((prev) => prev - 1);
+      setInputPage((prev) => prev - 1);
     }
   };
 
@@ -75,6 +78,17 @@ const Timesheets: React.FC = () => {
     setPageSize(newSize);
     setCurrentPage(1);
   };
+
+  const [inputPage, setInputPage] = useState(currentPage);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurrentPage(Math.max(1, Math.min(totalPages, inputPage)));
+      if(inputPage > totalPages) setInputPage(totalPages);
+    }, debounceTimer);
+
+    return () => clearTimeout(timer);
+  }, [inputPage]);
 
   return (
     <div className="timesheets-container">
@@ -248,7 +262,25 @@ const Timesheets: React.FC = () => {
           {/* Pagination Controls */}
           <div className="pagination-controls">
             <button disabled={currentPage === 1} onClick={handlePreviousPage}>Anterior</button>
-            <span>Página {currentPage} de {totalPages} |
+            <span>
+              Página
+              {' '}
+              <input
+                className="paginator-input"
+                type="number"
+                value={inputPage}
+                onChange={(e) => setInputPage(Number(e.target.value))}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setCurrentPage((prevPage) =>
+                      Math.max(1, Math.min(totalPages, prevPage))
+                    );
+                  }
+                }}
+                onFocus={(e) => e.target.select()}
+              />
+              {' '}
+              de {totalPages} |
               
               Fichajes por página:
               {' '}

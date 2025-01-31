@@ -473,7 +473,7 @@
     .filter-toggle-button:hover {
       color: #525252; /* Azul más oscuro al pasar el mouse */
     }
-    
+
     .pagination-controls {
       display: flex;
       justify-content: center;
@@ -494,4 +494,21 @@
     .pagination-controls button:disabled {
       background-color: #ccc;
       cursor: not-allowed;
+    }
+
+    .paginator-input {
+      width: 60px !important;
+      margin: 0 5px;
+    }
+
+    /* Remove arrows (Chrome, Safari, Edge, Opera) */
+    .paginator-input::-webkit-outer-spin-button,
+    .paginator-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Remove arrows (Firefox) */
+    .paginator-input[type="number"] {
+      -moz-appearance: textfield;
     }
