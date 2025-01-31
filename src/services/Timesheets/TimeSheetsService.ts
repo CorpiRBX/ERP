@@ -34,9 +34,10 @@ export const getPagedTimesheets = async (params: GetPagedTimesheetsParams): Prom
   }
 };
 
-export const createTimesheet = async (timesheet: TimesheetDto): Promise<TimesheetDto> => {
+//funcion para crear un nuevo timesheet
+export const createTimesheet = async (timesheet: TimesheetDto): Promise<ApiResponse<TimesheetDto>> => {
   try {
-    const response = await api.post<TimesheetDto>("timesheets/Create", timesheet);
+    const response = await api.post<ApiResponse<TimesheetDto>>("timesheets/Create", timesheet);
     return response.data;
   } catch (error: any) {
     if (error.response) {

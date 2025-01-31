@@ -1,6 +1,6 @@
 export interface TimesheetDto 
 {
-    id: number;
+    id?: number;
     employeeId: number;
     date: string; // Puede ajustarse según el formato de fecha devuelto
     week: number;

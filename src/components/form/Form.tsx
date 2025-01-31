@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useGetAllDepartments } from "../../hooks/useDepartments";
 import { useGetAllProjects } from "../../hooks/useProjects";
+import { useCreateTimesheet } from "../../hooks/useTimeSheets";
 //Styles
 import "./Form.css";
 import "react-date-range/dist/styles.css";
@@ -20,6 +21,8 @@ import { DepartmentsDto } from "../../Dtos/DepartmentsDto";
 import { ProjectDto } from "../../Dtos/ProjectsDto";
 import { useAsyncError } from "react-router-dom";
 import { ParsedDate } from "../../types/ParsedDate";
+import { TimesheetDto } from "../../Dtos/TimesheetDto";
+
 
 interface FormProps {
   onClose: () => void;
@@ -36,8 +39,8 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
     },
   ]);
 
-  const [departmentId,setDeparmentId] = useState<number|null>(null)
-  const [projectId,setProjectId] = useState<number|null>(null);
+  const [departmentId, setDeparmentId] = useState<number | null>(null)
+  const [projectId, setProjectId] = useState<number | null>(null);
 
   const [entryTime, setEntryTime] = useState<Date | null>(new Date());
   const [exitTime, setExitTime] = useState<Date | null>(() => {
@@ -45,6 +48,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
     newTime.setHours(newTime.getHours() + 9);
     return newTime;
   });
+  const [breakTime,setBreakTime] = useState<string | undefined>(undefined)
 
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const maxDate = state !== "vacaciones" ? new Date() : null;
@@ -65,23 +69,45 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
     console.log(selectedDates);
     toggleCalendar();
   };
-
+   // Usar el hook de mutación
+  const { mutate: createTimesheet, status, isError, error } = useCreateTimesheet();
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const customEntryDate = new ParsedDate(entryTime ?? new Date())
-    console.log(
-      `Fecha: ${customEntryDate.formattedDate}\nHora: ${customEntryDate.formattedTime}\nSemana del Año: ${customEntryDate.weekOfYear}`
-    );
-    
-    const customExitDate = new ParsedDate(exitTime ?? new Date())
-    console.log(
-      `Fecha: ${customExitDate.formattedDate}\nHora: ${customExitDate.formattedTime}\nSemana del Año: ${customExitDate.weekOfYear}`
-    );
-    const validation = false;
-    console.log('departmentId',departmentId);
-    console.log('projectId',projectId);
-    console.log('observaciones',observacionesRef.current?.value);
 
+    const customEntryDate = new ParsedDate(entryTime ?? new Date())
+    const customExitDate = new ParsedDate(exitTime ?? new Date())
+
+    const storedEmployeeId = localStorage.getItem('employeeId');
+
+    if (storedEmployeeId !== null) {
+      const timesheet : TimesheetDto = {
+        employeeId: Number(storedEmployeeId),
+        date : customEntryDate.formattedDate,
+        week : customEntryDate.weekOfYear,
+        timeIn: customEntryDate.formattedTime,
+        timeOut : customExitDate.formattedTime,
+        break : breakTime ?? '01:00:00',
+        taskObservation:  observacionesRef.current?.value,
+        departmentsId: departmentId ?? -1,
+        projectId:projectId ?? -1,
+        holiday:false,
+        typeOfWorkId:1,
+        validation:false,
+        branchId :1,
+    };
+   
+    createTimesheet(timesheet)
+    if (status) {
+      console.log("Creando timesheet...",status);
+    }
+
+    if (isError && error) {
+      console.error("Error al crear el timesheet:", error);
+    }
+
+    } else {
+      console.error('No se encontró employeeId en localStorage');
+    }
     onClose();
   };
 
@@ -120,8 +146,8 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
         {/* <h2 className="form-title">FICHAJE</h2> */}
         <div className="header-container">
           <h2 className="title">FICHAJE</h2>
-          <button className="close-btn"onClick={onClose}>
-            <FontAwesomeIcon icon= {faTimes}></FontAwesomeIcon>
+          <button className="close-btn" onClick={onClose}>
+            <FontAwesomeIcon icon={faTimes}></FontAwesomeIcon>
           </button>
         </div>
         <div className="form-box">
@@ -145,12 +171,12 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                 <label htmlFor="departamento" className="form-group-label">
                   DEPARTAMENTO
                 </label>
-              </div>              
+              </div>
               <DropdownSelect<DepartmentsDto>
                 queryHook={useGetAllDepartments}
                 getLabel={(option) => option.name}  // Asumiendo que 'name' es la propiedad que quieres mostrar
                 getValue={(option) => option.id.toString()}  // Usamos 'id' como valor
-                onChange={(value)=>setDeparmentId(value ? parseInt(value,10):null)}  // El valor seleccionado será el 'id' de la opción
+                onChange={(value) => setDeparmentId(value ? parseInt(value, 10) : null)}  // El valor seleccionado será el 'id' de la opción
               />
             </div>
             <div className="form-group">
@@ -160,11 +186,11 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                 </label>
               </div>
               <DropdownSelect<ProjectDto>
-              	queryHook = {useGetAllProjects}
-                getLabel={(option)=>option.projectName}
-                getValue={(option)=>option.id.toString()}
-                onChange={(value)=>setProjectId(value ? parseInt(value,10):null)}
-                />
+                queryHook={useGetAllProjects}
+                getLabel={(option) => option.projectName}
+                getValue={(option) => option.id.toString()}
+                onChange={(value) => setProjectId(value ? parseInt(value, 10) : null)}
+              />
             </div>
             <div className="form-group">
               <label className="form-group-label">OBSERVACIONES</label>
@@ -260,7 +286,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                       const updatedTime = new Date(entryTime || Date.now());
                       updatedTime.setHours(Number(hours));
                       updatedTime.setMinutes(Number(minutes));
-                      console.log('raw date',updatedTime)
+                      console.log('raw date', updatedTime)
                       setEntryTime(updatedTime);
                     }}
                   />
@@ -283,7 +309,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                       const [hours, minutes] = value.split(":");
                       const updatedTime = new Date(exitTime || Date.now());
                       updatedTime.setHours(Number(hours));
-                      updatedTime.setMinutes(Number(minutes));
+                      updatedTime.setMinutes(Number(minutes));                      
                       setExitTime(updatedTime);
                     }}
                   />
@@ -298,8 +324,8 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
                     type="time"
                     className="time-input time-3"
                     defaultValue="01:00"
-                    onChange={(e) => {
-                      console.log("Nuevo valor:", e.target.value);
+                    onChange={(e) => {      
+                      setBreakTime(e.target.value)
                     }}
                   />
                 </div>
