@@ -10,4 +10,6 @@ export interface GetPagedTimesheetsParams {
   year?: number;
   month?: number;
   day?: number;
+  projectId?: number;
+  departmentId?: number;
 }

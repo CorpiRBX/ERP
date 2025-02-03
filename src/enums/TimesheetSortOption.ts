@@ -1,6 +1,9 @@
 export enum TimesheetSortOption {
     Id = "Id",
     Date = "Date",
-    EmployeeId = "EmployeeId",
+    EmployeeName = "EmployeeName",
+    ProjectName = "ProjectName",
+    ProjectDate = "ProjectDate",
+    DepartmentName = "DepartmentName",
   }
   

@@ -11,3 +11,22 @@
 .clear-button:hover {
   color: black;
 }
+
+.input-error {
+  background-color: #ffdddd !important;
+  border: 2px solid red !important;
+}
+
+.show-filters {
+  display: block; /* Muestra los filtros */
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hide-filters {
+  display: block; /* Mantiene el espacio pero oculta visualmente */
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+}
