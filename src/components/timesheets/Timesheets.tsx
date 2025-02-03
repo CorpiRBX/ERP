@@ -264,11 +264,11 @@ const Timesheets: React.FC = () => {
             onChange={(event) => {
               const value = event.target.value;
               switch (value) {
-                case "employee-asc":
+                case "employee-name-asc":
                   setSortBy(TimesheetSortOption.EmployeeName);
                   setAscending(true);
                   break;
-                case "employee-desc":
+                case "employee-name-desc":
                   setSortBy(TimesheetSortOption.EmployeeName);
                   setAscending(false);
                   break;
@@ -280,6 +280,30 @@ const Timesheets: React.FC = () => {
                   setSortBy(TimesheetSortOption.Date);
                   setAscending(true);
                   break;
+                case "project-name-asc":
+                  setSortBy(TimesheetSortOption.ProjectName);
+                  setAscending(true);
+                  break;
+                case "project-name-desc":
+                  setSortBy(TimesheetSortOption.ProjectName);
+                  setAscending(false);
+                  break;
+                case "project-date-recent":
+                  setSortBy(TimesheetSortOption.ProjectDate);
+                  setAscending(false);
+                  break;
+                case "project-date-oldest":
+                  setSortBy(TimesheetSortOption.ProjectDate);
+                  setAscending(true);
+                  break;
+                case "department-name-asc":
+                  setSortBy(TimesheetSortOption.DepartmentName);
+                  setAscending(true);
+                  break;
+                case "department-name-desc":
+                  setSortBy(TimesheetSortOption.DepartmentName);
+                  setAscending(false);
+                  break;
                 default:
                   setSortBy(TimesheetSortOption.Id);
                   setAscending(true);
@@ -288,8 +312,14 @@ const Timesheets: React.FC = () => {
             }}
           >
             <option value="none">Sin orden específico</option>
-            <option value="employee-asc">Empleado: A-Z</option>
-            <option value="employee-desc">Empleado: Z-A</option>
+            <option value="employee-name-asc">Empleado: A-Z</option>
+            <option value="employee-name-desc">Empleado: Z-A</option>
+            <option value="project-name-asc">Proyecto: A-Z</option>
+            <option value="project-name-desc">Proyecto: Z-A</option>
+            <option value="project-date-recent">Proyecto: más reciente</option>
+            <option value="project-date-oldest">Proyecto: más antiguo</option>
+            <option value="department-name-asc">Departamento: A-Z</option>
+            <option value="department-name-desc">Departamento: Z-A</option>
             <option value="date-recent">Fecha: Más reciente</option>
             <option value="date-oldest">Fecha: Más antiguo</option>
           </select>
