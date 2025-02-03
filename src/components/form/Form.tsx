@@ -1,5 +1,5 @@
 //Hooks
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useGetAllDepartments } from "../../hooks/useDepartments";
 import { useGetAllProjects } from "../../hooks/useProjects";
 import { useCreateTimesheet } from "../../hooks/useTimeSheets";
@@ -21,11 +21,14 @@ import { DepartmentsDto } from "../../Dtos/DepartmentsDto";
 import { ProjectDto } from "../../Dtos/ProjectsDto";
 import { ParsedDate } from "../../types/ParsedDate";
 import { TimesheetDto } from "../../Dtos/TimesheetDto";
+//Context
+import { TimesheetType } from "../../context/TimesheetContext";
+import { useTimesheet } from "../../context/TimesheetContext";
 
 
 interface FormProps {
   onClose: () => void;
-  state: string | null;
+  state: TimesheetType | null;
   isMobile: boolean;
 }
 
@@ -48,7 +51,11 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
   const [showCalendar, setShowCalendar] = useState<boolean>(false);  
   const [entryTime, setEntryTime] = useState<Date | null>(new Date());
   const [errors, setErrors] = useState<{ departmentId?: string; projectId?: string }>({});
-  const maxDate = state !== "vacaciones" ? new Date() : null;
+  const {timesheetType,setTimesheetType} = useTimesheet();
+
+
+  const maxDate = state !== TimesheetType.Vacaciones ? new Date() : null;
+
 
   const handleDateChange = (item: any) => {
     setDateRange([item.selection]);
@@ -105,7 +112,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
         departmentsId: departmentId ?? -1,
         projectId:projectId ?? -1,
         holiday:false,
-        typeOfWorkId:1,
+        typeOfWorkId:Number(timesheetType),
         validation:false,
         branchId :1,
     };
@@ -147,24 +154,47 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
     canvasRef.current?.clearCanvas();
   };
 
-  const stateToImageMap: { [key: string]: { img: string; text: string } } = {
-    oficina: {
+  // const stateToImageMap: { [key: string]: { img: string; text: string } } = {
+  //   oficina: {
+  //     img: "../../../src/assets/images/Oficinas.jpg",
+  //     text: "OFICINA",
+  //   },
+  //   onsite: {
+  //     img: "../../../src/assets/images/Onsite.jpg",
+  //     text: "VIAJE",
+  //   },
+  //   vacaciones: {
+  //     img: "../../../src/assets/images/Vacaciones.jpg",
+  //     text: "VACACIONES",
+  //   },
+  //   baja: {
+  //     img: "../../../src/assets/images/Baja.jpg",
+  //     text: "BAJA",
+  //   },
+  // };
+  const stateToImageMap: Record<TimesheetType, { img: string; text: string }> = {
+    [TimesheetType.Trabajo]: {
       img: "../../../src/assets/images/Oficinas.jpg",
       text: "OFICINA",
     },
-    onsite: {
+    [TimesheetType.Viaje]: {
       img: "../../../src/assets/images/Onsite.jpg",
-      text: "ONSITE",
+      text: "VIAJE",
     },
-    vacaciones: {
+    [TimesheetType.Vacaciones]: {
       img: "../../../src/assets/images/Vacaciones.jpg",
       text: "VACACIONES",
     },
-    baja: {
+    [TimesheetType.Baja]: {
       img: "../../../src/assets/images/Baja.jpg",
       text: "BAJA",
     },
+    [TimesheetType.Undefined]:{
+      img:"",
+      text:""
+    }
   };
+  
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -176,20 +206,20 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
           </button>
         </div>
         <div className="form-box">
-          {stateToImageMap[state || ""] ? (
+          {stateToImageMap[state??TimesheetType.Undefined] ? (
             <div>
               <img
-                src={stateToImageMap[state || ""].img}
-                className={`form-state-img ${state}`}
-                alt={stateToImageMap[state || ""].text}
+                src={stateToImageMap[state??TimesheetType.Undefined].img}
+                className={`form-state-img ${String(state).toLowerCase()}`}
+                alt={stateToImageMap[state??TimesheetType.Undefined].text}
               />
             </div>
           ) : (
             <p>Estado no válido</p>
           )}
         </div>
-        <label className="form-label">{stateToImageMap[state || ""].text}</label>
-        {(state === "onsite" || state === "oficina") && (
+        <label className="form-label">{stateToImageMap[state??TimesheetType.Undefined].text}</label>
+        {(state === TimesheetType.Viaje || state === TimesheetType.Trabajo) && (
           <>
             <div className="form-group">
               <div className="form-group-label-filter">
@@ -293,7 +323,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
             )}
           </div>
         </div>
-        {(state === "onsite" || state === "oficina") && (
+        {(state === TimesheetType.Viaje || state === TimesheetType.Trabajo) && (
           <>
             <div className="form-group">
               <div className="time-picker-row">

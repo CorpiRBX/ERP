@@ -4,11 +4,13 @@ import Sidebar from './components/sidebar/Sidebar';
 import Dashboard from './components/dashboard/Dashboard';
 import Timesheets from './components/timesheets/Timesheets';
 import Topbar from './components/topbar/Topbar';
+//Context
+import { TimesheetProvider } from "./context/TimesheetContext";
 
 const Home: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [roleId,setRoleId] = useState<number>(3);
+  const [roleId, setRoleId] = useState<number>(3);
 
   const navigate = useNavigate();
 
@@ -19,7 +21,7 @@ const Home: React.FC = () => {
   const handleFichajesClick = () => {
     navigate('/home/timesheets'); // Incluye el prefijo
   };
-  
+
   const handleDashboardClick = () => {
     navigate('/home/dashboard'); // Incluye el prefijo
   };
@@ -33,7 +35,7 @@ const Home: React.FC = () => {
       const id = stringRoleId ? parseInt(stringRoleId, 10) : 3;
       setRoleId(id);
 
-      
+
 
     };
 
@@ -71,8 +73,13 @@ const Home: React.FC = () => {
 
         <div style={contentStyle}>
           <Routes>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="timesheets" element={<Timesheets />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="timesheets" element={
+              <TimesheetProvider>
+                <Timesheets />
+              </TimesheetProvider>
+                } 
+              />
           </Routes>
         </div>
       </div>

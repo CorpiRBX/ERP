@@ -4,14 +4,17 @@ import "./Timesheets.css";
 import Form from "../form/Form";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal } from 'react-bootstrap';
-
+//Context 
+import { useTimesheet } from "../../context/TimesheetContext";
+import { TimesheetType } from "../../context/TimesheetContext";
 
 
 const Timesheets: React.FC = () => {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [showForm, setShowForm] = useState<boolean>(false);
-  const [formState, setFormState] = useState<string | null>(null);
+  const [formState, setFormState] = useState<number | null>(null);
+  const {timesheetType, setTimesheetType} = useTimesheet();
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,8 +32,10 @@ const Timesheets: React.FC = () => {
     navigate("/");
   };
 
-  const handleOpenForm = (state: string): void => {
+  const handleOpenForm = (state: number): void => {
     setFormState(state);
+    setTimesheetType(state ? (state as TimesheetType) : TimesheetType.Undefined)
+    
     setShowForm(true);
   };
 
@@ -46,7 +51,7 @@ const Timesheets: React.FC = () => {
           <h2 className="timesheets-title">FICHAJE</h2>
         </div>
         <div className="timesheets-button-container">
-          <button className="timesheets-button-oficina" onClick={() => handleOpenForm("oficina")}>       
+          <button className="timesheets-button-oficina" onClick={() => handleOpenForm(1)}>       
             <img
               src="../../../src/assets/images/Oficinas.jpg"
               className="timesheets-button-img"
@@ -56,7 +61,7 @@ const Timesheets: React.FC = () => {
           <span className="timesheets-label">OFICINAS</span>
         </div>
         <div className="timesheets-button-container">
-          <button className="timesheets-button-onsite" onClick={() => handleOpenForm("onsite")}>
+          <button className="timesheets-button-onsite" onClick={() => handleOpenForm(2)}>
             <img
               src="../../../src/assets/images/OnSite.jpg"
               className="timesheets-button-img-onsite"
@@ -67,7 +72,7 @@ const Timesheets: React.FC = () => {
         </div>
         <div className="timesheets-button-group">
           <div className="timesheets-button-wrapper">
-            <button className="timesheets-button-vacaciones" onClick={() => handleOpenForm("vacaciones")}>
+            <button className="timesheets-button-vacaciones" onClick={() => handleOpenForm(3)}>
               <img
                 src="../../../src/assets/images/Vacaciones.jpg"
                 className="timesheets-button-img-vacaciones"
@@ -78,7 +83,7 @@ const Timesheets: React.FC = () => {
           </div>
 
           <div className="timesheets-button-wrapper">
-            <button className="timesheets-button-baja" onClick={() => handleOpenForm("baja")}>
+            <button className="timesheets-button-baja" onClick={() => handleOpenForm(4)}>
               <img
                 src="../../../src/assets/images/Baja.jpg"
                 className="timesheets-button-img-baja"
