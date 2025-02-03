@@ -9,14 +9,20 @@ import { FilterConfig } from "../../interfaces/FilterConfig";
 import { TimesheetSortOption } from "../../enums/TimesheetSortOption";
 import { FilterState } from "../../types/FilterState";
 import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal } from 'react-bootstrap';
+import { useTimesheet } from "../../context/TimesheetContext";
+import { TimesheetType } from "../../context/TimesheetContext";
+
 
 const Timesheets: React.FC = () => {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 800);
   const [showForm, setShowForm] = useState<boolean>(false);
-  const [formState, setFormState] = useState<string | boolean>(false);
+  const [formState, setFormState] = useState<number | null>(null);
   const [filtersVisible, setFiltersVisible] = useState<boolean>(false);
   const debounceTimerInMiliSeconds: number = 500;
+  const {timesheetType, setTimesheetType} = useTimesheet();
 
   const {
     timesheets,
@@ -62,14 +68,20 @@ const Timesheets: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   
-  const handleGoBack = () => navigate("/");
+  const handleGoBack = (): void => {
+    navigate("/");
+  }
+    
 
-  const handleOpenForm = (state: string) => {
+  const handleOpenForm = (state: number): void => {
     setFormState(state);
+    setTimesheetType(state ? (state as TimesheetType) : TimesheetType.Undefined)
+    
     setShowForm(true);
   };
 
-  const handleCloseForm = () => {
+  // Función para cerrar el modal
+  const handleCloseForm = (): void => {
     setShowForm(false);
   };
 
@@ -126,94 +138,72 @@ const Timesheets: React.FC = () => {
           <h2 className="timesheets-title">FICHAJE</h2>
         </div>
         <div className="timesheets-button-container">
-          <button
-            className="timesheets-button-oficina"
-            onClick={() => handleOpenForm("oficina")}
-          >
-            {showForm && formState === "oficina" && (
-              <Form
-                onClose={handleCloseForm}
-                state={"oficina"}
-                isMobile={isMobile}
-              />
-            )}
+          <button className="timesheets-button-oficina" onClick={() => handleOpenForm(1)}>       
             <img
               src="../../../src/assets/images/Oficinas.jpg"
               className="timesheets-button-img"
               alt="Onsite"
-            ></img>
+            />
           </button>
           <span className="timesheets-label">OFICINAS</span>
         </div>
         <div className="timesheets-button-container">
-          <button
-            className="timesheets-button-onsite"
-            onClick={() => handleOpenForm("onsite")}
-          >
-            {showForm && formState === "onsite" && (
-              <Form
-                onClose={handleCloseForm}
-                state={"onsite"}
-                isMobile={isMobile}
-              />
-            )}
+          <button className="timesheets-button-onsite" onClick={() => handleOpenForm(2)}>
             <img
               src="../../../src/assets/images/OnSite.jpg"
               className="timesheets-button-img-onsite"
               alt="Onsite"
-            ></img>
+            />
           </button>
           <span className="timesheets-label">ONSITE</span>
         </div>
         <div className="timesheets-button-group">
           <div className="timesheets-button-wrapper">
-            <button
-              className="timesheets-button-vacaciones"
-              onClick={() => handleOpenForm("vacaciones")}
-            >
-              {showForm && formState === "vacaciones" && (
-                <Form
-                  onClose={handleCloseForm}
-                  state={"vacaciones"}
-                  isMobile={isMobile}
-                />
-              )}
+            <button className="timesheets-button-vacaciones" onClick={() => handleOpenForm(3)}>
               <img
                 src="../../../src/assets/images/Vacaciones.jpg"
                 className="timesheets-button-img-vacaciones"
                 alt="Onsite"
-              ></img>
+              />
             </button>
             <span className="timesheets-label-right">VACACIONES</span>
           </div>
 
           <div className="timesheets-button-wrapper">
-            <button
-              className="timesheets-button-baja"
-              onClick={() => handleOpenForm("baja")}
-            >
-              {showForm && formState === "baja" && (
-                <Form
-                  onClose={handleCloseForm}
-                  state={"baja"}
-                  isMobile={isMobile}
-                />
-              )}
+            <button className="timesheets-button-baja" onClick={() => handleOpenForm(4)}>
               <img
                 src="../../../src/assets/images/Baja.jpg"
                 className="timesheets-button-img-baja"
                 alt="Onsite"
-              ></img>
+              />
             </button>
             <span className="timesheets-label-right">BAJA</span>
           </div>
         </div>
 
+        {/* Modal de Bootstrap */}
+        <Modal
+          show={showForm}
+          onHide={handleCloseForm}
+          backdrop="static"  // No se cierra al hacer clic fuera
+          centered
+        >
+          <Modal.Body>
+            <Form
+              onClose={handleCloseForm}
+              state={formState}
+              isMobile={isMobile}
+            />
+          </Modal.Body>
+        </Modal>
+    
         <div className="timesheets-last-entry-container">
           <label className="timesheets-last-entry-label">ULTIMO FICHAJE</label>
           <label className="timesheets-last-entry-type">OFICINAS</label>
           <div className="timesheets-last-entry-details">
-            <label className="timesheets-last-entry-detail-label">ENTRADA</label>
+            <label className="timesheets-last-entry-detail-label">
+              ENTRADA
+            </label>
             <label className="timesheets-last-entry-detail-label">SALIDA</label>
             <label className="timesheets-last-entry-detail-label">
               PROYECTO

@@ -50,7 +50,7 @@ const Filters: React.FC<FiltersProps> = ({ config, onFilterChange, noResults }) 
             {key === "date" ? (
               <DatePicker 
               value={inputValues[key] || ""} 
-              onChange={(date) => onInputChange(key, date)} 
+              onChange={(date: string | number | undefined) => onInputChange(key, date)} 
               clearInput={() => clearInput(key)}/>
             ) : (
               <>

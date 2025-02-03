@@ -1,272 +1,281 @@
 .timesheets-container {
-      flex: 1;
-      padding: 1.25rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      position: relative;
-      background-color: #F2F2F2;
-    }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  position: relative;
+  background-color: #F2F2F2;
+  padding: 1.25rem;
+  min-width: 100%;
+  width: auto; /* Permite que el ancho se adapte al contenido */
+}
 
-    @media (max-width: 750px) {
-      .timesheets-container {
-        grid-template-columns: 1fr;
-      }
-    }
+@media (max-width: 800px) {
+  .timesheets-container {
+    grid-template-columns: 1fr; /* Una sola columna */
+  }
+  
+  .timesheets-main-container {
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+  }
+}
 
-    .timesheets-main-container {
-      min-height: 90vh;
-      background-color: white;
-      border: 0.125rem solid black;
-      display: flex;
-      flex-direction: column;
-      border-radius: 0.3125rem;
-      padding: 0.625rem;    
-    }
+.timesheets-main-container {
+  min-height: 90vh;
+  background-color: white;
+  border: 0.125rem solid black;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.3125rem;
+  padding: 0.625rem;
+  width: 100%; /* Asegura que el contenedor ocupe el 100% del ancho disponible */
+  box-sizing: border-box; /* Incluye el padding y border en el tamaño total */
+}
 
-    .timesheets-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      position: relative;
-    }
+.timesheets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
 
-    .timesheets-title {
-      margin: 0;
-      font-family: DM Sans;
-      font-size: 1.25rem;
-      text-shadow: 0.2rem 0.2rem 0.15rem rgba(0, 0, 0, 0.2);
-    }
+.timesheets-title {
+  margin: 0;
+  font-family: DM Sans;
+  font-size: 1.25rem;
+  text-shadow: 0.2rem 0.2rem 0.15rem rgba(0, 0, 0, 0.2);
+}
 
-    .timesheets-button-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 2.2rem;
-      position: relative;
-    }
+.timesheets-button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2.2rem;
+  position: relative;
+}
 
-    .timesheets-button-oficina {
-      height: 5rem;
-      border: 2px solid black;
-      border-radius: 0.3125rem;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-    }
+.timesheets-button-oficina {
+  height: 5rem;
+  border: 2px solid black;
+  border-radius: 0.3125rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
 
-    .timesheets-button-onsite{
-      
-      height: 5rem;
-      border: 2px solid black;
-      border-radius: 0.3125rem;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;  /* Asegúrate de que no haya padding en el contenedor */
-    }
+.timesheets-button-onsite {
 
-    .timesheets-button-vacaciones {
-      height: 5rem;
-      border: 2px solid black;
-      border-radius: 0.3125rem;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-    }
+  height: 5rem;
+  border: 2px solid black;
+  border-radius: 0.3125rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  /* Asegúrate de que no haya padding en el contenedor */
+}
 
-    .timesheets-button-baja {
-      height: 5rem;
-      border: 2px solid black;
-      border-radius: 0.3125rem;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      
-    }
-    
-    .timesheets-button-img {
-      height: 100%;
-      width: 100%;  
-      object-fit: cover;  
-      border-radius: 0.3125rem;
-    }   
-    
-    .timesheets-button-img-onsite {
-      height: 100%;
-      width: 100%;  
-      object-fit: cover ;  
-      object-position: center 35%;
-      border-radius: 0.3125rem;
-    } 
+.timesheets-button-vacaciones {
+  height: 5rem;
+  border: 2px solid black;
+  border-radius: 0.3125rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
 
-    .timesheets-button-img-vacaciones {
-      height: 100%;
-      width: 100%;  
-      object-fit: cover ;  
-      object-position: center 67%;
-      border-radius: 0.3125rem;
-    } 
+.timesheets-button-baja {
+  height: 5rem;
+  border: 2px solid black;
+  border-radius: 0.3125rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 
-    .timesheets-button-img-baja {
-      height: 100%;
-      width: 100%;  
-      object-fit: cover ;  
-      object-position: center 60%;
-      border-radius: 0.3125rem;
-    } 
+}
 
-    .timesheets-button-text {
-      font-family: DM Sans;
-      font-size: 1rem;
-      font-weight: bold;
-      color: black;
-    }
+.timesheets-button-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0.3125rem;
+}
 
-    .timesheets-label {
-      font-family: DM Sans;
-      font-size: 0.8125rem;
-      font-weight: bold;
-      color: black;
-      position: absolute;
-      bottom: -1.2rem;
-      right: 0rem;
-    }
+.timesheets-button-img-onsite {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  border-radius: 0.3125rem;
+}
 
-    .timesheets-button-group {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-    }
+.timesheets-button-img-vacaciones {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center 67%;
+  border-radius: 0.3125rem;
+}
 
-    .timesheets-button-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      width: 49%;
-    }
+.timesheets-button-img-baja {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+  border-radius: 0.3125rem;
+}
 
-    .timesheets-label-right {
-      margin-top: 0.3rem;
-      width: 100%;
-      text-align: right;
-      font-family: DM Sans;
-      font-size: 0.8125rem;
-      font-weight: bold;
-      color: black;
-      bottom: -1.2rem;
-      right: 0rem;
-      
-    }
+.timesheets-button-text {
+  font-family: DM Sans;
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+}
 
-    .timesheets-last-entry-container {
-      margin-top: 4rem;
-      min-height: 13.5rem;
-      border: 2px solid black;
-      width: 100%;
-      height: auto;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      border-radius: 0.3125rem;
-    }
+.timesheets-label {
+  font-family: DM Sans;
+  font-size: 0.8125rem;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  bottom: -1.2rem;
+  right: 0rem;
+}
 
-    .timesheets-last-entry-label {
-      font-family: DM Sans;
-      font-size: 1rem;
-      font-weight: bold;
-      color: black;
-      position: absolute;
-      top: 0.625rem;
-      left: 0.625rem;
-    }
+.timesheets-button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
-    .timesheets-last-entry-type {
-      font-family: DM Sans;
-      font-size: 0.75rem;
-      font-weight: bold;
-      color: #9e0000;
-      position: absolute;
-      top: 0.625rem;
-      right: 0.625rem;
-    }
+.timesheets-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 49%;
+}
 
-    .timesheets-last-entry-details {
-      display: flex;
-      position: absolute;
-      top: 3rem;
-      left: 1rem;
-      width: calc(100% - 4rem);
-      justify-content: space-between;
-      padding: 0 1rem;
-    }
+.timesheets-label-right {
+  margin-top: 0.3rem;
+  width: 100%;
+  text-align: right;
+  font-family: DM Sans;
+  font-size: 0.8125rem;
+  font-weight: bold;
+  color: black;
+  bottom: -1.2rem;
+  right: 0rem;
 
-    .timesheets-last-entry-detail-label {
-      font-family: DM Sans;
-      font-size: 0.65rem;
-      color: #9F9292;
-      text-shadow: 0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2);
-    }
+}
 
-    .timesheets-last-entry-data {
-      border: 0.125rem solid black;
-      border-radius: 0.3125rem;
-      background-color: white;
-      width: calc(100% - 1.25rem);
-      height: 2.5rem;
-      position: absolute;
-      top: 4.2rem;
-      left: 0.625rem;
-    }
+.timesheets-last-entry-container {
+  margin-top: 4rem;
+  min-height: 13.5rem;
+  border: 2px solid black;
+  width: 100%;
+  height: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 0.3125rem;
+}
 
-    .timesheets-repeat-button {
-      height: 3rem;
-      width: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 0.125rem solid black;
-      border-radius: 0.3125rem;
-      background-color: #333131;
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+.timesheets-last-entry-label {
+  font-family: DM Sans;
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  top: 0.625rem;
+  left: 0.625rem;
+}
 
-    .timesheets-repeat-button-text {
-      font-family: DM Sans;
-      color: white;
-    }
+.timesheets-last-entry-type {
+  font-family: DM Sans;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #9e0000;
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+}
 
-    .timesheets-history-container {
-      min-height: 90vh;
-      background-color: white;
-      border: 0.125rem solid black;
-      display: flex;
-      flex-direction: column;
-      border-radius: 0.3125rem;
-    }
+.timesheets-last-entry-details {
+  display: flex;
+  position: absolute;
+  top: 3rem;
+  left: 1rem;
+  width: calc(100% - 4rem);
+  justify-content: space-between;
+  padding: 0 1rem;
+}
 
-    .timesheets-history-header {
-      padding: 0.625rem;
-      border-bottom: 0.125rem solid black;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      min-height: 3.125rem;
-    }
+.timesheets-last-entry-detail-label {
+  font-family: DM Sans;
+  font-size: 0.65rem;
+  color: #9F9292;
+  text-shadow: 0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2);
+}
+
+.timesheets-last-entry-data {
+  border: 0.125rem solid black;
+  border-radius: 0.3125rem;
+  background-color: white;
+  width: calc(100% - 1.25rem);
+  height: 2.5rem;
+  position: absolute;
+  top: 4.2rem;
+  left: 0.625rem;
+}
+
+.timesheets-repeat-button {
+  height: 3rem;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.125rem solid black;
+  border-radius: 0.3125rem;
+  background-color: #333131;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timesheets-repeat-button-text {
+  font-family: DM Sans;
+  color: white;
+}
+
+.timesheets-history-container {
+  min-height: 90vh;
+  width: 100%;
+  background-color: white;
+  border: 0.125rem solid black;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.3125rem;
+}
+
+.timesheets-history-header {
+  padding: 0.625rem;
+  border-bottom: 0.125rem solid black;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 3.125rem;
+}
 
     .timesheets-history-header-top {
       display: flex;
@@ -275,46 +284,46 @@
       gap: 10px;
     }
 
-    .timesheets-history-title {
-      margin: 0;
-      font-family: DM Sans;
-      font-size: 1.25rem;
-      text-shadow: 0.2rem 0.2rem 0.15rem rgba(0, 0, 0, 0.2);
-    }
+.timesheets-history-title {
+  margin: 0;
+  font-family: DM Sans;
+  font-size: 1.25rem;
+  text-shadow: 0.2rem 0.2rem 0.15rem rgba(0, 0, 0, 0.2);
+}
 
     .timesheets-history-filters {
       width: 100%;
     }
 
-    .timesheets-history-filter-label {
-      margin-right: 0.3125rem;
-      font-family: DM Sans;
-      font-size: 0.8125rem;
-    }
+.timesheets-history-filter-label {
+  margin-right: 0.3125rem;
+  font-family: DM Sans;
+  font-size: 0.8125rem;
+}
 
-    .timesheets-history-filter-checkbox {
-      margin-right: 0.3125rem;
-    }
+.timesheets-history-filter-checkbox {
+  margin-right: 0.3125rem;
+}
 
-    .timesheets-history-header-bottom {
-      display: flex;
-      position: absolute;
-      bottom: -0.5rem;
-      width: calc(100% - 2.5rem);
-      height: 2.5rem;
-      align-items: center;
-      justify-content: space-between;
-      left: 1.25rem;
-    }
+.timesheets-history-header-bottom {
+  display: flex;
+  position: absolute;
+  bottom: -0.5rem;
+  width: calc(100% - 2.5rem);
+  height: 2.5rem;
+  align-items: center;
+  justify-content: space-between;
+  left: 1.25rem;
+}
 
-    .timesheets-history-header-bottom-label {
-      text-align: center;
-      font-size: 0.75rem;
-      font-family: DM Sans;
-      color: #9F9292;
-      text-shadow: 0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2);
-      margin-right: 0.0625rem;
-    }
+.timesheets-history-header-bottom-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-family: DM Sans;
+  color: #9F9292;
+  text-shadow: 0.12rem 0.12rem 0.1rem rgba(0, 0, 0, 0.2);
+  margin-right: 0.0625rem;
+}
 
     .timesheets-history-content {
       flex: 1;

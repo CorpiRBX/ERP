@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import RBXLogo from '../../assets/logos/RBXWhite.jpg';
-import './MainContent.css'; // Importa el archivo CSS
+import './Dashboard.css'; // Importa el archivo CSS
 
-const MainContent = () => {
+const Dashboard: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
 
   const handleResize = () => {
@@ -30,4 +30,4 @@ const MainContent = () => {
   );
 };
 
-export default MainContent;
+export default Dashboard;

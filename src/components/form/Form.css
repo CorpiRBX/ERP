@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  /* z-index: 1000; */
 }
 
 .isHidden {
@@ -39,7 +39,9 @@
   text-align: center;
   margin-top: -0.3rem;
   margin-bottom: 20px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-family: DM Sans;
+  font-weight: bold;
 }
 
 .form-box {
@@ -50,7 +52,6 @@
   justify-content: center;
   align-items: center;
   padding: 0;
-  margin-bottom: 0.5rem;
   flex-direction: column;
   align-items: center;
   position: relative;
@@ -68,7 +69,7 @@
   object-position: center 0%;
 }
 
-.form-state-img.onsite {
+.form-state-img.viaje {
   object-position: center 2.5rem;
 }
 
@@ -107,15 +108,38 @@
 }
 
 .form-group-label {
-  margin-bottom: 0.5rem;
   font-size: 0.9rem;
   font-weight: bold;
+  color:#050505;
+}
+
+.form-button-filter {
+  background-color: transparent;
+  cursor: pointer;
+  padding: auto;
+}
+
+.form-button-icon-filter {
+  width: 1.1rem;  
+  height: 1.1rem;
+  background-color: white; /* Asegura que no haya fondo */
+  display: block; /* Asegura que la imagen no tenga márgenes */
+  border-radius: 4px;
+  margin-top: 0.3rem;
+}
+
+
+.form-group-label-filter {
+  display: flex;
+  flex-direction: row; /* Organiza los elementos en filas */
+  justify-content: space-between;
+  width: 100%; /* Asegura que el contenedor ocupe el 100% */
 }
 
 .form-select {
   width: 100%;
   padding: 8px;
-  border: 2px solid black;
+  border: 2px solid black !important;
   border-radius: 4px;
   appearance: none;
   -webkit-appearance: none;
@@ -234,6 +258,7 @@
 }
 
 
+
 .form-button-icon-calendar {
   width: 2.2rem;
   height: 2rem;
@@ -323,7 +348,6 @@
 .time-picker-row {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
   /* Espaciado entre los inputs */
 }
 
@@ -341,20 +365,6 @@
   display: flex;
   height: 2.5rem;
   width: 7.4rem;
-}
-
-input {
-  background-color: #ffffff !important;
-  height: 2.5rem !important;
-  width: 7rem !important;
-  padding: 0 !important;
-  margin-top: 0.1rem !important;
-  margin-bottom: 1rem ;
-  border: 2px solid black;
-  border-radius: 4px;
-  text-align: center !important;
-  padding-left: 0 !important;
-  padding-right: -0 !important;
 }
 
 .form-group-label {
@@ -392,11 +402,11 @@ input {
 }
 
 .time-picker-input.isMobile {
-  margin-right: 30%;
+  margin-right: 15%;
 }
 
 .time-picker-input.isDesktop {
-  margin-right: 45%;
+  margin-right: 30%;
 }
 
 .time-picker-row {
@@ -406,17 +416,19 @@ input {
 }
 
 .time-input {
+  background-color: #ffffff;
+  height: 2.5rem !important;
+  width: 7rem !important;
   text-align: center;
-  /* Centra el contenido dentro del input */
   padding-left: none;
-  /* Elimina el padding que podría descentrar el texto */
   margin: 0;
-
+  border: 2px solid black !important;
+  padding: 0 !important;
 }
 
 .time-12::-webkit-calendar-picker-indicator {
   padding-right: 1rem;
-  margin-left: -1rem
+  margin-left: -1rem;
 }
 
 .time-3::-webkit-calendar-picker-indicator {
@@ -467,15 +479,45 @@ input {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid #222222;
 }
 
 .form-button-cancel {
   padding: 10px 15px;
   width: 7rem;
   height: 3rem;
-  background-color: #8b8b8b;
+  background-color: #7c7c7c;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid #222222;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Alinea el título y el botón en los extremos */
+  align-items: center; /* Alinea verticalmente los elementos */
+  padding: 10px;
+}
+
+.title {
+  flex: 1; /* Hace que el título ocupe el espacio disponible */
+  text-align: center; /* Centra el texto del título */
+  font-size: 1.3rem;
+  font-family: DM Sans;
+}
+
+.close-btn {
+  background-color: #ff4d4d; /* Color de fondo del botón (rojo, por ejemplo) */
+  color: white; /* Color del texto del botón */
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 15px; /* Aquí redondeamos los bordes */
+
+}
+
+.close-btn:hover {
+  background-color: #cc0000; /* Cambia el color de fondo cuando el ratón pasa por encima */
 }

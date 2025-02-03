@@ -1,0 +1,142 @@
+.login-wrapper {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+}
+
+.logo-robot {
+  position: absolute;
+  left: 1;
+  margin-right: 10%;
+  height: 95%;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+@media (max-width: 600px) {
+  .logo-robot {
+    height: 75%;
+    margin-left: 15%;
+  }
+}
+
+.logo-RBX-White {
+  position: absolute; /* Esto posiciona el elemento fuera del flujo normal */
+  bottom: 0; /* Lo coloca en la parte inferior */
+  right: 0; /* Lo coloca en la parte derecha */
+  height: 6%;
+  margin-right: 1%;
+}
+
+.rbx-phrase {
+  position: absolute; /* Esto posiciona el elemento fuera del flujo normal */
+  left: 0; /* Lo coloca en la parte inferior */
+  bottom: 0; /* Lo coloca en la parte derecha */
+  font-size: 1rem;
+  margin-left: 1%;
+}
+
+.login-container {
+  background-color: #222222;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 380px;
+}
+
+@media (max-width: 600px) {
+  .login-container {
+    width: 20.625rem;
+  }
+}
+
+.icon-user {
+  width: 1.2rem;
+  height:  1.2rem;
+}
+
+.icon-position {
+  display: flex; /* Activa Flexbox */
+  flex-direction: row; /* Alinea los elementos en una fila */
+  justify-content: flex-start; /* Alinea los elementos al inicio horizontalmente */
+  align-items: center; /* Alinea los elementos al centro verticalmente */
+  gap: 5px; /* Espaciado entre los elementos */
+}
+
+.login-container h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group-login {
+  margin-bottom: 2rem;
+}
+
+.form-group-login label {
+  color: white;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-group-login input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-button-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  margin-bottom: 20px;
+}
+
+.container-password-forgotten{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+.button-form {
+  background-color: rgb(233, 58, 51);
+  color: white;
+  font: bold;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 80%;
+}
+
+
+.button-form:hover {
+  background-color: #fa8072;
+}
+
+.error-message-container {
+  margin-top: 10px;
+  display: flex; /* Flexbox para centrar contenido */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  text-align: center; /* Centra texto dentro de los hijos, si es necesario */
+  width: 100%;
+}
+
+.error-message {
+  width: 100%;
+  margin: 0; /* Asegúrate de que no haya margen adicional */
+  color: #ffffff !important;
+  text-align: center; /* Asegúrate de centrar el texto en el elemento <p> */
+}
+
+@media (max-width: 600px) {
+  .error-message{
+    width: 80%;
+  }
+}

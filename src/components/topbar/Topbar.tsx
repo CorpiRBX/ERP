@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import './Topbar.css';
 import logo from '../../assets/logos/RBXTransparente.png';
 
-const Topbar = () => {
+// Definir el tipo para el componente
+const Topbar: React.FC = () => {
   const location = useLocation();
+  
+  // Definir el estado de la visibilidad y el tamaño de la pantalla
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 800);
+  const [prevScrollPos, setPrevScrollPos] = useState<number>(window.pageYOffset);
+  const [visible, setVisible] = useState<boolean>(true);
+  const navigate = useNavigate();
+
   let labelText = '';
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
-  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
-  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    // Manejo del cambio de tamaño de la ventana
     const handleResize = () => {
       setIsMobile(window.innerWidth < 800);
     };
@@ -22,6 +29,7 @@ const Topbar = () => {
   }, []);
 
   useEffect(() => {
+    // Manejo del scroll
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
 
@@ -39,9 +47,14 @@ const Topbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos, isMobile]);
 
-  if (location.pathname === '/') {
+  const handleHomeClick = () => {
+    navigate('/home');
+  };
+
+  // Establecer el texto de la etiqueta según la ruta
+  if (location.pathname === '/home/dashboard') {
     labelText = 'DASHBOARD';
-  } else if (location.pathname === '/timesheets') {
+  } else if (location.pathname === '/home/timesheets') {
     labelText = 'FICHAJES';
   }
 
@@ -57,6 +70,7 @@ const Topbar = () => {
         src={logo}
         alt="Logo"
         className="topbar-logo"
+        onClick={handleHomeClick}
       />
       <label className="topbar-label">
         {labelText}
