@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Timesheets.css";
+import "./Paginator.css";
 import Form from "../form/Form";
 import { useTimesheets } from "./useTimesheets";
 import Filters from "./Filters";
@@ -75,12 +76,22 @@ const Timesheets: React.FC = () => {
       setInputPage((prev) => prev + 1);
     }
   };
+
+  const handleLastPage = () => {
+    setCurrentPage(totalPages);
+    setInputPage(totalPages);
+  };
   
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage((prev) => prev - 1);
       setInputPage((prev) => prev - 1);
     }
+  };
+  
+  const handleFirstPage = () => {
+    setCurrentPage(1);
+    setInputPage(1);
   };
 
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -357,10 +368,17 @@ const Timesheets: React.FC = () => {
 
           {/* Pagination Controls */}
           <div className="pagination-controls">
-            <button disabled={currentPage === 1} onClick={handlePreviousPage}>Anterior</button>
+            <button 
+              className="pagination-button first-page" aria-label="First Page"
+              disabled={currentPage === 1} onClick={handleFirstPage}>
+            </button>
+
+            <button 
+              className="pagination-button prev-page" aria-label="Previous Page"
+              disabled={currentPage === 1} onClick={handlePreviousPage}>
+            </button>
+
             <span>
-              Página
-              {' '}
               <input
                 className="paginator-input"
                 type="number"
@@ -388,7 +406,16 @@ const Timesheets: React.FC = () => {
               </select> 
               
             </span>
-            <button disabled={currentPage === totalPages} onClick={handleNextPage}>Siguiente</button>
+            
+            <button 
+              disabled={currentPage === totalPages} onClick={handleNextPage}
+              className="pagination-button next-page" aria-label="Next Page">
+            </button>
+
+            <button 
+              disabled={currentPage === totalPages} onClick={handleLastPage}
+              className="pagination-button last-page" aria-label="Last Page">
+            </button>
           </div>
         </div>
       </div>

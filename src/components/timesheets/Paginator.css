@@ -1,0 +1,76 @@
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  /* gap: 1rem; */
+}
+
+.pagination-controls button {
+  padding: 0.5rem 1rem;
+  border: none;
+  /* background-color: #007bff; */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.paginator-input {
+  width: 60px !important;
+  height: 25px !important;
+  margin: 0 5px;
+}
+
+/* Remove arrows (Chrome, Safari, Edge, Opera) */
+.paginator-input::-webkit-outer-spin-button,
+.paginator-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove arrows (Firefox) */
+.paginator-input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.pagination-button {
+  width: 20px; /* Adjust as needed */
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* Hover Effect */
+.pagination-button:hover {
+  opacity: 0.6;
+}
+
+/* Next Page (→) */
+.next-page {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4l8 8-8 8"/></svg>');
+}
+
+/* Last Page (→|) */
+.last-page {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l8 8-8 8"/><path d="M18 4v16"/></svg>');
+}
+
+/* Previous Page (←) */
+.prev-page {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4l-8 8 8 8"/></svg>');
+}
+
+/* First Page (|←) */
+.first-page {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 4l-8 8 8 8"/><path d="M6 4v16"/></svg>');
+}

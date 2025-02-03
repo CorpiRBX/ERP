@@ -453,48 +453,7 @@
     .filter-toggle-button:hover {
       color: #525252; /* Azul más oscuro al pasar el mouse */
     }
-
-    .pagination-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 1rem;
-      gap: 1rem;
-    }
     
-    .pagination-controls button {
-      padding: 0.5rem 1rem;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    .pagination-controls button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-
-    .paginator-input {
-      width: 60px !important;
-      height: 25px !important;
-      margin: 0 5px;
-    }
-
-    /* Remove arrows (Chrome, Safari, Edge, Opera) */
-    .paginator-input::-webkit-outer-spin-button,
-    .paginator-input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Remove arrows (Firefox) */
-    .paginator-input[type="number"] {
-      appearance: textfield;
-      -moz-appearance: textfield;
-    }
-
     .timesheets-sort-container {
       margin: 10px 0;
       display: flex;
