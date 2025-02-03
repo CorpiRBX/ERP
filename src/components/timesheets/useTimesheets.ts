@@ -12,12 +12,14 @@ import { useEntityFilter } from "../../hooks/useEntityFilter";
 import { EmployeeDto } from "../../dtos/EmployeeDto";
 import { ProjectDto } from "../../dtos/ProjectDto";
 import { DepartmentDto } from "../../dtos/DepartmentDto";
+import { FilterState } from "../../types/FilterState";
 
 export const useTimesheets = () => {
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
   const [filters, setFilters] = useState<TimesheetFilters>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [noResults, setNoResults] = useState(false);
   const debounceTimeout = useRef<number | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,6 +34,8 @@ export const useTimesheets = () => {
   const { names: employeeNames, fetchNames: fetchEmployeeNames } = useFetchNames(getEmployeeById);
   const { names: projectNames, fetchNames: fetchProjectNames } = useFetchNames(getNameProjectById);
   const { names: departmentNames, fetchNames: fetchDepartmentNames } = useFetchNames(getDepartmentById);
+
+  const [filterStates, setFilterStates] = useState<{ [key in keyof TimesheetFilters]?: FilterState }>({});
 
   const parseDateFilter = (dateString?: string) => {
     if (!dateString) return {};
@@ -49,6 +53,7 @@ export const useTimesheets = () => {
   const fetchTimesheets = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setNoResults(false);
 
     try {
       const dateFilter = parseDateFilter(filters.date);
@@ -67,6 +72,9 @@ export const useTimesheets = () => {
       const data = response.data;
       const pagedItemsList = response.data.pagedItemsList;
 
+      console.log("pagedItemsList", pagedItemsList);
+      setNoResults(pagedItemsList.length === 0);
+
       await fetchEmployeeNames(pagedItemsList, "employeeId"); // Nombre de la propiedad de TimesheetDto
       await fetchProjectNames(pagedItemsList, "projectId");
       await fetchDepartmentNames(pagedItemsList, "departmentsId");
@@ -81,8 +89,9 @@ export const useTimesheets = () => {
     }
   }, [filters, currentPage, pageSize, sortBy, ascending, fetchEmployeeNames, fetchProjectNames, fetchDepartmentNames]);
 
-  const updateFilter = (key: keyof TimesheetFilters, value: any) => {
+  const updateFilter = (key: keyof TimesheetFilters, value: any, state: FilterState) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
+    setFilterStates((prev) => ({ ...prev, [key]: state })); // ✅ Guardamos el estado del filtro
   };
 
   const debounce = (callback: () => void, delay: number) => {
@@ -112,7 +121,7 @@ export const useTimesheets = () => {
   );
 
   const handleDateFilter = (date: Date | null) => {
-    debounce(() => updateFilter("date", date ?? undefined), 1000);
+    debounce(() => updateFilter("date", date ?? undefined, FilterState.Valid), 1000);
   };
 
   useEffect(() => {
@@ -126,6 +135,7 @@ export const useTimesheets = () => {
     departmentNames,
     loading,
     error,
+    noResults,
     updateFilter,
     handleEmployeeNameFilter,
     handleProjectNameFilter,

@@ -23,6 +23,7 @@ const Timesheets: React.FC = () => {
     departmentNames,
     loading,
     error,
+    noResults,
     updateFilter,
     handleEmployeeNameFilter,
     handleProjectNameFilter,
@@ -257,7 +258,9 @@ const Timesheets: React.FC = () => {
                   // else {
                   //   updateFilter(key, value);
                   // }
+                  console.log("noResults", noResults);
                 }}
+                noResults={noResults}
               />
             )}
           </div>
@@ -339,6 +342,7 @@ const Timesheets: React.FC = () => {
 
         <div className="timesheets-history-content">
           {loading && <p>Cargando...</p>}
+          {noResults && <p style={{ color: "red" }}>Sin resultados.</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
           <table className="timesheets-table">
             <thead>

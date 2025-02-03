@@ -1,4 +1,5 @@
 import { useCallback, useRef } from "react";
+import { FilterState } from "../types/FilterState";
 
 /**
  * Hook genérico para manejar la búsqueda de entidades por nombre y actualizar un filtro.
@@ -9,7 +10,7 @@ import { useCallback, useRef } from "react";
  */
 export const useEntityFilter = <T extends { id: number }, K extends keyof any>(
   fetchByNameFunc: (name: string) => Promise<{ success: boolean; data?: T }>,
-  updateFilterFunc: (key: K, value: any) => void,
+  updateFilterFunc: (key: K, value: any, state: FilterState) => void,
   filterKey: K,
   minLength: number
 ) => {
@@ -26,12 +27,16 @@ export const useEntityFilter = <T extends { id: number }, K extends keyof any>(
         if (name.length >= minLength) {
           try {
             const response = await fetchByNameFunc(name);
-            updateFilterFunc(filterKey, response.success && response.data ? response.data.id : undefined);
+            if (response.success && response.data) {
+              updateFilterFunc(filterKey, response.data.id, FilterState.Valid);
+            } else {
+              updateFilterFunc(filterKey, undefined, FilterState.NotFound); // ❌ No encontrado
+            }
           } catch {
-            updateFilterFunc(filterKey, undefined);
+            updateFilterFunc(filterKey, -1000, FilterState.Error); // ⚠️ Error en la búsqueda
           }
         } else {
-          updateFilterFunc(filterKey, undefined);
+          updateFilterFunc(filterKey, undefined, FilterState.Empty); // 🔄 Reinicio del filtro
         }
       }, 1000);
     },

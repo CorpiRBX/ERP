@@ -1,22 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FilterConfig } from "../../interfaces/FilterConfig";
 import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
 import DatePicker from "./DatePicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Filters.css";
+import { FilterState } from "../../types/FilterState";
 
 interface FiltersProps {
   config: FilterConfig[];
   onFilterChange: (key: keyof TimesheetFilters, value: any) => void;
+  noResults: boolean;
 }
 
-const Filters: React.FC<FiltersProps> = ({ config, onFilterChange }) => {
+const Filters: React.FC<FiltersProps> = ({ config, onFilterChange, noResults }) => {
   const [inputValues, setInputValues] = useState<{ [key: string]: string | number | undefined }>({});
-
+  // const [errorInputs, setErrorInputs] = useState<{ [key: string]: boolean }>({});
+  const [filterStates, setFilterStates] = useState<{ [key: string]: FilterState }>({});
+  
   const onInputChange = (key: keyof TimesheetFilters, value: string | number | undefined) => {
     console.log("onInputChange key:", key, "value:", value);
     if (!key) return; // Prevents undefined errors
     setInputValues((prev) => ({ ...prev, [key]: value }));
+    // setErrorInputs((prev) => ({ ...prev, [key]: value === -1000 }));
+    // setFilterStates((prev) => ({
+    //   ...prev,
+    //   [key]: value !== undefined && noResults ? FilterState.Error : FilterState.Valid
+    // }));
     onFilterChange(key, value);
   };
 
@@ -32,8 +41,21 @@ const Filters: React.FC<FiltersProps> = ({ config, onFilterChange }) => {
     // const clearedValue = key === "date" ? "" : undefined;
     // onFilterChange(key, clearedValue);
 
+    setFilterStates((prev) => ({
+      ...prev,
+      [key]: FilterState.Empty
+    }));
     onFilterChange(key, "");
   };
+
+  useEffect(() => {
+      Object.keys(inputValues).forEach((key) => {
+          setFilterStates((prev) => ({
+              ...prev,
+              [key]: inputValues[key] !== undefined && inputValues[key] !== "" && noResults ? FilterState.Error : FilterState.Valid
+          }));
+      });
+  }, [inputValues, noResults]);
 
   return (
     <div className="filters-container">
@@ -50,7 +72,7 @@ const Filters: React.FC<FiltersProps> = ({ config, onFilterChange }) => {
               <>
                 <input
                   type={type}
-                  className="filter-input"
+                  className={`filter-input ${filterStates[key] === FilterState.Error ? "input-error" : ""}`}
                   placeholder={placeholder}
                   value={inputValues[key] || ""}
                   onChange={(e) =>
