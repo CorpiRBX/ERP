@@ -91,7 +91,7 @@ export const useTimesheets = () => {
 
   const updateFilter = (key: keyof TimesheetFilters, value: any, state: FilterState) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
-    setFilterStates((prev) => ({ ...prev, [key]: state })); // ✅ Guardamos el estado del filtro
+    setFilterStates((prev) => ({ ...prev, [key]: state }));
   };
 
   const debounce = (callback: () => void, delay: number) => {

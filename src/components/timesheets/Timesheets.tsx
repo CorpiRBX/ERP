@@ -109,9 +109,13 @@ const Timesheets: React.FC = () => {
       setCurrentPage(Math.max(1, Math.min(totalPages, inputPage)));
       if(inputPage > totalPages) setInputPage(totalPages);
     }, debounceTimerInMiliSeconds);
+    
+    if (noResults) {
+      setCurrentPage(1);
+    }
 
     return () => clearTimeout(timer);
-  }, [inputPage]);
+  }, [inputPage, noResults]);
 
   return (
     <div className="timesheets-container">
@@ -258,7 +262,6 @@ const Timesheets: React.FC = () => {
                   // else {
                   //   updateFilter(key, value);
                   // }
-                  console.log("noResults", noResults);
                 }}
                 noResults={noResults}
               />
