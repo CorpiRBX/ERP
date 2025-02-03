@@ -14,32 +14,16 @@ interface FiltersProps {
 
 const Filters: React.FC<FiltersProps> = ({ config, onFilterChange, noResults }) => {
   const [inputValues, setInputValues] = useState<{ [key: string]: string | number | undefined }>({});
-  // const [errorInputs, setErrorInputs] = useState<{ [key: string]: boolean }>({});
   const [filterStates, setFilterStates] = useState<{ [key: string]: FilterState }>({});
   
   const onInputChange = (key: keyof TimesheetFilters, value: string | number | undefined) => {
-    console.log("onInputChange key:", key, "value:", value);
     if (!key) return; // Prevents undefined errors
     setInputValues((prev) => ({ ...prev, [key]: value }));
-    // setErrorInputs((prev) => ({ ...prev, [key]: value === -1000 }));
-    // setFilterStates((prev) => ({
-    //   ...prev,
-    //   [key]: value !== undefined && noResults ? FilterState.Error : FilterState.Valid
-    // }));
     onFilterChange(key, value);
   };
 
   const clearInput = (key: keyof TimesheetFilters) => {
-    console.log("onInputChange key:", key);
-    console.log("inputValues:", inputValues);
-    console.log("key:", key);
-    console.log("[key]", [key]);
-    console.log("inputValues[key]:", inputValues[key]);
     setInputValues((prev) => ({ ...prev, [key]: "" }));
-    console.log("inputValues after setInputValues:", inputValues);
-    // // Assign "" for string filters (e.g., date), undefined for numbers (e.g., employeeId)
-    // const clearedValue = key === "date" ? "" : undefined;
-    // onFilterChange(key, clearedValue);
 
     setFilterStates((prev) => ({
       ...prev,

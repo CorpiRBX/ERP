@@ -72,7 +72,6 @@ export const useTimesheets = () => {
       const data = response.data;
       const pagedItemsList = response.data.pagedItemsList;
 
-      console.log("pagedItemsList", pagedItemsList);
       setNoResults(pagedItemsList.length === 0);
 
       await fetchEmployeeNames(pagedItemsList, "employeeId"); // Nombre de la propiedad de TimesheetDto

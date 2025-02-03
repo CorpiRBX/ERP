@@ -7,6 +7,8 @@ import { useTimesheets } from "./useTimesheets";
 import Filters from "./Filters";
 import { FilterConfig } from "../../interfaces/FilterConfig";
 import { TimesheetSortOption } from "../../enums/TimesheetSortOption";
+import { FilterState } from "../../types/FilterState";
+import { TimesheetFilters } from "../../interfaces/TimesheetFilters";
 
 const Timesheets: React.FC = () => {
   const navigate = useNavigate();
@@ -240,7 +242,7 @@ const Timesheets: React.FC = () => {
               <i className={`bi ${filtersVisible ? "bi-filter-circle-fill" : "bi-filter-circle"}`}></i>
             </button>
             
-            {filtersVisible && (
+            <div className={`${filtersVisible ? "show-filters" : "hide-filters"}`}>
               <Filters
                 config={filtersConfig}
                 onFilterChange={(key, value) => {
@@ -263,9 +265,10 @@ const Timesheets: React.FC = () => {
                   //   updateFilter(key, value);
                   // }
                 }}
+                
                 noResults={noResults}
               />
-            )}
+            </div>
           </div>
         </div>
 
