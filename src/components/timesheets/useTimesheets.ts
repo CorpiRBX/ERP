@@ -93,19 +93,22 @@ export const useTimesheets = () => {
   const { handleFilter: handleEmployeeNameFilter } = useEntityFilter<EmployeeDto, keyof TimesheetFilters>(
     getEmployeeByName,
     updateFilter,
-    "employeeId"
+    "employeeId",
+    5
   );
 
   const { handleFilter: handleProjectNameFilter } = useEntityFilter<ProjectDto, keyof TimesheetFilters>(
     getProjectByName,
     updateFilter,
-    "projectId"
+    "projectId",
+    3
   );
 
   const { handleFilter: handleDepartmentNameFilter } = useEntityFilter<DepartmentDto, keyof TimesheetFilters>(
     getDepartmentByName,
     updateFilter,
-    "departmentId"
+    "departmentId",
+    3
   );
 
   const handleDateFilter = (date: Date | null) => {

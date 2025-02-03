@@ -364,7 +364,7 @@ const Timesheets: React.FC = () => {
             </tbody>
           </table>
 
-          <span>Fichajes totales: {totalCount}</span>
+          <span>Fichajes obtenidos: {totalCount}</span>
 
           {/* Pagination Controls */}
           <div className="pagination-controls">

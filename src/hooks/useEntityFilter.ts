@@ -5,13 +5,13 @@ import { useCallback, useRef } from "react";
  * @param fetchByNameFunc Función para obtener la entidad por nombre.
  * @param updateFilterFunc Función para actualizar el filtro en el estado.
  * @param filterKey Clave del filtro que se actualizará (ej. "employeeId", "projectId").
- * @param minLength Mínima cantidad de caracteres antes de ejecutar la búsqueda (default: 5).
+ * @param minLength Mínima cantidad de caracteres antes de ejecutar la búsqueda.
  */
 export const useEntityFilter = <T extends { id: number }, K extends keyof any>(
   fetchByNameFunc: (name: string) => Promise<{ success: boolean; data?: T }>,
   updateFilterFunc: (key: K, value: any) => void,
   filterKey: K,
-  minLength: number = 5
+  minLength: number
 ) => {
   const debounceTimeout = useRef<number | null>(null);
 
