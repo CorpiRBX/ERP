@@ -477,6 +477,10 @@
       border-radius: 5px;
       font-size: 1rem;
     }
+    
+    .timesheets-sort-dropdown:hover {
+      border: 1px solid #a0a0a0;
+    }
 
     .sortby-icon {
       padding: 8px;

@@ -343,7 +343,7 @@ const Timesheets: React.FC = () => {
           <table className="timesheets-table">
             <thead>
               <tr>
-                {["Nombre", "Entrada", "Salida", "Break", "Proyecto", "Departamento"].map((header) => (
+                {["Nombre", "Fecha", "Entrada", "Salida", "Break", "Proyecto", "Departamento"].map((header) => (
                   <th key={header} className="timesheets-history-header-bottom-label">
                     {header}
                   </th>
@@ -351,9 +351,10 @@ const Timesheets: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {timesheets.map(({ id, employeeId, timeIn, timeOut, break: breakTime, projectId, departmentsId }) => (
+              {timesheets.map(({ id, employeeId, date, timeIn, timeOut, break: breakTime, projectId, departmentsId }) => (
                 <tr key={id}>
                   <td>{employeeNames[employeeId] || "Cargando..."}</td>
+                  <td>{date}</td>
                   <td>{timeIn}</td>
                   <td>{timeOut}</td>
                   <td>{breakTime}</td>

@@ -6,6 +6,7 @@ import App from './App';
 import './index.css';
 import { AuthProvider } from './context/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const rootElement = document.getElementById('root');
 const queryClient = new QueryClient();
