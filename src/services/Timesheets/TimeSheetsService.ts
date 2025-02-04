@@ -1,8 +1,8 @@
-import axios from "axios";
 import { ApiResponse } from "../../types/ApiResponse.ts";
-import { TimesheetDto } from "../../Dtos/TimesheetDto.ts";
+import { TimesheetDto } from "../../dtos/TimesheetDto.ts";
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams.ts";
 import api from '../../config/ApiConfig.ts'
+import { GetPagedResponse } from "../../types/GetPagedResponse.ts";
 
 // Función para obtener un timesheet por ID
 export const getTimesheetById = async (id: number): Promise<ApiResponse<TimesheetDto>> => {
@@ -19,9 +19,9 @@ export const getTimesheetById = async (id: number): Promise<ApiResponse<Timeshee
 };
 
 // Función para obtener timesheets paginados
-export const getPagedTimesheets = async (params: GetPagedTimesheetsParams): Promise<ApiResponse<TimesheetDto[]>> => {
+export const getPagedTimesheets = async (params: GetPagedTimesheetsParams): Promise<ApiResponse<GetPagedResponse<TimesheetDto>>> => {
   try {
-    const response = await api.get<ApiResponse<TimesheetDto[]>>(`timesheets/GetPaged`, {
+    const response = await api.get<ApiResponse<GetPagedResponse<TimesheetDto>>>(`timesheets/GetPaged`, {
       params,
     });
     return response.data;

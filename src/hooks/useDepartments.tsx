@@ -1,9 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getAllDepartments } from "../services/Departments/DeparmentsServices";
-import { DepartmentsDto } from '../Dtos/DepartmentsDto';
+import { useQuery } from '@tanstack/react-query';
+import { getAllDepartments } from "../services/departments/DeparmentsServices";
 
 export const useGetAllDepartments = () => {
-    return useQuery<DepartmentsDto[], Error>({
+    return useQuery({
       queryKey: ['departments'],
       queryFn: getAllDepartments,
     });

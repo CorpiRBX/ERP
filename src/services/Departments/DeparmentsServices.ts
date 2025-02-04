@@ -1,5 +1,5 @@
 import api from '../../config/ApiConfig'
-import { DepartmentsDto } from '../../Dtos/DepartmentsDto'
+import { DepartmentsDto } from '../../dtos/DepartmentsDto'
 
 export const getAllDepartments = async (): Promise<DepartmentsDto[]> => {
     try {

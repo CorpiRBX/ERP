@@ -1,5 +1,5 @@
 import api from '../../config/ApiConfig'
-import { LoginResponseDto } from '../../Dtos/LoginResponseDto';
+import { LoginResponseDto } from '../../dtos/LoginResponseDto';
 
 // Función para hacer login  
   export const loginUser = async (username: string, password: string): Promise<LoginResponseDto> => {

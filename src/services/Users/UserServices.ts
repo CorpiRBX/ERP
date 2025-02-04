@@ -1,5 +1,5 @@
 import api from '../../config/ApiConfig'
-import { UserDTO } from '../../Dtos/UserDto';
+import { UserDTO } from '../../dtos/UserDto';
 
 export const getAllUsers = async (token:string) : Promise<UserDTO[]> =>{
     try{

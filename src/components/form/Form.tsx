@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useGetAllDepartments } from "../../hooks/useDepartments";
 import { useGetAllProjects } from "../../hooks/useProjects";
-import { useCreateTimesheet } from "../../hooks/useTimeSheets";
+import { useCreateTimesheet } from "../../hooks/useTimeSheetQueries";
 //Styles
 import "./Form.css";
 import "react-date-range/dist/styles.css";
@@ -17,10 +17,10 @@ import { DropdownSelect } from "./DropdownSelect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 //Dtos
-import { DepartmentsDto } from "../../Dtos/DepartmentsDto";
+import { DepartmentsDto } from "../../dtos/DepartmentsDto";
 import { ProjectDto } from "../../Dtos/ProjectsDto";
 import { ParsedDate } from "../../types/ParsedDate";
-import { TimesheetDto } from "../../Dtos/TimesheetDto";
+import { TimesheetDto } from "../../dtos/TimesheetDto";
 //Context
 import { TimesheetType } from "../../context/TimesheetContext";
 import { useTimesheet } from "../../context/TimesheetContext";
@@ -126,7 +126,7 @@ const Form: React.FC<FormProps> = ({ onClose, state, isMobile }) => {
         alert("✅ Timesheet creado correctamente.");
         onClose();
       },
-      onError: (error) => {
+      onError: (error: { message: any; }) => {
         console.error("Error al crear el timesheet:", error);
         alert(`❌ Error al crear el timesheet: ${error.message || "Error desconocido"}`);
       }

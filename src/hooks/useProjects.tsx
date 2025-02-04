@@ -1,9 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getAllProjects } from '../services/Projects/ProjectServices';
-import { ProjectDto } from '../Dtos/ProjectsDto';
+import { useQuery } from '@tanstack/react-query';
+import { getAllProjects } from '../services/projects/ProjectServices';
 
 export const useGetAllProjects = () =>{
-    return useQuery<ProjectDto[],Error>({
+    return useQuery({
         queryKey:['projects'],
         queryFn : getAllProjects
     });

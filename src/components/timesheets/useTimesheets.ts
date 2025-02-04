@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { getPagedTimesheets } from "../../services/timesheets/timesheetService";
+import { getPagedTimesheets } from "../../services/timesheets/TimeSheetsService";
 import { getEmployeeById, getEmployeeByName } from "../../services/employees/employeeService";
-import { getNameProjectById, getProjectByName } from "../../services/projects/projectService";
+import { getNameProjectById, getProjectByName } from "../../services/projects/ProjectServices";
 import { getDepartmentById, getDepartmentByName } from "../../services/departments/departmentService";
 import { GetPagedTimesheetsParams } from "../../types/GetPagedTimesheetsParams";
 import { TimesheetDto } from "../../dtos/TimesheetDto";
